@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amaarifa <amaarifa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mkabissi <mkabissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 13:48:45 by amaarifa          #+#    #+#             */
-/*   Updated: 2022/05/30 16:08:52 by amaarifa         ###   ########.fr       */
+/*   Updated: 2022/05/31 17:11:27 by mkabissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,11 +121,17 @@ int	main(int ac, char **av, char **env)
 	(void)ac;
 	//unset_test(&env_lst, av, ac); //TEST UNSET
 	export_test(&env_lst, av, ac);
+
 	//env_test(env_lst);
 	while (1)
 	{
 		line = readline("minishell$ ");
 		if (line[0] == '\0')
+		{
+			free(line);
+			continue ;
+		}
+		if (!syntax_checker(line))
 		{
 			free(line);
 			continue ;

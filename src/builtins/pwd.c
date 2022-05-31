@@ -1,22 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lib.h                                              :+:      :+:    :+:   */
+/*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mkabissi <mkabissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/29 18:09:49 by amaarifa          #+#    #+#             */
-/*   Updated: 2022/05/31 17:16:09 by mkabissi         ###   ########.fr       */
+/*   Created: 2022/05/24 16:00:37 by mkabissi          #+#    #+#             */
+/*   Updated: 2022/05/30 13:54:19 by mkabissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef LIB_H
-# define LIB_H
+#include "builtins.h"
 
-# include "../../types.h"
+int	pwd(void)
+{
+	char	buffer[PATH_MAX];
 
-t_env	*set_env(char **env);
-t_env	*create_env(char *s);
-char	*get_env(t_env *env_list, char *key);
-
-#endif
+	if (getcwd(buffer, PATH_MAX) == NULL)
+		perror("getcwd() error");
+	ft_putstr_fd(buffer, 1);
+	return (0);
+}

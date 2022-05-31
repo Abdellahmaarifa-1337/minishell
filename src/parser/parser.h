@@ -3,10 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
+<<<<<<< HEAD
 /*   By: amaarifa <amaarifa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/21 18:22:38 by amaarifa          #+#    #+#             */
 /*   Updated: 2022/05/29 13:40:20 by amaarifa         ###   ########.fr       */
+=======
+/*   By: mkabissi <mkabissi@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/05/21 18:22:38 by amaarifa          #+#    #+#             */
+/*   Updated: 2022/05/30 13:46:02 by mkabissi         ###   ########.fr       */
+>>>>>>> medilyas
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +50,17 @@ void			unflag_pipe(char *s);
 void			flag_pipe(char *source);
 int				replace_pipe(char *source, int i, char c);
 
+<<<<<<< HEAD
+=======
+/******************** SYNTAX CHECKER *********************/
+int				syntax_checker(char *cmd_line);
+int				pipe_check(char *cmd_line, int *stx_error);
+int				quotes_check(char *cmd_line, int *stx_error);
+int				redirection_check(char *cmd_line, int *stx_error);
+int				skip_spaces(char *cmd_line, int i);
+int				end_of_cmd(char c);
+
+>>>>>>> medilyas
 /*****************	CMD LIST METHODS	*****************/
 //void			delete_cmd_list(t_cmd_list	**cmd_list);
 

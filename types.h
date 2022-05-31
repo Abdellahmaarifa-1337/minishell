@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   types.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amaarifa <amaarifa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mkabissi <mkabissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/21 18:23:30 by amaarifa          #+#    #+#             */
-/*   Updated: 2022/05/29 21:54:05 by amaarifa         ###   ########.fr       */
+/*   Updated: 2022/05/31 17:12:04 by mkabissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <string.h>
+# include <unistd.h>
 # include "./src/libft/libft.h"
 
 # define EMPTY_TOKEN -1

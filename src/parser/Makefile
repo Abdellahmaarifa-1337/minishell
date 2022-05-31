@@ -11,8 +11,15 @@ EXPAN_MD = ./modules/expander
 LIB = ./lib
 QUOTERM_MD = ./modules/quote_removal
 PARSSERR_MD = ./modules/parsing_err
+
+STX_CHECK= ./syntax_check
 TOKEN_MT = ./methods/token
 TOKENSRC = ./methods/token_source
+
+#-------------------- SYNTAX CHECKER --------------------#
+SYNTAX_CHECK = ${STX_CHECK}/syntax_checker.c \
+	${STX_CHECK}/pipe_check.c ${STX_CHECK}/redirection_check.c \
+	${STX_CHECK}/quotes_check.c
 
 #---------------------- PARSER LIB ----------------------#
 LIB_SRC = ${LIB}/parse_cmd.c ${LIB}/get_env.c ${LIB}/join_strings.c \
@@ -38,6 +45,7 @@ PARSSERR_MD_SRC = ${PARSSERR_MD}/parsing_err.c
 
 #---------------------- PARSSER SOURCE -------------------#
 SRC = parser.c \
+	${SYNTAX_CHECK} \
 	${LIB_SRC} ${LEXER_MD_SRC} \
 	${EXPAN_MD_SRC} ${QUOTERM_MD_SRC} \
 	${TOKEN_MT_SRC} \
@@ -63,4 +71,4 @@ clean:
 	rm -rf ${OBJ} 
 fclean: clean
 	rm -rf ${NAME}
-.PHONY: clean fclean
+.PHONY: clean fclean all

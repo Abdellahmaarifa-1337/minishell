@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amaarifa <amaarifa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mkabissi <mkabissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 11:58:30 by amaarifa          #+#    #+#             */
-/*   Updated: 2022/05/31 12:10:38 by amaarifa         ###   ########.fr       */
+/*   Updated: 2022/05/31 17:22:50 by mkabissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 int	replace_env(t_env *env, t_env *tmp, int append)
 {
+	char	*s;
+
 	if (ft_strncmp(env->key, tmp->key, ft_strlen(tmp->key) + 1) == 0)
 	{
 		s = tmp->value;
@@ -35,7 +37,6 @@ int	replace_env(t_env *env, t_env *tmp, int append)
 void	add_back_env(t_env **env_lst, t_env *env, int append)
 {
 	t_env	*tmp;
-	char	*s;
 
 	tmp = *env_lst;
 	while (tmp)
@@ -49,7 +50,7 @@ void	add_back_env(t_env **env_lst, t_env *env, int append)
 	tmp->next = env;
 }
 
-void	add_export_env(t_env **env_lst, char *s)
+int	add_export_env(t_env **env_lst, char *s, int append)
 {
 	t_env	*env;
 
@@ -66,8 +67,9 @@ void	add_export_env(t_env **env_lst, char *s)
 		free(env->key);
 		free(env->value);
 		free(env);
-		exit_status = 1;
+		return (1);
 	}
+	return (0);
 }
 
 int	export(t_env **env_lst, char **av)
@@ -86,7 +88,8 @@ int	export(t_env **env_lst, char **av)
 	append = 0;
 	while (av[i])
 	{
-		add_export_env(env_lst, av[i]);
+		if (add_export_env(env_lst, av[i], append))
+			exit_status = 1;
 		i++;
 	}
 	return (exit_status);
