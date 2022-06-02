@@ -3,7 +3,7 @@ CFLAGS= -Wall -Wextra -Wall #-fsanitize=address
 UTILS= src/utils
 PARSER= src/parser
 
-LIB = src/lib/set_env.c src/lib/create_env.c
+LIB = src/lib/set_env.c src/lib/create_env.c src/lib/get_env.c src/lib/get_index_char.c
 SRC= minishell.c ${LIB} ${BUILTINS}
 LIBFT= src/libft/libft.a
 PARSER= src/parser/parser.a

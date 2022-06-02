@@ -6,7 +6,7 @@
 /*   By: amaarifa <amaarifa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/22 08:13:08 by amaarifa          #+#    #+#             */
-/*   Updated: 2022/05/29 15:22:09 by amaarifa         ###   ########.fr       */
+/*   Updated: 2022/06/02 07:49:11 by amaarifa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,12 +70,12 @@ void	falg_token(t_token *tokens)
 	}
 }
 
-t_token	*parse_cmd(t_token_source *token_source)
+t_token	*parse_cmd(t_token_source *token_source, t_env **env_lst)
 {
 	t_token	*tokens;
 
 	tokens = lexer(token_source);
-	expander(&tokens);
+	expander(&tokens, env_lst);
 	falg_token(tokens);
 	quote_removal(&tokens);
 	return_quotes(&tokens);

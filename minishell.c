@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mkabissi <mkabissi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: amaarifa <amaarifa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 13:48:45 by amaarifa          #+#    #+#             */
-/*   Updated: 2022/05/31 17:11:27 by mkabissi         ###   ########.fr       */
+/*   Updated: 2022/06/02 08:24:39 by amaarifa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,21 +76,17 @@ void	print_env(t_env *env)
 	}
 }
 
-/* SET TO DEFAULT */
-int	g_exit_status = 0;
+
 
 /* TEST BUILTINGS */
 void	unset_test(t_env **env_lst, char **av, int ac)
 {
-	int	i;
-
 	av[ac - 1] = NULL;
 	printf("\n\nbefore unset \n\n");
 	print_env(*env_lst);
-	i = unset(env_lst, av);
+	unset(env_lst, av);
 	printf("\n\nafter unset \n\n");
 	print_env(*env_lst);
-	printf("\n\nUNSET EXIT CODE == %d\n\n", i);
 	//exit(1);
 }
 
@@ -109,6 +105,8 @@ void	export_test(t_env	**env, char **av, int ac)
 	export(env, NULL);
 	exit(1);
 }
+/* SET TO DEFAULT */
+int	g_exit_status = 0;
 
 int	main(int ac, char **av, char **env)
 {
@@ -120,7 +118,7 @@ int	main(int ac, char **av, char **env)
 	(void)av;
 	(void)ac;
 	//unset_test(&env_lst, av, ac); //TEST UNSET
-	export_test(&env_lst, av, ac);
+	// export_test(&env_lst, av, ac);
 
 	//env_test(env_lst);
 	while (1)
@@ -138,7 +136,7 @@ int	main(int ac, char **av, char **env)
 		}
 		cmd_list = init_cmd_list(line);
 		add_history(line);
-		cmd_list->env = env_lst;
+		cmd_list->env = &env_lst;
 		parser(cmd_list);
 		print_cmd_tk(cmd_list->tokens);
 		free_cmd_list(cmd_list);

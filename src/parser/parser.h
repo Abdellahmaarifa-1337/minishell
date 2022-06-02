@@ -3,24 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-<<<<<<< HEAD
 /*   By: amaarifa <amaarifa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/21 18:22:38 by amaarifa          #+#    #+#             */
-/*   Updated: 2022/05/29 13:40:20 by amaarifa         ###   ########.fr       */
-=======
-/*   By: mkabissi <mkabissi@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/21 18:22:38 by amaarifa          #+#    #+#             */
-/*   Updated: 2022/05/30 13:46:02 by mkabissi         ###   ########.fr       */
->>>>>>> medilyas
+/*   Updated: 2022/06/02 08:02:49 by amaarifa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PARSER_H
 # define PARSER_H
 # include "../../types.h"
-
+# include "../lib/lib.h"
 /*---------------------- MODULES -----------------------*/
 
 /*------------------- Scanner Module -------------------*/
@@ -32,26 +25,23 @@ t_token			*get_next_token(t_token_source *token_source, char symbol,
 void			resolve_type(char symbol, int *type);
 
 /*------------------- Expander Module -------------------*/
-void			expander(t_token **token);
-char			*expand_var(char *value);
-int				collect_var(char	*value, int *i, char **s);
+char			*expand_var(char *value, t_env **env_lst);
+int				collect_var(char	*value, int *i, char **s, t_env **env_lst);
 void			collect_none_var(char	*value, int *i, char **s);
-void			expand_env_var(char	**s, char *value, int *i);
+void			expand_env_var(char	**s, char *value, int *i, t_env **env_lst);
 void			hide_quotes(char	*s);
 void			hide_wrapped_quotes(char *s, int *i, char c);
 int				unclosed_double_qoutes(char *s, int i);
 
 /*------------------- LIB ----------------------------*/
 char			*join_strings(char *s1, char *s2);
-char			*get_env(char *s);
-t_token			*parse_cmd(t_token_source *token_source);
+//char			*get_env(char *s);
+t_token			*parse_cmd(t_token_source *token_source, t_env **env_lst);
 void			unflag_cmd_list(char **s);
 void			unflag_pipe(char *s);
 void			flag_pipe(char *source);
 int				replace_pipe(char *source, int i, char c);
 
-<<<<<<< HEAD
-=======
 /******************** SYNTAX CHECKER *********************/
 int				syntax_checker(char *cmd_line);
 int				pipe_check(char *cmd_line, int *stx_error);
@@ -60,7 +50,6 @@ int				redirection_check(char *cmd_line, int *stx_error);
 int				skip_spaces(char *cmd_line, int i);
 int				end_of_cmd(char c);
 
->>>>>>> medilyas
 /*****************	CMD LIST METHODS	*****************/
 //void			delete_cmd_list(t_cmd_list	**cmd_list);
 
@@ -69,8 +58,8 @@ int				is_cmd_exist(t_token *token);
 
 /*****************	PARSER METHODS *****************/
 t_token			*lexer(t_token_source *token_source);
-void			expander(t_token **tokens);
 void			quote_removal(t_token **tokens);
+void			expander(t_token **token, t_env **env_lst);
 
 /*****************	TOKEN_SOURCE METHODS *****************/
 t_token_source	*init_token_source(char	*cmd_line);

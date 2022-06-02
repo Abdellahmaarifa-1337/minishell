@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   types.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mkabissi <mkabissi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: amaarifa <amaarifa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/21 18:23:30 by amaarifa          #+#    #+#             */
-/*   Updated: 2022/05/31 17:12:04 by mkabissi         ###   ########.fr       */
+/*   Updated: 2022/06/02 07:47:06 by amaarifa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ typedef struct s_cmd_list {
 	char				*cmd_line;
 	t_token				**tokens;
 	int					n_cmd;
-	t_env				*env;
+	t_env				**env;
 }	t_cmd_list;
 
 #endif
