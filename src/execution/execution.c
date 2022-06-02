@@ -3,22 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mkabissi <mkabissi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: amaarifa <amaarifa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 14:07:51 by mkabissi          #+#    #+#             */
-/*   Updated: 2022/05/31 16:05:30 by mkabissi         ###   ########.fr       */
+/*   Updated: 2022/06/02 20:02:27 by amaarifa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execution.h"
 
-
-
 /*************************************************************************/
 /*********************** 🚧 UNTIL CONSTRUCTION 🚧 *************************/
 /*************************************************************************/
-
-
 
 // void	run_execution(void *arg)
 // {
@@ -125,3 +121,36 @@
 // 		dt->pipe++;
 // 	}
 // }
+
+void	free_args(char **args)
+{
+	int	i;
+
+	i = 0;
+	while (args[i])
+	{
+		free(args[i]);
+		i++;
+	}
+}
+
+void	execution(t_cmd_list *cmd_lst)
+{
+	char	**args;
+	int		i;
+
+	i = 0;
+	args = get_args((cmd_lst->tokens));
+	resolve_path(args, cmd_lst->env);
+	while (args && args[i])
+	{
+		printf("[ARGS] : %s\n", args[i]);
+		i++;
+	}
+	exec_here_doc(cmd_lst);
+	if (args)
+	{
+		free_args(args);
+		free(args);
+	}
+}

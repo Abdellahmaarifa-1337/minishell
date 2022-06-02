@@ -6,7 +6,7 @@
 /*   By: amaarifa <amaarifa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/21 18:23:30 by amaarifa          #+#    #+#             */
-/*   Updated: 2022/06/02 07:47:06 by amaarifa         ###   ########.fr       */
+/*   Updated: 2022/06/02 20:28:52 by amaarifa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <string.h>
 # include <unistd.h>
 # include "./src/libft/libft.h"
+# include "fcntl.h"
 
 # define EMPTY_TOKEN -1
 # define AMBIGUOUS_REDIRECT -2

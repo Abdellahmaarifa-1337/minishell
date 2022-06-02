@@ -6,7 +6,7 @@
 /*   By: amaarifa <amaarifa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 13:48:45 by amaarifa          #+#    #+#             */
-/*   Updated: 2022/06/02 08:24:39 by amaarifa         ###   ########.fr       */
+/*   Updated: 2022/06/02 13:26:36 by amaarifa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,8 +76,6 @@ void	print_env(t_env *env)
 	}
 }
 
-
-
 /* TEST BUILTINGS */
 void	unset_test(t_env **env_lst, char **av, int ac)
 {
@@ -138,6 +136,7 @@ int	main(int ac, char **av, char **env)
 		add_history(line);
 		cmd_list->env = &env_lst;
 		parser(cmd_list);
+		execution(cmd_list);
 		print_cmd_tk(cmd_list->tokens);
 		free_cmd_list(cmd_list);
 		cmd_list = NULL;

@@ -6,7 +6,7 @@
 /*   By: amaarifa <amaarifa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/29 23:15:10 by amaarifa          #+#    #+#             */
-/*   Updated: 2022/06/02 08:11:57 by amaarifa         ###   ########.fr       */
+/*   Updated: 2022/06/02 13:13:31 by amaarifa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,5 +37,5 @@ void	cd(char **token, t_env *env);
 void	export(t_env **env, char **av);
 void	export_print(t_env *env);
 int		is_valid_idn(char *s);
-
+int		which_builtin(char *builtin);
 #endif
