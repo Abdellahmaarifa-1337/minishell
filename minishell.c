@@ -6,7 +6,7 @@
 /*   By: mkabissi <mkabissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 13:48:45 by amaarifa          #+#    #+#             */
-/*   Updated: 2022/06/03 17:23:04 by mkabissi         ###   ########.fr       */
+/*   Updated: 2022/06/03 18:01:10 by mkabissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,8 +142,6 @@ int	main(int ac, char **av, char **env)
 		parser(cmd_list);
 		execution(cmd_list, env_lst);
 		print_cmd_tk(cmd_list->tokens);
-		char ***parms = token_to_3d(cmd_list);
-		// print_3dparms(parms);
 		free_cmd_list(cmd_list);
 		cmd_list = NULL;
 		exit(0);
