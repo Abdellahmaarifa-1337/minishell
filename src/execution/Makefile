@@ -3,7 +3,8 @@ CFLAGS= -Wall -Wextra -Wall
 
 
 METHODS= ./methods/get_args.c ./methods/resolve_path.c \
-		./methods/exec_here_doc.c
+		./methods/exec_here_doc.c ./methods/get_in_file.c \
+		./methods/get_out_file.c
 
 SRC = execution.c $(METHODS)
 

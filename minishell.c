@@ -6,7 +6,7 @@
 /*   By: amaarifa <amaarifa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 13:48:45 by amaarifa          #+#    #+#             */
-/*   Updated: 2022/06/02 13:26:36 by amaarifa         ###   ########.fr       */
+/*   Updated: 2022/06/03 11:27:23 by amaarifa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,7 +136,7 @@ int	main(int ac, char **av, char **env)
 		add_history(line);
 		cmd_list->env = &env_lst;
 		parser(cmd_list);
-		execution(cmd_list);
+		execution(cmd_list, env_lst);
 		print_cmd_tk(cmd_list->tokens);
 		free_cmd_list(cmd_list);
 		cmd_list = NULL;

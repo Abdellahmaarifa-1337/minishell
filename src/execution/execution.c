@@ -6,7 +6,7 @@
 /*   By: amaarifa <amaarifa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 14:07:51 by mkabissi          #+#    #+#             */
-/*   Updated: 2022/06/02 20:02:27 by amaarifa         ###   ########.fr       */
+/*   Updated: 2022/06/03 11:26:48 by amaarifa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,23 +134,31 @@ void	free_args(char **args)
 	}
 }
 
-void	execution(t_cmd_list *cmd_lst)
+void	execution(t_cmd_list *cmd_lst, t_env *env_lst)
 {
 	char	**args;
 	int		i;
+	int		n;
 
-	i = 0;
-	args = get_args((cmd_lst->tokens));
-	resolve_path(args, cmd_lst->env);
-	while (args && args[i])
+	exec_here_doc(cmd_lst, env_lst);
+	n = 0;
+	while ((cmd_lst->tokens)[n])
 	{
-		printf("[ARGS] : %s\n", args[i]);
-		i++;
-	}
-	exec_here_doc(cmd_lst);
-	if (args)
-	{
-		free_args(args);
-		free(args);
+		i = 0;
+		args = get_args((cmd_lst->tokens) + n);
+		resolve_path(args, cmd_lst->env);
+		while (args && args[i])
+		{
+			printf("[ARGS] : %s\n", args[i]);
+			i++;
+		}
+		printf("int file : %d\n", get_in_file((cmd_lst->tokens)[n]));
+		printf("out file : %d\n", get_out_file((cmd_lst->tokens)[n]));
+		if (args)
+		{
+			free_args(args);
+			free(args);
+		}
+		n++;
 	}
 }

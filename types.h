@@ -6,7 +6,7 @@
 /*   By: amaarifa <amaarifa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/21 18:23:30 by amaarifa          #+#    #+#             */
-/*   Updated: 2022/06/02 20:28:52 by amaarifa         ###   ########.fr       */
+/*   Updated: 2022/06/03 11:17:49 by amaarifa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ typedef struct s_env {
 typedef struct s_token {
 	char			*value;	
 	int				type;
+	int				expand_heredoc;
 	struct s_token	*next;
 }	t_token;
 
