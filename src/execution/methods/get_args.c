@@ -1,47 +1,57 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   set_env.c                                          :+:      :+:    :+:   */
+/*   get_args.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: amaarifa <amaarifa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/29 18:12:37 by amaarifa          #+#    #+#             */
-/*   Updated: 2022/06/02 07:22:41 by amaarifa         ###   ########.fr       */
+/*   Created: 2022/06/02 08:42:51 by amaarifa          #+#    #+#             */
+/*   Updated: 2022/06/02 13:29:12 by amaarifa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lib.h"
+#include "../execution.h"
 
-void	add_env_back(t_env *env, t_env *new_env)
+int	get_size_of_args(t_token *tokens)
 {
-	t_env	*tmp;
+	t_token	*tmp;
+	int		i;
 
-	tmp = env;
+	i = 0;
+	tmp = tokens;
 	while (tmp)
 	{
-		if (!tmp->next)
-			break ;
+		if (tmp->type == WORD)
+			i++;
 		tmp = tmp->next;
 	}
-	tmp->next = new_env;
+	return (i);
 }
 
-t_env	*set_env(char **env)
+char	**get_args(t_token **tokens)
 {
+	int		size;
+	char	**args;
 	int		i;
-	t_env	*env_lst;
-	t_env	*tmp;
+	t_token	*tmp;
 
-	env_lst = create_env(env[0]);
-	if (!env_lst)
+	size = get_size_of_args(*tokens);
+	if (!size)
 		return (NULL);
-	tmp = env_lst;
-	i = 1;
-	while (env[i])
+	args = (char **)malloc(sizeof(char *) * (size + 1));
+	if (!args)
+		exit(1);
+	i = 0;
+	tmp = *tokens;
+	while (tmp)
 	{
-		add_env_back(tmp, create_env(env[i]));
+		if (tmp->type == WORD)
+		{
+			args[i] = ft_strdup(tmp->value);
+			i++;
+		}
 		tmp = tmp->next;
-		i++;
 	}
-	return (env_lst);
+	args[size] = NULL;
+	return (args);
 }

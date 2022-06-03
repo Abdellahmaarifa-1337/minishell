@@ -1,23 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_env.c                                          :+:      :+:    :+:   */
+/*   get_index_char.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: amaarifa <amaarifa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/29 13:10:18 by amaarifa          #+#    #+#             */
-/*   Updated: 2022/05/29 13:49:13 by amaarifa         ###   ########.fr       */
+/*   Created: 2022/06/02 07:21:01 by amaarifa          #+#    #+#             */
+/*   Updated: 2022/06/02 07:21:41 by amaarifa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../parser.h"
+#include "lib.h"
 
-char	*get_env(char *s)
+int	get_index_char(char *s, char c)
 {
-	char	*str;
+	int	i;
 
-	str = ft_strdup(getenv(s));
-	if (!str)
-		return (ft_strdup(""));
-	return (str);
+	i = 0;
+	while (s[i])
+	{
+		if (s[i] == c)
+			return (i);
+		i++;
+	}
+	return (i);
 }

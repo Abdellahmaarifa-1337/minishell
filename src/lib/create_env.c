@@ -6,25 +6,11 @@
 /*   By: amaarifa <amaarifa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 14:57:37 by amaarifa          #+#    #+#             */
-/*   Updated: 2022/05/30 14:58:06 by amaarifa         ###   ########.fr       */
+/*   Updated: 2022/06/02 07:21:22 by amaarifa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lib.h"
-
-int	get_index_char(char *s, char c)
-{
-	int	i;
-
-	i = 0;
-	while (s[i])
-	{
-		if (s[i] == c)
-			return (i);
-		i++;
-	}
-	return (i);
-}
 
 t_env	*create_env(char *s)
 {

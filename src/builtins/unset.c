@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mkabissi <mkabissi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: amaarifa <amaarifa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/29 23:13:46 by amaarifa          #+#    #+#             */
-/*   Updated: 2022/05/31 17:19:57 by mkabissi         ###   ########.fr       */
+/*   Updated: 2022/06/02 08:11:29 by amaarifa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,13 +47,16 @@ void	delete_node(t_env **env, int index)
 	}
 }
 
-int	unset_var(t_env **env, char *s)
+void	unset_var(t_env **env, char *s)
 {
 	t_env	*tmp;
 	int		i;
 
 	if (!is_valid_idn(s))
-		return (1);
+	{
+		g_exit_status = 1;
+		return ;
+	}
 	tmp = *env;
 	i = 0;
 	while (tmp)
@@ -67,21 +70,19 @@ int	unset_var(t_env **env, char *s)
 		i++;
 		tmp = tmp->next;
 	}
-	return (0);
+	return ;
 }
 
-int	unset(t_env **env, char **av)
+void	unset(t_env **env, char **av)
 {
-	int	exit_status;
 	int	i;
 
-	exit_status = 0;
+	g_exit_status = 0;
 	i = 1;
 	while (av[i])
 	{
-		if (unset_var(env, av[i]))
-			exit_status = 1;
+		unset_var(env, av[i]);
 		i++;
 	}
-	return (exit_status);
+	return ;
 }

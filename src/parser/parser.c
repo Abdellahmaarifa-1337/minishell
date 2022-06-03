@@ -6,7 +6,7 @@
 /*   By: amaarifa <amaarifa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 17:15:00 by amaarifa          #+#    #+#             */
-/*   Updated: 2022/05/29 21:06:52 by amaarifa         ###   ########.fr       */
+/*   Updated: 2022/06/02 07:47:02 by amaarifa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	parser(t_cmd_list	*cmd_list)
 	while (cmd_lines[i])
 	{
 		(cmd_list->tokens)[i] = parse_cmd(init_token_source(
-					ft_strtrim(cmd_lines[i], " ")));
+					ft_strtrim(cmd_lines[i], " ")), cmd_list->env);
 		free(cmd_lines[i]);
 		i++;
 	}
