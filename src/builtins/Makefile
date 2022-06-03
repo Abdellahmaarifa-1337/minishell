@@ -1,10 +1,11 @@
 CC = cc
-CFLAGS = #-Wall -Werror -Wextra
+CFLAGS = -g #-Wall -Werror -Wextra
 
 #------------------------- BUILTINS ------------------------#
 BUILTINS = builtins.c echo.c pwd.c env.c export.c unset.c \
 		cd.c \
-		./lib/export_print.c ./lib/is_valid_idn.c
+		./lib/export_print.c ./lib/is_valid_idn.c \
+		../execution/methods/parameters.c
 
 #---------------------- EXECUTION SOURCE -------------------#
 SRC = ${BUILTINS}

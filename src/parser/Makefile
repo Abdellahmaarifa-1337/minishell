@@ -1,5 +1,5 @@
 CC=cc
-CFLAGS= -Wall -Wextra -Wall
+CFLAGS= -Wall -Wextra -Wall -g
 
 #------------------------ PATHS ------------------------#
 

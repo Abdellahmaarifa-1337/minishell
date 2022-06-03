@@ -6,7 +6,7 @@
 /*   By: mkabissi <mkabissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 14:22:37 by mkabissi          #+#    #+#             */
-/*   Updated: 2022/05/31 12:14:45 by mkabissi         ###   ########.fr       */
+/*   Updated: 2022/06/02 15:10:15 by mkabissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,15 @@
 
 void	change_envpwd(t_env *env_lst, char *new_pwd, char *old_pwd)
 {
-	export(env_lst, ft_strjoin("export PWD=", new_pwd));
-	export(env_lst, ft_strjoin("export PWD=", old_pwd));
+	char	*p;
+
+	p = ft_strjoin("export PWD=", new_pwd);
+	export(&env_lst, &p);
+	free(p);
 	free(new_pwd);
+	p = ft_strjoin("export PWD=", old_pwd);
+	export(&env_lst, &p);
+	free(p);
 	free(old_pwd);
 }
 

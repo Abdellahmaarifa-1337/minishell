@@ -6,7 +6,7 @@
 /*   By: mkabissi <mkabissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 13:48:45 by amaarifa          #+#    #+#             */
-/*   Updated: 2022/05/31 17:11:27 by mkabissi         ###   ########.fr       */
+/*   Updated: 2022/06/03 16:44:57 by mkabissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,8 +107,11 @@ void	export_test(t_env	**env, char **av, int ac)
 	printf("\n\nADDING VALUES\n\n");
 	export(env, av);
 	export(env, NULL);
-	exit(1);
+	// exit(1);
 }
+
+char	***token_to_3d(t_cmd_list *list);
+void	print_3dparms(char ***parms);
 
 int	main(int ac, char **av, char **env)
 {
@@ -120,12 +123,13 @@ int	main(int ac, char **av, char **env)
 	(void)av;
 	(void)ac;
 	//unset_test(&env_lst, av, ac); //TEST UNSET
-	export_test(&env_lst, av, ac);
+	// export_test(&env_lst, av, ac);
 
 	//env_test(env_lst);
 	while (1)
 	{
-		line = readline("minishell$ ");
+		// line = readline("minishell$ ");
+		line = ft_strdup("ls <file1 echo hello | >file2 cat file3 <<here1 | <<here2 ls -la >>append cat file4");
 		if (line[0] == '\0')
 		{
 			free(line);
@@ -141,8 +145,11 @@ int	main(int ac, char **av, char **env)
 		cmd_list->env = env_lst;
 		parser(cmd_list);
 		print_cmd_tk(cmd_list->tokens);
+		char ***parms = token_to_3d(cmd_list);
+		// print_3dparms(parms);
 		free_cmd_list(cmd_list);
 		cmd_list = NULL;
+		exit(0);
 	}
 	return (0);
 }

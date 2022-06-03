@@ -3,51 +3,44 @@
 /*                                                        :::      ::::::::   */
 /*   set_env.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amaarifa <amaarifa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mkabissi <mkabissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/29 18:12:37 by amaarifa          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2022/05/30 14:58:10 by amaarifa         ###   ########.fr       */
-=======
-/*   Updated: 2022/05/29 23:06:07 by amaarifa         ###   ########.fr       */
->>>>>>> medilyas
+/*   Updated: 2022/06/02 15:02:24 by mkabissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lib.h"
 
-<<<<<<< HEAD
-=======
-int	get_index_char(char *s, char c)
-{
-	int	i;
+// int	get_index_char(char *s, char c)
+// {
+// 	int	i;
 
-	i = 0;
-	while (s[i])
-	{
-		if (s[i] == c)
-			return (i);
-		i++;
-	}
-	return (i);
-}
+// 	i = 0;
+// 	while (s[i])
+// 	{
+// 		if (s[i] == c)
+// 			return (i);
+// 		i++;
+// 	}
+// 	return (i);
+// }
 
-t_env	*create_env(char *s)
-{
-	t_env	*env;
-	int		i;
+// t_env	*create_env(char *s)
+// {
+// 	t_env	*env;
+// 	int		i;
 
-	if (!s)
-		return (NULL);
-	env = (t_env *)malloc(sizeof(t_env));
-	i = get_index_char(s, '=');
-	env->key = ft_substr(s, 0, i);
-	env->value = ft_substr(s, i + 1, ft_strlen(s) - 1);
-	env->next = NULL;
-	return (env);
-}
+// 	if (!s)
+// 		return (NULL);
+// 	env = (t_env *)malloc(sizeof(t_env));
+// 	i = get_index_char(s, '=');
+// 	env->key = ft_substr(s, 0, i);
+// 	env->value = ft_substr(s, i + 1, ft_strlen(s) - 1);
+// 	env->next = NULL;
+// 	return (env);
+// }
 
->>>>>>> medilyas
 void	add_env_back(t_env *env, t_env *new_env)
 {
 	t_env	*tmp;
