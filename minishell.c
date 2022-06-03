@@ -6,7 +6,7 @@
 /*   By: mkabissi <mkabissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 13:48:45 by amaarifa          #+#    #+#             */
-/*   Updated: 2022/06/03 16:44:57 by mkabissi         ###   ########.fr       */
+/*   Updated: 2022/06/03 17:23:04 by mkabissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,21 +76,15 @@ void	print_env(t_env *env)
 	}
 }
 
-/* SET TO DEFAULT */
-int	g_exit_status = 0;
-
 /* TEST BUILTINGS */
 void	unset_test(t_env **env_lst, char **av, int ac)
 {
-	int	i;
-
 	av[ac - 1] = NULL;
 	printf("\n\nbefore unset \n\n");
 	print_env(*env_lst);
-	i = unset(env_lst, av);
+	unset(env_lst, av);
 	printf("\n\nafter unset \n\n");
 	print_env(*env_lst);
-	printf("\n\nUNSET EXIT CODE == %d\n\n", i);
 	//exit(1);
 }
 
@@ -109,6 +103,8 @@ void	export_test(t_env	**env, char **av, int ac)
 	export(env, NULL);
 	// exit(1);
 }
+/* SET TO DEFAULT */
+int	g_exit_status = 0;
 
 char	***token_to_3d(t_cmd_list *list);
 void	print_3dparms(char ***parms);
@@ -142,8 +138,9 @@ int	main(int ac, char **av, char **env)
 		}
 		cmd_list = init_cmd_list(line);
 		add_history(line);
-		cmd_list->env = env_lst;
+		cmd_list->env = &env_lst;
 		parser(cmd_list);
+		execution(cmd_list, env_lst);
 		print_cmd_tk(cmd_list->tokens);
 		char ***parms = token_to_3d(cmd_list);
 		// print_3dparms(parms);

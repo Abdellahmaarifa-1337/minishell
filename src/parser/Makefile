@@ -22,7 +22,7 @@ SYNTAX_CHECK = ${STX_CHECK}/syntax_checker.c \
 	${STX_CHECK}/quotes_check.c
 
 #---------------------- PARSER LIB ----------------------#
-LIB_SRC = ${LIB}/parse_cmd.c ${LIB}/get_env.c ${LIB}/join_strings.c \
+LIB_SRC = ${LIB}/parse_cmd.c ${LIB}/join_strings.c \
 		  ${LIB}/flag_pipe.c
 
 #---------------------- TOKEN METHODS ----------------------#

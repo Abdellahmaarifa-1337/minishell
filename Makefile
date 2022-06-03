@@ -3,12 +3,12 @@ CFLAGS= -Wall -Wextra -Wall -g #-fsanitize=address
 UTILS= src/utils
 PARSER= src/parser
 
-LIB = src/lib/set_env.c src/lib/create_env.c
+LIB = src/lib/set_env.c src/lib/create_env.c src/lib/get_env.c src/lib/get_index_char.c
 SRC= minishell.c ${LIB} ${BUILTINS}
 LIBFT= src/libft/libft.a
 PARSER= src/parser/parser.a
 BUILTIN= src/builtins/builtins.a
-
+EXECUTION= src/execution/execution.a
 OBJ=${SRC:.c=.o}
 
 NAME=minishell
@@ -22,9 +22,10 @@ call_make:
 	make -C src/libft
 	make -C src/parser
 	make -C src/builtins
+	make -C src/execution
 
-${NAME}:${OBJ} $(LIBFT) $(PARSER) $(BUILTIN)
-	@${CC} ${CFLAGS} ${LIBFT} ${PARSER} ${BUILTIN} ${OBJ} -o ${NAME} -lreadline
+${NAME}:${OBJ} $(LIBFT) $(PARSER) $(BUILTIN) $(EXECUTION)
+	@${CC} ${CFLAGS} ${LIBFT} ${PARSER} ${BUILTIN} $(EXECUTION) ${OBJ} -o ${NAME} -lreadline
 
 #${OBJ}:${SRC}
 
@@ -32,11 +33,13 @@ clean:
 	make clean -C src/libft
 	make clean -C src/parser
 	make clean -C src/builtins
+	make clean -C src/execution
 	rm -rf ${OBJ} 
 fclean: clean
 	make fclean -C src/libft
 	make fclean -C src/parser
 	make fclean -C src/builtins
+	make fclean -C src/execution
 	rm -rf ${NAME}
 re : fclean All
 .PHONY: clean fclean re All call_make

@@ -6,13 +6,13 @@
 /*   By: amaarifa <amaarifa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 01:34:52 by amaarifa          #+#    #+#             */
-/*   Updated: 2022/05/29 23:02:35 by amaarifa         ###   ########.fr       */
+/*   Updated: 2022/06/03 11:21:54 by amaarifa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../parser.h"
 
-void	expand_env_var(char	**s, char *value, int *i)
+void	expand_env_var(char	**s, char *value, int *i, t_env **env_lst)
 {
 	char	*temp;
 	char	*expanded;
@@ -25,7 +25,7 @@ void	expand_env_var(char	**s, char *value, int *i)
 		temp = ft_substr(value, start, *i - start + 1);
 	else
 		temp = ft_substr(value, start, *i - start);
-	expanded = get_env(temp);
+	expanded = get_env(*env_lst, temp);
 	free(temp);
 	if (value[*i] == '?')
 	{
@@ -62,7 +62,7 @@ void	collect_none_var(char	*value, int *i, char **s)
 	*s = join_strings(*s, temp);
 }
 
-int	collect_var(char	*value, int *i, char **s)
+int	collect_var(char	*value, int *i, char **s, t_env **env_lst)
 {
 	(*i)++;
 	if (!value[*i])
@@ -71,11 +71,11 @@ int	collect_var(char	*value, int *i, char **s)
 		(*i)++;
 	if (!value[*i])
 		return (0);
-	expand_env_var(s, value, i);
+	expand_env_var(s, value, i, env_lst);
 	return (1);
 }
 
-char	*expand_var(char *value)
+char	*expand_var(char *value, t_env **env_lst)
 {
 	int		i;
 	char	*s;
@@ -91,7 +91,7 @@ char	*expand_var(char *value)
 		}
 		else
 		{
-			if (!collect_var(value, &i, &s))
+			if (!collect_var(value, &i, &s, env_lst))
 				break ;
 			continue ;
 		}
@@ -99,7 +99,7 @@ char	*expand_var(char *value)
 	return (s);
 }
 
-void	expander(t_token **token)
+void	expander(t_token **token, t_env **env_lst)
 {
 	t_token	*temp;
 	char	*str;
@@ -107,12 +107,16 @@ void	expander(t_token **token)
 	temp = *token;
 	while (temp)
 	{
+		temp->expand_heredoc = 0;
 		if (temp->type != HERE_DOC)
 		{
 			str = temp->value;
-			temp->value = expand_var(temp->value);
+			temp->value = expand_var(temp->value, env_lst);
 			free(str);
 		}
+		else if (!ft_strchr(temp->value, '\'')
+			&& !ft_strchr(temp->value, '\"'))
+			temp->expand_heredoc = 1;
 		hide_quotes(temp->value);
 		temp = temp->next;
 	}

@@ -6,7 +6,7 @@
 /*   By: mkabissi <mkabissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/21 18:23:30 by amaarifa          #+#    #+#             */
-/*   Updated: 2022/05/31 17:12:04 by mkabissi         ###   ########.fr       */
+/*   Updated: 2022/06/03 17:29:20 by mkabissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <string.h>
 # include <unistd.h>
 # include "./src/libft/libft.h"
+# include "fcntl.h"
 
 # define EMPTY_TOKEN -1
 # define AMBIGUOUS_REDIRECT -2
@@ -43,6 +44,7 @@ typedef struct s_env {
 typedef struct s_token {
 	char			*value;	
 	int				type;
+	int				expand_heredoc;
 	struct s_token	*next;
 }	t_token;
 
@@ -62,7 +64,7 @@ typedef struct s_cmd_list {
 	char				*cmd_line;
 	t_token				**tokens;
 	int					n_cmd;
-	t_env				*env;
+	t_env				**env;
 }	t_cmd_list;
 
 #endif
@@ -80,6 +82,5 @@ typedef struct s_cmd_list {
 		
 		i++;
 	}
-
-
+	
 */

@@ -6,13 +6,14 @@
 /*   By: mkabissi <mkabissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/21 18:22:38 by amaarifa          #+#    #+#             */
-/*   Updated: 2022/06/02 15:03:35 by mkabissi         ###   ########.fr       */
+/*   Updated: 2022/06/03 17:25:22 by mkabissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PARSER_H
 # define PARSER_H
 # include "../../types.h"
+# include "../lib/lib.h"
 
 /*---------------------- MODULES -----------------------*/
 
@@ -25,19 +26,18 @@ t_token			*get_next_token(t_token_source *token_source, char symbol,
 void			resolve_type(char symbol, int *type);
 
 /*------------------- Expander Module -------------------*/
-void			expander(t_token **token);
-char			*expand_var(char *value);
-int				collect_var(char	*value, int *i, char **s);
+char			*expand_var(char *value, t_env **env_lst);
+int				collect_var(char	*value, int *i, char **s, t_env **env_lst);
 void			collect_none_var(char	*value, int *i, char **s);
-void			expand_env_var(char	**s, char *value, int *i);
+void			expand_env_var(char	**s, char *value, int *i, t_env **env_lst);
 void			hide_quotes(char	*s);
 void			hide_wrapped_quotes(char *s, int *i, char c);
 int				unclosed_double_qoutes(char *s, int i);
 
 /*------------------- LIB ----------------------------*/
 char			*join_strings(char *s1, char *s2);
-char			*get_env(char *s);
-t_token			*parse_cmd(t_token_source *token_source);
+//char			*get_env(char *s);
+t_token			*parse_cmd(t_token_source *token_source, t_env **env_lst);
 void			unflag_cmd_list(char **s);
 void			unflag_pipe(char *s);
 void			flag_pipe(char *source);
@@ -59,8 +59,8 @@ int				is_cmd_exist(t_token *token);
 
 /*****************	PARSER METHODS *****************/
 t_token			*lexer(t_token_source *token_source);
-void			expander(t_token **tokens);
 void			quote_removal(t_token **tokens);
+void			expander(t_token **token, t_env **env_lst);
 
 /*****************	TOKEN_SOURCE METHODS *****************/
 t_token_source	*init_token_source(char	*cmd_line);

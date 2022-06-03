@@ -6,7 +6,7 @@
 /*   By: amaarifa <amaarifa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 13:49:19 by amaarifa          #+#    #+#             */
-/*   Updated: 2022/05/30 10:24:28 by amaarifa         ###   ########.fr       */
+/*   Updated: 2022/06/03 11:26:59 by amaarifa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@
 # include "src/builtins/builtins.h"
 
 void	parser(t_cmd_list	*cmd_list);
+void	execution(t_cmd_list *cmd_lst, t_env *env_lst);
 
 /********* TEMP FUNCTIONS **********/
 

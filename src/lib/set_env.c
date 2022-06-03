@@ -6,12 +6,17 @@
 /*   By: mkabissi <mkabissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/29 18:12:37 by amaarifa          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2022/06/02 15:02:24 by mkabissi         ###   ########.fr       */
+=======
+/*   Updated: 2022/06/02 07:22:41 by amaarifa         ###   ########.fr       */
+>>>>>>> 69fd0caff08e0f59731e77cdbf449a926d215ba4
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lib.h"
 
+<<<<<<< HEAD
 // int	get_index_char(char *s, char c)
 // {
 // 	int	i;
@@ -41,6 +46,8 @@
 // 	return (env);
 // }
 
+=======
+>>>>>>> 69fd0caff08e0f59731e77cdbf449a926d215ba4
 void	add_env_back(t_env *env, t_env *new_env)
 {
 	t_env	*tmp;
