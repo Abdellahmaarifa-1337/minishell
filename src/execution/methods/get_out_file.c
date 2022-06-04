@@ -6,7 +6,7 @@
 /*   By: amaarifa <amaarifa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 10:20:59 by amaarifa          #+#    #+#             */
-/*   Updated: 2022/06/03 11:15:00 by amaarifa         ###   ########.fr       */
+/*   Updated: 2022/06/04 10:18:00 by amaarifa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	open_out_file(char *name)
 {
 	int	fd;
 
-	fd = open(name, O_CREAT | O_RDWR);
+	fd = open(name, O_CREAT | O_RDWR, 0777);
 	if (fd == -1)
 	{
 		perror(NULL);
