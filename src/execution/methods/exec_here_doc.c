@@ -6,7 +6,7 @@
 /*   By: mkabissi <mkabissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 18:58:55 by amaarifa          #+#    #+#             */
-/*   Updated: 2022/06/03 18:43:43 by mkabissi         ###   ########.fr       */
+/*   Updated: 2022/06/04 21:11:49 by mkabissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,47 @@ char	*append_string(char *res, char *s)
 	return (new_res);
 }
 
+void hide_all_quotes(char *s)
+{
+	int i;
+
+	i = 0;
+	while (s[i])
+	{
+		if (s[i] == '\'')
+			s[i] = -1;
+		else if (s[i] == '\"')
+			s[i] = -2;
+		i++;
+	}
+}
+
+void return_all_quotes(char *s)
+{
+	int i;
+
+	i = 0;
+	while (s[i])
+	{
+		if (s[i] == -1)
+			s[i] = '\'';
+		else if (s[i] == -2)
+			s[i] = '\"';
+		i++;
+	}
+}
+
+char	*expand_str(char *s, t_env	**env_lst)
+{
+	char	*tmp;
+
+	hide_all_quotes(s);
+	tmp = expand_var(s, env_lst);
+	free(s);
+	return_all_quotes(tmp);
+	return (tmp);
+}
+
 void	open_full_here_doc(t_token *token, int id, t_env *env_lst)
 {
 	char	*s;
@@ -88,8 +129,8 @@ void	open_full_here_doc(t_token *token, int id, t_env *env_lst)
 	{
 		if (s)
 		{
-			res = append_string(res, s);
-		} 
+			res = append_string(res, expand_str(s, &env_lst));
+		}
 		s = readline(">");
 	}
 	if (s)

@@ -6,7 +6,7 @@
 /*   By: amaarifa <amaarifa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 12:11:45 by amaarifa          #+#    #+#             */
-/*   Updated: 2022/05/31 12:15:13 by amaarifa         ###   ########.fr       */
+/*   Updated: 2022/06/04 10:11:26 by amaarifa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ char	*get_env(t_env *env_list, char *key)
 	while (tmp)
 	{
 		if (!ft_strncmp(tmp->key, key, ft_strlen(key) + 1))
-			return (tmp->value);
+			return (ft_strdup(tmp->value));
 		tmp = tmp->next;
 	}
 	return (NULL);
