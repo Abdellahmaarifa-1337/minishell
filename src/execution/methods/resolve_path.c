@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   resolve_path.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amaarifa <amaarifa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mkabissi <mkabissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 09:07:00 by amaarifa          #+#    #+#             */
-/*   Updated: 2022/06/02 13:37:46 by amaarifa         ###   ########.fr       */
+/*   Updated: 2022/06/05 11:35:44 by mkabissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ char	*get_right_path(char *command, char **path)
 	if (ft_strchr(command, '/'))
 	{
 		if (access(command, F_OK | X_OK) == 0)
-			return (command);
+			return (ft_strdup(command));
 		else
 			throw_not_found_err(NULL, 1);
 	}

@@ -6,7 +6,7 @@
 /*   By: mkabissi <mkabissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 14:07:51 by mkabissi          #+#    #+#             */
-/*   Updated: 2022/06/04 05:20:01 by mkabissi         ###   ########.fr       */
+/*   Updated: 2022/06/04 23:43:01 by mkabissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,24 +126,22 @@ void	execution(t_cmd_list *cmd_lst, t_env *env_lst)
 	cmd_lst->n_cmd = get_number_of_cmds(cmd_lst->tokens);
 	printf("cmd: %d\n", cmd_lst->n_cmd);
 	dt.pid = (pid_t *)malloc(sizeof(pid_t) * cmd_lst->n_cmd);
-	if (!dt.pid)
-		perror("malloc error (1)");
-	// dt.fd = (int **)malloc(sizeof(int *) * (cmd_lst->n_cmd - 1));
-	// if (!dt.fd)
-	// 	perror("malloc error (2)");
+	dt.fd = (int **)malloc(sizeof(int *) * (cmd_lst->n_cmd - 1));
+	if (!dt.pid || !dt.fd)
+		perror("malloc error");
 	dt.a = -1;
-	// while (++dt.a < cmd_lst->n_cmd - 1)
-	// {
-	// 	dt.fd[dt.a] = (int *)malloc(sizeof(int) * 2);
-	// 	if (!dt.fd[dt.a])
-	// 		perror("malloc error (3)");
-	// }
-	// while (dt.a < cmd_lst->n_cmd - 1)
-	// {
-	// 	if (pipe(dt.fd[dt.a]) == -1)
-	// 		perror("pipe error");
-	// 	dt.a += 1;
-	// }
+	while (++dt.a < cmd_lst->n_cmd - 1)
+	{
+		dt.fd[dt.a] = (int *)malloc(sizeof(int) * 2);
+		if (!dt.fd[dt.a])
+			perror("malloc error");
+	}
+	while (dt.a < cmd_lst->n_cmd - 1)
+	{
+		if (pipe(dt.fd[dt.a]) == -1)
+			perror("pipe error");
+		dt.a += 1;
+	}
 /**************************************************************************/
 	exec_here_doc(cmd_lst, env_lst);
 	n = 0;
@@ -157,7 +155,7 @@ void	execution(t_cmd_list *cmd_lst, t_env *env_lst)
 		{
 			dt.i = 0;
 			args = get_args((cmd_lst->tokens) + n);
-			resolve_path(args, cmd_lst->env);
+			resolve_path(args, cmd_lst->env);		/*errooooooor*/
 			while (args && args[dt.i])
 			{
 				printf("[ARGS] : %s\n", args[dt.i]);
@@ -171,14 +169,15 @@ void	execution(t_cmd_list *cmd_lst, t_env *env_lst)
 				free(args);
 			}
 			free(dt.pid);
-			return ;
+			exit(0) ;
 		}
+		sleep(1);
 		dt.a++;
 		n++;
 	}
 	dt.a = -1;
 	while (++dt.a < cmd_lst->n_cmd)
-		waitpid(dt.pid[dt.a], NULL, 0);
-	// free(dt.pid);
+		wait(NULL);
+	free(dt.pid);
 	return ;
 }
