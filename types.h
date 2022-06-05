@@ -6,7 +6,7 @@
 /*   By: mkabissi <mkabissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/21 18:23:30 by amaarifa          #+#    #+#             */
-/*   Updated: 2022/06/04 00:08:21 by mkabissi         ###   ########.fr       */
+/*   Updated: 2022/06/05 12:11:52 by mkabissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,6 @@ typedef struct s_data {
 #endif
 
 /*
-
 	int ***pip;
 	pip[3] = {{0,1}, ...};
 
@@ -91,5 +90,4 @@ typedef struct s_data {
 		
 		i++;
 	}
-	
 */

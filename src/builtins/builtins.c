@@ -6,7 +6,7 @@
 /*   By: mkabissi <mkabissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 18:20:45 by mkabissi          #+#    #+#             */
-/*   Updated: 2022/05/31 17:31:27 by mkabissi         ###   ########.fr       */
+/*   Updated: 2022/06/05 18:05:21 by mkabissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	which_builtin(char *builtin)
 
 // 	flag = which_builtin(dt->cmd->cmds[0]);
 // 	if (flag == ECHO)
-// 		ft_echo(dt);
+		// ft_echo(dt);
 // 	else if (flag == CD)
 // 		ft_chdir(dt);
 // 	else if (flag == PWD)

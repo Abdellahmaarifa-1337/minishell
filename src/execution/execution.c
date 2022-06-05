@@ -6,7 +6,7 @@
 /*   By: mkabissi <mkabissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 14:07:51 by mkabissi          #+#    #+#             */
-/*   Updated: 2022/06/05 11:39:56 by mkabissi         ###   ########.fr       */
+/*   Updated: 2022/06/05 18:40:31 by mkabissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@
 // 			perror("fork error");
 // 		else if (dt.pid[dt.a] == 0)
 // 		{
-// 			if (i != 0)
+// 			if (dt.a != 0)
 // 				dup2(dt.fd[dt.a - 1][0], STDIN_FILENO);
 // 			if (dt.a != cmd_list->n_cmd - 1)
 // 				dup2(dt.fd[dt.a][1], STDOUT_FILENO);
@@ -122,21 +122,22 @@ void	execution(t_cmd_list *cmd_lst, t_env *env_lst)
 	char	**args;
 	int		n;
 
-/**************************************************************************/
+/*********************** INIT PIDs AND PIPEs FILES ************************/
+	args = NULL;
 	cmd_lst->n_cmd = get_number_of_cmds(cmd_lst->tokens);
 	printf("cmd: %d\n", cmd_lst->n_cmd);
 	dt.pid = (pid_t *)malloc(sizeof(pid_t) * cmd_lst->n_cmd);
-	dt.fd = (int **)malloc(sizeof(int *) * (cmd_lst->n_cmd - 1));
+	dt.fd = (int **)malloc(sizeof(int *) * 2);
 	if (!dt.pid || !dt.fd)
 		perror("malloc error");
 	dt.a = -1;
-	while (++dt.a < cmd_lst->n_cmd - 1)
+	while (++dt.a < 2)
 	{
 		dt.fd[dt.a] = (int *)malloc(sizeof(int) * 2);
 		if (!dt.fd[dt.a])
 			perror("malloc error");
 	}
-	while (dt.a < cmd_lst->n_cmd - 1)
+	while (dt.a < 2)
 	{
 		if (pipe(dt.fd[dt.a]) == -1)
 			perror("pipe error");
@@ -153,9 +154,22 @@ void	execution(t_cmd_list *cmd_lst, t_env *env_lst)
 			perror("fork error");
 		if (dt.pid[dt.a] == 0)
 		{
+			/************* START PIPELINES ***************/
+			if (dt.a != 0)
+				dup2(dt.fd[dt.a - 1][0], STDIN_FILENO);
+			if (dt.a != cmd_lst->n_cmd - 1)
+				dup2(dt.fd[dt.a][1], STDOUT_FILENO);
+			dt.b = -1;
+			while (++dt.b < 2)
+			{
+				dt.c = -1;
+				while (++dt.c < 2)
+					close(dt.fd[dt.b][dt.c]);
+			}
+			/********************************************/
 			dt.i = 0;
 			args = get_args((cmd_lst->tokens) + n);
-			resolve_path(args, cmd_lst->env);		/*errooooooor*/
+			resolve_path(args, cmd_lst->env);
 			while (args && args[dt.i])
 			{
 				printf("[ARGS] : %s\n", args[dt.i]);
@@ -168,16 +182,32 @@ void	execution(t_cmd_list *cmd_lst, t_env *env_lst)
 				free_args(args);
 				free(args);
 			}
+			/************ FREE PIDs AND FILES ALLOC. ***********/
 			free(dt.pid);
+			dt.c = -1;
+			while (++dt.c < 2)
+				free(dt.fd[dt.c]);
+			free(dt.fd);
+			/***************************************************/
 			exit(0) ;
 		}
-		sleep(1);
-		dt.a++;
+		waitpid(dt.pid[dt.a], NULL, 0);
+		if (++dt.a == 2)
+			dt.a = 0;
 		n++;
 	}
-	dt.a = -1;
-	while (++dt.a < cmd_lst->n_cmd)
-		wait(NULL);
+	/************** CLOSING PIPE/FILES *****************/
+	dt.b = -1;
+	while (++dt.b < 2)
+	{
+		dt.c = -1;
+		while (++dt.c < 2)
+			close(dt.fd[dt.b][dt.c]);
+	}
+	// dt.a = -1;
+	// while (++dt.a < cmd_lst->n_cmd)
+	// 	wait(NULL);
+	/***************************************************/
 	free(dt.pid);
 	return ;
 }
