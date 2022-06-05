@@ -4,8 +4,7 @@ CFLAGS = -g #-Wall -Werror -Wextra
 #------------------------- BUILTINS ------------------------#
 BUILTINS = builtins.c echo.c pwd.c env.c export.c unset.c \
 		cd.c \
-		./lib/export_print.c ./lib/is_valid_idn.c \
-		../execution/methods/parameters.c
+		./lib/export_print.c ./lib/is_valid_idn.c 
 
 #---------------------- EXECUTION SOURCE -------------------#
 SRC = ${BUILTINS}

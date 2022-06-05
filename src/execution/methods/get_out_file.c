@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_out_file.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amaarifa <amaarifa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mkabissi <mkabissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 10:20:59 by amaarifa          #+#    #+#             */
-/*   Updated: 2022/06/03 11:15:00 by amaarifa         ###   ########.fr       */
+/*   Updated: 2022/06/04 23:03:25 by mkabissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,10 @@ int	open_out_file(char *name)
 {
 	int	fd;
 
-	fd = open(name, O_CREAT | O_RDWR);
+	fd = open(name, O_CREAT | O_RDWR, 0777);
 	if (fd == -1)
 	{
-		perror(NULL);
+		perror((const char *)name);
 		g_exit_status = 1;
 		exit(g_exit_status);
 	}
