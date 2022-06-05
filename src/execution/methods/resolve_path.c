@@ -6,7 +6,7 @@
 /*   By: amaarifa <amaarifa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 09:07:00 by amaarifa          #+#    #+#             */
-/*   Updated: 2022/06/02 13:37:46 by amaarifa         ###   ########.fr       */
+/*   Updated: 2022/06/05 11:18:51 by amaarifa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ char	*get_right_path(char *command, char **path)
 	if (ft_strchr(command, '/'))
 	{
 		if (access(command, F_OK | X_OK) == 0)
-			return (command);
+			return (ft_strdup(command));
 		else
 			throw_not_found_err(NULL, 1);
 	}
@@ -70,8 +70,12 @@ void	resolve_path(char **args, t_env **env_lst)
 
 	if (!args || which_builtin(args[0]) != -1)
 		return ;
-	path = ft_split(get_env(*env_lst, "PATH"), ':');
+	tmp = get_env(*env_lst, "PATH");
+	path = ft_split(tmp, ':');
+	free(tmp);
 	tmp = get_right_path(args[0], path);
+	if (tmp)
+		printf("real path: %s\n", tmp);
 	if (!tmp)
 	{
 		tmp = ft_strjoin(args[0], ": command not found");
