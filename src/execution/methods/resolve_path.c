@@ -6,7 +6,7 @@
 /*   By: mkabissi <mkabissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 09:07:00 by amaarifa          #+#    #+#             */
-/*   Updated: 2022/06/05 11:35:44 by mkabissi         ###   ########.fr       */
+/*   Updated: 2022/06/05 11:39:23 by mkabissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,8 +70,12 @@ void	resolve_path(char **args, t_env **env_lst)
 
 	if (!args || which_builtin(args[0]) != -1)
 		return ;
-	path = ft_split(get_env(*env_lst, "PATH"), ':');
+	tmp = get_env(*env_lst, "PATH");
+	path = ft_split(tmp, ':');
+	free(tmp);
 	tmp = get_right_path(args[0], path);
+	if (tmp)
+		printf("real path: %s\n", tmp);
 	if (!tmp)
 	{
 		tmp = ft_strjoin(args[0], ": command not found");
