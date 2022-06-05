@@ -58,7 +58,7 @@
 // 			if (i != 0)
 // 				dup2(fd[i[0] - 1][0], STDIN_FILENO);
 // 			if (i[0] != cmd_list->n_cmd - 1)
-// 				dup2(fd[i[0]][1], STDOUT_FILENO);
+// 	ls 			dup2(fd[i[0]][1], STDOUT_FILENO);
 // 			i[1] = -1;
 // 			while (++i[1] < cmd_list->n_cmd - 1)
 // 			{
