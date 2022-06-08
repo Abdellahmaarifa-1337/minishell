@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   types.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amaarifa <amaarifa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mkabissi <mkabissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/21 18:23:30 by amaarifa          #+#    #+#             */
-/*   Updated: 2022/06/05 18:58:58 by amaarifa         ###   ########.fr       */
+/*   Updated: 2022/06/07 19:32:03 by mkabissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,6 @@ typedef struct s_cmd_list {
 #endif
 
 /*
-
 	int ***pip;
 	pip[3] = {{0,1}, ...};
 
@@ -82,6 +81,4 @@ typedef struct s_cmd_list {
 		
 		i++;
 	}
-
-
 */

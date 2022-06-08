@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amaarifa <amaarifa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mkabissi <mkabissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 13:48:45 by amaarifa          #+#    #+#             */
-/*   Updated: 2022/06/04 10:13:48 by amaarifa         ###   ########.fr       */
+/*   Updated: 2022/06/08 07:45:49 by mkabissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,11 +97,11 @@ void env_test(t_env *env_list)
 void	export_test(t_env	**env, char **av, int ac)
 {
 	av[ac - 1] = 0;
-	export(env, NULL);
+	ft_export(env, NULL);
 	printf("\n\nADDING VALUES\n\n");
-	export(env, av);
-	export(env, NULL);
-	exit(1);
+	ft_export(env, av);
+	ft_export(env, NULL);
+	// exit(1);
 }
 /* SET TO DEFAULT */
 int	g_exit_status = 0;
@@ -122,6 +122,7 @@ int	main(int ac, char **av, char **env)
 	while (1)
 	{
 		line = readline("minishell$ ");
+		// line = ft_strdup("ls <file1 echo hello | >file2 cat file3 <<here1 | <<here2 ls -la >>append cat file4");
 		if (line[0] == '\0')
 		{
 			free(line);
@@ -137,9 +138,10 @@ int	main(int ac, char **av, char **env)
 		cmd_list->env = &env_lst;
 		parser(cmd_list);
 		execution(cmd_list, env_lst);
-		print_cmd_tk(cmd_list->tokens);
+		// print_cmd_tk(cmd_list->tokens);
 		free_cmd_list(cmd_list);
 		cmd_list = NULL;
+		// exit(0);
 	}
 	return (0);
 }
