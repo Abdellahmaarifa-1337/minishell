@@ -6,7 +6,7 @@
 /*   By: amaarifa <amaarifa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 01:34:52 by amaarifa          #+#    #+#             */
-/*   Updated: 2022/06/04 10:13:30 by amaarifa         ###   ########.fr       */
+/*   Updated: 2022/06/08 13:11:23 by amaarifa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,8 @@ void	collect_none_var(char	*value, int *i, char **s)
 	int		start;
 	char	*temp;
 
+	if (!(*s))
+		*s = ft_strdup("");
 	start = *i;
 	while (value[*i] && value[*i] != '$')
 	{

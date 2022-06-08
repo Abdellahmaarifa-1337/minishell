@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mkabissi <mkabissi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: amaarifa <amaarifa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 13:48:45 by amaarifa          #+#    #+#             */
-/*   Updated: 2022/06/08 07:45:49 by mkabissi         ###   ########.fr       */
+/*   Updated: 2022/06/08 13:12:02 by amaarifa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,7 +138,7 @@ int	main(int ac, char **av, char **env)
 		cmd_list->env = &env_lst;
 		parser(cmd_list);
 		execution(cmd_list, env_lst);
-		// print_cmd_tk(cmd_list->tokens);
+		//print_cmd_tk(cmd_list->tokens);
 		free_cmd_list(cmd_list);
 		cmd_list = NULL;
 		// exit(0);
