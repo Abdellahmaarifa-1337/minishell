@@ -6,7 +6,7 @@
 /*   By: amaarifa <amaarifa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 18:58:55 by amaarifa          #+#    #+#             */
-/*   Updated: 2022/06/04 10:15:48 by amaarifa         ###   ########.fr       */
+/*   Updated: 2022/06/05 19:01:07 by amaarifa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,9 +72,9 @@ char	*append_string(char *res, char *s)
 	return (new_res);
 }
 
-void hide_all_quotes(char *s)
+void	hide_all_quotes(char *s)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (s[i])
@@ -87,9 +87,9 @@ void hide_all_quotes(char *s)
 	}
 }
 
-void return_all_quotes(char *s)
+void	return_all_quotes(char *s)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (s[i])
