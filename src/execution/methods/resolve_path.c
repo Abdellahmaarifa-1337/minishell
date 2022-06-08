@@ -6,20 +6,20 @@
 /*   By: amaarifa <amaarifa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 09:07:00 by amaarifa          #+#    #+#             */
-/*   Updated: 2022/06/08 11:47:23 by amaarifa         ###   ########.fr       */
+/*   Updated: 2022/06/08 12:45:24 by amaarifa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../execution.h"
 
-void	throw_not_found_err(char *err, int exit_bool)
+void	throw_not_found_err(char *err, char *msg)
 {
-	if (err)
+	if (err && !msg)
 		printf("%s\n", err);
 	else
-		perror(err);
+		perror(msg);
 	g_exit_status = 127;
-	if (exit_bool)
+	//if (exit_bool)
 		exit(g_exit_status);
 }
 
@@ -37,7 +37,7 @@ char	*get_right_path(char *command, char **path)
 		if (access(command, F_OK | X_OK) == 0)
 			return (ft_strdup(command));
 		else
-			throw_not_found_err(NULL, 1);
+			throw_not_found_err(NULL, command);
 	}
 	while (path && path[i])
 	{
@@ -82,7 +82,7 @@ void	resolve_path(char **args, t_env **env_lst)
 		args[0] = ft_strjoin("minishell: ", args[0]);
 		free(args[0]);
 		tmp = ft_strjoin(args[0], ": command not found");
-		throw_not_found_err(tmp, 0);
+		throw_not_found_err(tmp, NULL);
 		free(tmp);
 		exit(g_exit_status);
 	}
