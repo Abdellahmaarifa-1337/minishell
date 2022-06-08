@@ -6,7 +6,7 @@
 /*   By: mkabissi <mkabissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 18:20:45 by mkabissi          #+#    #+#             */
-/*   Updated: 2022/06/08 06:29:11 by mkabissi         ###   ########.fr       */
+/*   Updated: 2022/06/08 08:06:35 by mkabissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,14 @@ int	ft_special_cmp(char	*s1, char	*s2, size_t	n)
 		i++;
 	}
 	if (n == 0)
+	{
+		free(lowercase);
 		return (0);
+	}
 	i = 0;
 	while (a[i] && b[i] && a[i] == b[i] && i < n - 1)
 		i++;
+	free(lowercase);
 	return (a[i] - b[i]);
 }
 

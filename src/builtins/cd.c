@@ -6,7 +6,7 @@
 /*   By: mkabissi <mkabissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 14:22:37 by mkabissi          #+#    #+#             */
-/*   Updated: 2022/06/08 04:20:31 by mkabissi         ###   ########.fr       */
+/*   Updated: 2022/06/08 07:08:13 by mkabissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,5 @@ void cd(char **token, t_env *env_lst)
 		perror("cd error");
 		free(old_pwd);
 	}
-	if (!dirname)
-		free(dirname);
 	return ;
 }

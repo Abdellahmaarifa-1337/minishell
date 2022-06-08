@@ -1,5 +1,5 @@
 CC=cc
-CFLAGS= -Wall -Wextra -Wall -fsanitize=address
+CFLAGS= -Wall -Wextra -Wall #-fsanitize=address
 
 #------------------------ PATHS ------------------------#
 
