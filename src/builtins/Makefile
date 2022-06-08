@@ -1,5 +1,5 @@
 CC = cc
-CFLAGS = -g #-Wall -Werror -Wextra
+CFLAGS = -Wall -Werror -Wextra -fsanitize=address
 
 #------------------------- BUILTINS ------------------------#
 BUILTINS = builtins.c echo.c pwd.c env.c export.c unset.c \

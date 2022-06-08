@@ -6,7 +6,7 @@
 /*   By: mkabissi <mkabissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/16 12:19:02 by mkabissi          #+#    #+#             */
-/*   Updated: 2022/05/30 13:51:18 by mkabissi         ###   ########.fr       */
+/*   Updated: 2022/06/08 01:06:13 by mkabissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	check_n_option(char *arg)
 	return (1);
 }
 
-void	ft_echo(char **token)
+void	echo(char **token)
 {
 	int		n_option;
 	long	i;

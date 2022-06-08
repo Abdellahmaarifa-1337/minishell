@@ -6,7 +6,7 @@
 /*   By: mkabissi <mkabissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 18:20:45 by mkabissi          #+#    #+#             */
-/*   Updated: 2022/06/05 18:05:21 by mkabissi         ###   ########.fr       */
+/*   Updated: 2022/06/08 04:03:52 by mkabissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,25 +31,30 @@ int	which_builtin(char *builtin)
 	return (-1);
 }
 
-// void	builtins(t_cmd_data *dt)
+// void	exec(char **args, t_env **env_lst)
 // {
-// 	int	flag;
-
-// 	flag = which_builtin(dt->cmd->cmds[0]);
-// 	if (flag == ECHO)
-		// ft_echo(dt);
-// 	else if (flag == CD)
-// 		ft_chdir(dt);
-// 	else if (flag == PWD)
-// 		ft_pwd();
-// 	else if (flag == EXPORT)
-// 		ft_export(dt);
-// 	else if (flag == UNSET)
-// 		ft_unset(dt);
-// 	else if (flag == ENV)
-// 		ft_env(dt);
-// 	else if (flag == EXIT)
-// 		ft_exit(dt);
-// 	else
-// 		exec();	
+	
 // }
+
+void	execute_command(char **args, t_env *env_lst)
+{
+	int	flag;
+
+	flag = which_builtin(args[0]);
+	if (flag == ECHO)
+		echo(args);
+	else if (flag == CD)
+		cd(args, env_lst);
+	else if (flag == PWD)
+		pwd();
+	else if (flag == EXPORT)
+		ft_export(&env_lst, args);
+	else if (flag == UNSET)
+		unset(&env_lst, args);
+	else if (flag == ENV)
+		env(env_lst);
+	// else if (flag == EXIT)
+	// 	ft_exit(args);
+	// else
+	// 	exec(args, &env_lst);
+}

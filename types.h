@@ -6,7 +6,7 @@
 /*   By: mkabissi <mkabissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/21 18:23:30 by amaarifa          #+#    #+#             */
-/*   Updated: 2022/06/05 12:11:52 by mkabissi         ###   ########.fr       */
+/*   Updated: 2022/06/07 19:32:03 by mkabissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,15 +66,6 @@ typedef struct s_cmd_list {
 	int					n_cmd;
 	t_env				**env;
 }	t_cmd_list;
-
-typedef struct s_data {
-	pid_t	*pid;
-	int		**fd;
-	int		i;
-	int		a;
-	int		b;
-	int		c;
-}	t_data;
 
 #endif
 
