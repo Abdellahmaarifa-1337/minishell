@@ -28,14 +28,14 @@
 
 /********** BUILTINS **********/
 
-void	execute_command(char **args, t_env *env_lst, int multi_cmds);
+void	execute_command(char **args, t_env *env_lst, int *exit, int multi_cmds);
 void	echo(char **token);
 void	pwd(void);
 void	unset(t_env **env, char **av);
 void	env(t_env *env);
 void	cd(char **token, t_env *env);
 void	ft_export(t_env **env_lst, char **av);
-void	ft_exit(char **args);
+void	ft_exit(char **args, int *exit);
 void	export_print(t_env *env);
 int		is_valid_idn(char *s);
 int		which_builtin(char *builtin);

@@ -115,11 +115,12 @@ int	main(int ac, char **av, char **env)
 	env_lst = set_env(env);
 	(void)av;
 	(void)ac;
+	cmd_list->exit_minishell = 0;
 	//unset_test(&env_lst, av, ac); //TEST UNSET
 	// export_test(&env_lst, av, ac);
 
 	//env_test(env_lst);
-	while (1)
+	while (cmd_list->exit_minishell == 0)
 	{
 		line = readline("minishell$ ");
 		// line = ft_strdup("ls <file1 echo hello | >file2 cat file3 <<here1 | <<here2 ls -la >>append cat file4");

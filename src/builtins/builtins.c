@@ -81,7 +81,7 @@ void	exec(char **args, t_env **env_lst, int multi_cmds)
 	}
 }
 
-void	execute_command(char **args, t_env *env_lst, int multi_cmds)
+void	execute_command(char **args, t_env *env_lst, int *exit, int multi_cmds)
 {
 	int	flag;
 	flag = which_builtin(args[0]);
@@ -97,10 +97,10 @@ void	execute_command(char **args, t_env *env_lst, int multi_cmds)
 		unset(&env_lst, args);
 	else if (flag == ENV)
 		env(env_lst);
+	else if (flag == EXIT)
+		ft_exit(args, exit);
 	else
 	{
 		exec(args, &env_lst, multi_cmds);
 	}
-	// else if (flag == EXIT)
-	// 	ft_exit(args);
 }

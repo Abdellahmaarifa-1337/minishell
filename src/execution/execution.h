@@ -25,4 +25,5 @@ void	exec_here_doc(t_cmd_list *cmd_lst, t_env *env_lst);
 int		*get_in_out_file(t_token *tokens, int *fd);
 //int		get_out_file(t_token *tokens);
 char	*expand_var(char *value, t_env **env_lst);
+int		get_size_of_arr(void **tokens);
 #endif

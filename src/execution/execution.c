@@ -82,7 +82,7 @@ void	exec_single_cmd(t_cmd_list *cmd_lst, t_env *env_lst)
 			exit(1);
 		}
 		//dprintf(2, "cms %s is about exec\n", args[0]);
-		execute_command(args, env_lst, 0);
+		execute_command(args, env_lst, &(cmd_lst->exit_minishell), 0);
 		exit(1);
 	}
 	wait(NULL);
@@ -167,7 +167,7 @@ void	exec_multiple_cmds(t_cmd_list *cmd_lst, t_env *env_lst)
 				if (int_out[1] != -1)
 					dup2(int_out[1], STDOUT_FILENO);
 			}
-			execute_command(args, env_lst, 1);
+			execute_command(args, env_lst, &(cmd_lst->exit_minishell), 1);
 
 			/*****************************************************/
 			// i = 0;

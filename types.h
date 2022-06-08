@@ -60,11 +60,12 @@ typedef struct s_token_source {
 /* MUILPILE PIP COMMANDS REPRESNTATION STRUCUER */
 
 typedef struct s_cmd_list {
-	char				*source;
-	char				*cmd_line;
-	t_token				**tokens;
-	int					n_cmd;
-	t_env				**env;
+	char	*source;
+	char	*cmd_line;
+	t_token	**tokens;
+	int		n_cmd;
+	int		exit_minishell;
+	t_env	**env;
 }	t_cmd_list;
 
 #endif
