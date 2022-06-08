@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_here_doc.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amaarifa <amaarifa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mkabissi <mkabissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 18:58:55 by amaarifa          #+#    #+#             */
-/*   Updated: 2022/06/04 10:15:48 by amaarifa         ###   ########.fr       */
+/*   Updated: 2022/06/06 10:43:01 by mkabissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,13 +47,13 @@ void	open_empty_here_doc(char *limiter)
 		free(s);
 }
 
-char	*generate_unique_name(int id)
+char	*generate_unique_name(char *path, int id)
 {
 	char	*id_str;
 	char	*name;
 
 	id_str = ft_itoa(id);
-	name = ft_strjoin("/tmp/here_doc_", id_str);
+	name = ft_strjoin(path, id_str);
 	free(id_str);
 	return (name);
 }
@@ -121,7 +121,7 @@ void	open_full_here_doc(t_token *token, int id, t_env *env_lst)
 	char	*name;
 
 	(void)env_lst;
-	name = generate_unique_name(id);
+	name = generate_unique_name("/tmp/here_doc_", id);
 	fd = open(name, O_CREAT | O_RDWR | O_TRUNC, 0777);
 	res = ft_strdup("");
 	s = readline(">");

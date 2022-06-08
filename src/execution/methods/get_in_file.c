@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_in_file.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amaarifa <amaarifa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mkabissi <mkabissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 10:01:36 by amaarifa          #+#    #+#             */
-/*   Updated: 2022/06/03 11:15:17 by amaarifa         ###   ########.fr       */
+/*   Updated: 2022/06/04 23:03:59 by mkabissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	open_in_file(char *name)
 	fd = open(name, O_RDONLY);
 	if (fd == -1)
 	{
-		perror(NULL);
+		perror((const char *)name);
 		g_exit_status = 1;
 		exit(g_exit_status);
 	}

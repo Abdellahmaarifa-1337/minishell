@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amaarifa <amaarifa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mkabissi <mkabissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 11:58:30 by amaarifa          #+#    #+#             */
-/*   Updated: 2022/06/02 08:11:37 by amaarifa         ###   ########.fr       */
+/*   Updated: 2022/06/08 01:19:50 by mkabissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ void	add_export_env(t_env **env_lst, char *s, int append)
 	return ;
 }
 
-void	export(t_env **env_lst, char **av)
+void	ft_export(t_env **env_lst, char **av)
 {
 	int		i;
 	int		append;
