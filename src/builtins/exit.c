@@ -1,23 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pwd.c                                              :+:      :+:    :+:   */
+/*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mkabissi <mkabissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/24 16:00:37 by mkabissi          #+#    #+#             */
-/*   Updated: 2022/06/08 04:04:55 by mkabissi         ###   ########.fr       */
+/*   Created: 2022/06/08 07:12:51 by mkabissi          #+#    #+#             */
+/*   Updated: 2022/06/08 07:27:33 by mkabissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtins.h"
 
-void	pwd(void)
-{
-	char	buffer[PATH_MAX];
-
-	if (getcwd(buffer, PATH_MAX) == NULL)
-		perror("getcwd() error");
-	ft_putendl_fd(buffer, 1);
-	return ;
-}
+// void	ft_exit(char **args)
+// {
+	
+// }

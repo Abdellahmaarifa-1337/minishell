@@ -6,7 +6,7 @@
 /*   By: mkabissi <mkabissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 13:48:45 by amaarifa          #+#    #+#             */
-/*   Updated: 2022/06/04 22:38:33 by mkabissi         ###   ########.fr       */
+/*   Updated: 2022/06/08 07:45:49 by mkabissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,17 +97,14 @@ void env_test(t_env *env_list)
 void	export_test(t_env	**env, char **av, int ac)
 {
 	av[ac - 1] = 0;
-	export(env, NULL);
+	ft_export(env, NULL);
 	printf("\n\nADDING VALUES\n\n");
-	export(env, av);
-	export(env, NULL);
+	ft_export(env, av);
+	ft_export(env, NULL);
 	// exit(1);
 }
 /* SET TO DEFAULT */
 int	g_exit_status = 0;
-
-char	***token_to_3d(t_cmd_list *list);
-void	print_3dparms(char ***parms);
 
 int	main(int ac, char **av, char **env)
 {
@@ -142,7 +139,7 @@ int	main(int ac, char **av, char **env)
 		parser(cmd_list);
 		execution(cmd_list, env_lst);
 		// print_cmd_tk(cmd_list->tokens);
-		// free_cmd_list(cmd_list);
+		free_cmd_list(cmd_list);
 		cmd_list = NULL;
 		// exit(0);
 	}
