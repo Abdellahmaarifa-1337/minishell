@@ -1,9 +1,9 @@
 CC = cc
-CFLAGS = -Wall -Werror -Wextra -fsanitize=address
+CFLAGS = -Wall -Werror -Wextra #-fsanitize=address
 
 #------------------------- BUILTINS ------------------------#
 BUILTINS = builtins.c echo.c pwd.c env.c export.c unset.c \
-		cd.c \
+		cd.c exit.c \
 		./lib/export_print.c ./lib/is_valid_idn.c 
 
 #---------------------- EXECUTION SOURCE -------------------#
