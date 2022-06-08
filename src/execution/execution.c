@@ -6,25 +6,25 @@
 /*   By: mkabissi <mkabissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 14:07:51 by mkabissi          #+#    #+#             */
-/*   Updated: 2022/06/08 04:29:36 by mkabissi         ###   ########.fr       */
+/*   Updated: 2022/06/08 06:27:26 by mkabissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execution.h"
 
-void	ft_free(void **mem)
+void	ft_free(void **arr, int size)
 {
 	int	i;
 
 	i = 0;
-	while (mem[i])
+	while (i < size && arr[i])
 	{
-		free(mem[i]);
+		free(arr[i]);
 		i++;
 	}
 }
 
-int	get_number_of_cmds(t_token **tokens)
+int	get_size_of_arr(void **tokens)
 {
 	int	len;
 
@@ -75,7 +75,7 @@ void	exec_single_cmd(t_cmd_list *cmd_lst, t_env *env_lst)
 		stdout_saved = dup(STDOUT_FILENO);
 		dup2(outfile, STDOUT_FILENO);
 	}
-	execute_command(args, env_lst);
+	execute_command(args, env_lst, 0);
 	
 	/****************************************************/
 	// int	i = 0;
@@ -94,7 +94,7 @@ void	exec_single_cmd(t_cmd_list *cmd_lst, t_env *env_lst)
 		dup2(stdout_saved, STDOUT_FILENO);
 	if (args)
 	{
-		ft_free((void **)args);
+		ft_free((void **)args, get_size_of_arr((void **)args));
 		free(args);
 	}
 	return ;
@@ -161,7 +161,7 @@ void	exec_multiple_cmds(t_cmd_list *cmd_lst, t_env *env_lst)
 				if (outfile != -1)
 					dup2(outfile, STDOUT_FILENO);
 			}
-			execute_command(args, env_lst);
+			execute_command(args, env_lst, 1);
 
 			/*****************************************************/
 			// i = 0;
@@ -176,7 +176,7 @@ void	exec_multiple_cmds(t_cmd_list *cmd_lst, t_env *env_lst)
 
 			if (args)
 			{
-				ft_free((void **)args);
+				ft_free((void **)args, get_size_of_arr((void **)args));
 				free(args);
 			}
 			exit(0);
@@ -188,13 +188,13 @@ void	exec_multiple_cmds(t_cmd_list *cmd_lst, t_env *env_lst)
 	while (++i < cmd_lst->n_cmd)
 		wait(NULL);
 	i = -1;
-	ft_free((void **)fd);
+	ft_free((void **)fd, cmd_lst->n_cmd);
 	free(fd);
 }
 
 void	execution(t_cmd_list *cmd_lst, t_env *env_lst)
 {
-	cmd_lst->n_cmd = get_number_of_cmds(cmd_lst->tokens);
+	cmd_lst->n_cmd = get_size_of_arr((void **)(cmd_lst->tokens));
 	if (cmd_lst->n_cmd == 1)
 		exec_single_cmd(cmd_lst, env_lst);
 	else
@@ -217,7 +217,7 @@ void	execution(t_cmd_list *cmd_lst, t_env *env_lst)
 
 // /*********************** INIT PIDs AND PIPEs FILES ************************/
 // 	args = NULL;
-// 	cmd_lst->n_cmd = get_number_of_cmds(cmd_lst->tokens);
+// 	cmd_lst->n_cmd = get_size_of_arr(cmd_lst->tokens);
 // 	printf("cmd: %d\n", cmd_lst->n_cmd);
 // 	dt.pid = (pid_t *)malloc(sizeof(pid_t) * cmd_lst->n_cmd);
 // 	dt.fd = (int **)malloc(sizeof(int *) * 2);

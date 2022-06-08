@@ -6,7 +6,7 @@
 /*   By: mkabissi <mkabissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/29 23:15:10 by amaarifa          #+#    #+#             */
-/*   Updated: 2022/06/08 02:04:56 by mkabissi         ###   ########.fr       */
+/*   Updated: 2022/06/08 06:27:49 by mkabissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@
 
 /********** BUILTINS **********/
 
-void	execute_command(char **args, t_env *env_lst);
+void	execute_command(char **args, t_env *env_lst, int multi_cmds);
 void	echo(char **token);
 void	pwd(void);
 void	unset(t_env **env, char **av);
