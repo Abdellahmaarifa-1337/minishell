@@ -6,7 +6,7 @@
 /*   By: amaarifa <amaarifa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/22 08:13:08 by amaarifa          #+#    #+#             */
-/*   Updated: 2022/06/04 09:44:02 by amaarifa         ###   ########.fr       */
+/*   Updated: 2022/06/08 09:17:54 by amaarifa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,8 @@ void	return_quotes(t_token **tokens)
 	temp = *tokens;
 	while (temp)
 	{
-		change_str(temp->value);
+		if (temp->value)
+			change_str(temp->value);
 		temp = temp->next;
 	}
 }
@@ -58,7 +59,7 @@ void	falg_token(t_token *tokens)
 	temp = tokens;
 	while (temp)
 	{
-		if ((temp->value)[0] == '\0')
+		if (!temp->value)
 		{
 			if (temp->type == IN_REDERCTIONT || temp->type == OUT_TRUNC
 				|| temp->type == APPEND)

@@ -6,7 +6,7 @@
 /*   By: amaarifa <amaarifa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/29 13:11:22 by amaarifa          #+#    #+#             */
-/*   Updated: 2022/05/29 15:21:27 by amaarifa         ###   ########.fr       */
+/*   Updated: 2022/06/08 09:06:44 by amaarifa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	hide_quotes(char	*s)
 	int	i;
 
 	i = 0;
-	while (s[i])
+	while (s && s[i])
 	{
 		if (s[i] == '\'')
 			hide_wrapped_quotes(s, &i, '\'');

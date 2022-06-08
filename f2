@@ -1,0 +1,12 @@
+total 288
+-rw-r--r--  1 mkabissi  2019    1020 Jun  8 04:34 Makefile
+-rw-r--r--  1 mkabissi  2019      11 May 31 16:58 README.md
+-rw-r--r--  1 mkabissi  2019       0 Jun  8 06:29 f2
+-rwxr-xr-x  1 mkabissi  2019  116048 Jun  8 06:29 minishell
+-rw-r--r--  1 mkabissi  2019    3254 Jun  8 04:34 minishell.c
+drwxr-xr-x  3 mkabissi  2019     102 Jun  8 04:47 minishell.dSYM
+-rw-r--r--  1 mkabissi  2019    1459 Jun  8 04:34 minishell.h
+drwxr-xr-x  7 mkabissi  2019     238 Jun  8 04:34 src
+-rw-r--r--  1 mkabissi  2019     144 May 31 16:58 test.c
+-rw-r--r--  1 mkabissi  2019      33 May 31 17:00 test_cases.txt
+-rw-r--r--  1 mkabissi  2019    2093 Jun  8 04:34 types.h

@@ -6,7 +6,7 @@
 /*   By: amaarifa <amaarifa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/21 13:00:15 by amaarifa          #+#    #+#             */
-/*   Updated: 2022/05/29 13:43:15 by amaarifa         ###   ########.fr       */
+/*   Updated: 2022/06/08 09:17:27 by amaarifa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,9 +66,12 @@ void	quote_removal(t_token **tokens)
 	temp = *tokens;
 	while (temp)
 	{
-		str = remove_quote(temp->value);
-		free(temp->value);
-		temp->value = str;
+		if (temp->value)
+		{
+			str = remove_quote(temp->value);
+			free(temp->value);
+			temp->value = str;
+		}
 		temp = temp->next;
 	}
 }
