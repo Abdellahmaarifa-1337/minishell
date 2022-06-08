@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mkabissi <mkabissi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: amaarifa <amaarifa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 18:20:45 by mkabissi          #+#    #+#             */
-/*   Updated: 2022/06/08 08:06:35 by mkabissi         ###   ########.fr       */
+/*   Updated: 2022/06/08 12:13:52 by amaarifa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,13 +62,19 @@ int	which_builtin(char *builtin)
 void	exec(char **args, t_env **env_lst, int multi_cmds)
 {
 	(void)env_lst;	/********** REMOVE THIS SHIT ***********/
+	char	**env;
+
+	env = NULL;
+	env = env_convert(*env_lst);
 	if (multi_cmds == 1)
-		execve(args[0], args, NULL);		/********* ENV. NOT SET YET **********/
+	{	
+		execve(args[0], args, env);		/********* ENV. NOT SET YET **********/
+	}
 	else
 	{
 		if (fork() == 0)
 		{
-			execve(args[0], args, NULL);	/********* ENV. NOT SET YET **********/
+			execve(args[0], args, env);	/********* ENV. NOT SET YET **********/
 			exit(0);
 		}
 		wait(NULL);
@@ -78,7 +84,6 @@ void	exec(char **args, t_env **env_lst, int multi_cmds)
 void	execute_command(char **args, t_env *env_lst, int multi_cmds)
 {
 	int	flag;
-
 	flag = which_builtin(args[0]);
 	if (flag == ECHO)
 		echo(args);
@@ -93,7 +98,9 @@ void	execute_command(char **args, t_env *env_lst, int multi_cmds)
 	else if (flag == ENV)
 		env(env_lst);
 	else
+	{
 		exec(args, &env_lst, multi_cmds);
+	}
 	// else if (flag == EXIT)
 	// 	ft_exit(args);
 }

@@ -6,7 +6,7 @@
 /*   By: amaarifa <amaarifa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 01:34:52 by amaarifa          #+#    #+#             */
-/*   Updated: 2022/06/08 09:10:26 by amaarifa         ###   ########.fr       */
+/*   Updated: 2022/06/08 09:29:21 by amaarifa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,7 @@ void	expander(t_token **token, t_env **env_lst)
 		else if (!ft_strchr(temp->value, '\'')
 			&& !ft_strchr(temp->value, '\"'))
 			temp->expand_heredoc = 1;
-		hide_quotes(temp->value); 
+		hide_quotes(temp->value);
 		temp = temp->next;
 	}
 }
