@@ -6,7 +6,7 @@
 /*   By: mkabissi <mkabissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 11:58:30 by amaarifa          #+#    #+#             */
-/*   Updated: 2022/06/08 01:19:50 by mkabissi         ###   ########.fr       */
+/*   Updated: 2022/06/09 13:04:34 by mkabissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,9 +76,13 @@ void	ft_export(t_env **env_lst, char **av)
 {
 	int		i;
 	int		append;
+	int 	size;
 
+	size = 0;
+	while (av[size])
+		size++;
 	g_exit_status = 0;
-	if (!av)
+	if (size == 1)
 	{
 		export_print(*env_lst);
 		return ;
@@ -90,5 +94,7 @@ void	ft_export(t_env **env_lst, char **av)
 		add_export_env(env_lst, av[i], append);
 		i++;
 	}
+	// printf("test in export\n");
+	// export_print(*env_lst);
 	return ;
 }

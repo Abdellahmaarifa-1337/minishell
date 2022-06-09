@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amaarifa <amaarifa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mkabissi <mkabissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/29 23:15:10 by amaarifa          #+#    #+#             */
-/*   Updated: 2022/06/08 12:05:29 by amaarifa         ###   ########.fr       */
+/*   Updated: 2022/06/09 12:51:30 by mkabissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,16 +28,18 @@
 
 /********** BUILTINS **********/
 
-void	execute_command(char **args, t_env *env_lst, int *exit, int multi_cmds);
+void	execute_command(char **args, t_env **env_lst, t_cmd_list *cmd_lst, int multi_cmds);
 void	echo(char **token);
 void	pwd(void);
 void	unset(t_env **env, char **av);
 void	env(t_env *env);
-void	cd(char **token, t_env *env);
+void	cd(char **token, t_env **env);
 void	ft_export(t_env **env_lst, char **av);
-void	ft_exit(char **args, int *exit);
+void	ft_exit(char **args, t_cmd_list *cmd_lst);
 void	export_print(t_env *env);
 int		is_valid_idn(char *s);
 int		which_builtin(char *builtin);
 char	**env_convert(t_env *env_lst);
+int		get_size_of_arr(void **tokens);
+
 #endif

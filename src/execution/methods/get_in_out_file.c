@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_in_out_file.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amaarifa <amaarifa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mkabissi <mkabissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 10:01:36 by amaarifa          #+#    #+#             */
-/*   Updated: 2022/06/08 11:35:22 by amaarifa         ###   ########.fr       */
+/*   Updated: 2022/06/09 15:31:11 by mkabissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,8 +63,10 @@ int	*get_in_out_file(t_token *tokens, int *fd)
 			if (fd[1] != -1)
 				close(fd[1]);
 			fd[1] = open_out_file(tmp->value, tmp->type);
+			
 		}
 		tmp = tmp->next;
 	}
+	fprintf(stderr, "fd: %d\n", fd[1]);
 	return (fd);
 }

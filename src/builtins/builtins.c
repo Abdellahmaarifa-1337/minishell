@@ -3,14 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amaarifa <amaarifa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mkabissi <mkabissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 18:20:45 by mkabissi          #+#    #+#             */
-/*   Updated: 2022/06/08 12:13:52 by amaarifa         ###   ########.fr       */
+/*   Updated: 2022/06/09 13:03:36 by mkabissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtins.h"
+
+int	get_size_of_arr(void **tokens)
+{
+	int	len;
+
+	len = 0;
+	while (tokens && tokens[len])
+		len++;
+	return (len);
+}
 
 int	ft_special_cmp(char	*s1, char	*s2, size_t	n)
 {
@@ -59,31 +69,20 @@ int	which_builtin(char *builtin)
 	return (-1);
 }
 
-void	exec(char **args, t_env **env_lst, int multi_cmds)
+void	exec(char **args, t_env **env_lst)
 {
 	(void)env_lst;	/********** REMOVE THIS SHIT ***********/
 	char	**env;
 
 	env = NULL;
 	env = env_convert(*env_lst);
-	if (multi_cmds == 1)
-	{	
-		execve(args[0], args, env);		/********* ENV. NOT SET YET **********/
-	}
-	else
-	{
-		if (fork() == 0)
-		{
-			execve(args[0], args, env);	/********* ENV. NOT SET YET **********/
-			exit(0);
-		}
-		wait(NULL);
-	}
+	execve(args[0], args, env);		/********* ENV. NOT SET YET **********/
 }
 
-void	execute_command(char **args, t_env *env_lst, int *exit, int multi_cmds)
+void	execute_command(char **args, t_env **env_lst, t_cmd_list *cmd_lst, int multi_cmds)
 {
 	int	flag;
+	(void)multi_cmds;
 	flag = which_builtin(args[0]);
 	if (flag == ECHO)
 		echo(args);
@@ -92,15 +91,16 @@ void	execute_command(char **args, t_env *env_lst, int *exit, int multi_cmds)
 	else if (flag == PWD)
 		pwd();
 	else if (flag == EXPORT)
-		ft_export(&env_lst, args);
+		ft_export(env_lst, args);
 	else if (flag == UNSET)
-		unset(&env_lst, args);
+		unset(env_lst, args);
 	else if (flag == ENV)
-		env(env_lst);
+		env(*env_lst);
 	else if (flag == EXIT)
-		ft_exit(args, exit);
+		ft_exit(args, cmd_lst);
 	else
 	{
-		exec(args, &env_lst, multi_cmds);
+		exec(args, env_lst);
 	}
+
 }

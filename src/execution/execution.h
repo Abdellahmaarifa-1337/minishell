@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amaarifa <amaarifa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mkabissi <mkabissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 14:05:27 by mkabissi          #+#    #+#             */
-/*   Updated: 2022/06/08 12:05:12 by amaarifa         ###   ########.fr       */
+/*   Updated: 2022/06/08 22:48:00 by mkabissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,5 +25,5 @@ void	exec_here_doc(t_cmd_list *cmd_lst, t_env *env_lst);
 int		*get_in_out_file(t_token *tokens, int *fd);
 //int		get_out_file(t_token *tokens);
 char	*expand_var(char *value, t_env **env_lst);
-int		get_size_of_arr(void **tokens);
+
 #endif
