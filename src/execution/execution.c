@@ -6,7 +6,7 @@
 /*   By: mkabissi <mkabissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 14:07:51 by mkabissi          #+#    #+#             */
-/*   Updated: 2022/06/08 08:07:06 by mkabissi         ###   ########.fr       */
+/*   Updated: 2022/06/09 15:50:17 by mkabissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,17 +21,7 @@ void	ft_free(void **arr, int size)
 	{
 		free(arr[i]);
 		i++;
-	}
-}
-
-int	get_size_of_arr(void **tokens)
-{
-	int	len;
-
-	len = 0;
-	while (tokens && tokens[len])
-		len++;
-	return (len);
+	} 
 }
 
 void	ft_close(int **fd, int size, int fd1, int fd2)
@@ -50,33 +40,42 @@ void	ft_close(int **fd, int size, int fd1, int fd2)
 	return ;
 }
 
-void	exec_single_cmd(t_cmd_list *cmd_lst, t_env *env_lst)
+void	exec_single_cmd(t_cmd_list *cmd_lst, t_env **env_lst)
 {
 	char	**args;
 	int		stdin_saved;
 	int		stdout_saved;
-	int		infile;
-	int		outfile;
+	int		int_out[2];
 
 	stdin_saved = -1;
 	stdout_saved = -1;
-	exec_here_doc(cmd_lst, env_lst);
+	exec_here_doc(cmd_lst, *env_lst);
 	args = get_args(cmd_lst->tokens);
-	resolve_path(args, cmd_lst->env);
-	infile = get_in_file((cmd_lst->tokens)[0]);
-	outfile = get_out_file((cmd_lst->tokens)[0]);
-	if (infile != -1)
-	{
-		stdin_saved = dup(STDIN_FILENO);
-		dup2(infile, STDIN_FILENO);
-	}
-	if (outfile != -1)
-	{
-		stdout_saved = dup(STDOUT_FILENO);
-		dup2(outfile, STDOUT_FILENO);
-	}
-	execute_command(args, env_lst, 0);
-	
+	// if (fork() == 0)
+	// {
+		resolve_path(args, cmd_lst->env);
+		get_in_out_file((cmd_lst->tokens)[0], int_out);
+		//outfile = get_out_file((cmd_lst->tokens)[0]);
+		if (int_out[0] != -1)
+		{
+			stdin_saved = dup(STDIN_FILENO);
+			dup2(int_out[0], STDIN_FILENO);
+		}
+		if (int_out[1] != -1)
+		{
+			stdout_saved = dup(STDOUT_FILENO);
+			dup2(int_out[1], STDOUT_FILENO);
+		}
+		if (!args)
+		{
+			//printf("NO arg are get in\n");
+			exit(1);
+		}
+		//dprintf(2, "cms %s is about exec\n", args[0]);
+		execute_command(args, env_lst, cmd_lst, 0);
+	// 	exit(1);
+	// }
+	// wait(NULL);
 	/****************************************************/
 	// int	i = 0;
 	// while (args && args[i])
@@ -87,7 +86,6 @@ void	exec_single_cmd(t_cmd_list *cmd_lst, t_env *env_lst)
 	// printf("int file : %d\n", get_in_file((cmd_lst->tokens)[0]));
 	// printf("out file : %d\n", get_out_file((cmd_lst->tokens)[0]));
 	/***************************************************/
-
 	if (stdin_saved != -1)
 		dup2(stdin_saved, STDIN_FILENO);
 	if (stdout_saved != -1)
@@ -100,17 +98,16 @@ void	exec_single_cmd(t_cmd_list *cmd_lst, t_env *env_lst)
 	return ;
 }
 
-void	exec_multiple_cmds(t_cmd_list *cmd_lst, t_env *env_lst)
+void	exec_multiple_cmds(t_cmd_list *cmd_lst, t_env **env_lst)
 {
 	pid_t	pid;
 	char	**args;
 	int		**fd;
-	int		infile;
-	int		outfile;
+	int		int_out[2];
 	int		n;
 	int		i;
 
-	exec_here_doc(cmd_lst, env_lst);
+	exec_here_doc(cmd_lst, *env_lst);
 	fd = (int **)malloc(sizeof(int *) * cmd_lst->n_cmd);
 	if (!fd)
 		exit(0);
@@ -124,28 +121,34 @@ void	exec_multiple_cmds(t_cmd_list *cmd_lst, t_env *env_lst)
 	if (pipe(fd[0]) == -1)
 		exit(1);
 	n = 0;
+	printf("size tokens: %d\n", get_size_of_arr((void **)(cmd_lst->tokens)));
 	while ((cmd_lst->tokens)[n])
 	{
-		infile = -1;
-		outfile = -1;
-		if (n != cmd_lst->n_cmd - 1 && pipe(fd[n + 1]) == -1)
-			exit(1);
+		int_out[0] = -1;
+		int_out[1] = -1;
+		if (n != cmd_lst->n_cmd - 1)
+			if (pipe(fd[n + 1]) == -1)
+				exit(1);
 		pid = fork();
 		if (pid == 0)
 		{
 			args = get_args((cmd_lst->tokens) + n);
+			// for(int a = 0; args[a]; a++)
+			// 	printf(">> %s\n", args[a]);
 			resolve_path(args, cmd_lst->env);
-			infile = get_in_file((cmd_lst->tokens)[0]);
-			if (infile != -1)
-				dup2(infile, fd[n][0]);
-			outfile = get_out_file((cmd_lst->tokens)[0]);
-			if (outfile != -1)
-				dup2(outfile, fd[n + 1][1]);
+			get_in_out_file((cmd_lst->tokens)[n], int_out);
+			// fprintf(stderr, "n: %d\n", n);
+			
+			if (int_out[0] != -1)
+				dup2(int_out[0], fd[n][0]);
+			if (int_out[1] != -1 && n < cmd_lst->n_cmd - 1)
+				dup2(int_out[1], fd[n + 1][1]);
+			
 			if (n == 0)
 			{
 				ft_close(fd, cmd_lst->n_cmd, -1, fd[n + 1][1]);
-				if (infile != -1)
-					dup2(infile, STDIN_FILENO);
+				if (int_out[0] != -1)
+					dup2(int_out[0], STDIN_FILENO);
 				dup2(fd[n + 1][1], STDOUT_FILENO);
 			}
 			else if (n != cmd_lst->n_cmd - 1)
@@ -154,14 +157,14 @@ void	exec_multiple_cmds(t_cmd_list *cmd_lst, t_env *env_lst)
 				dup2(fd[n][0], STDIN_FILENO);
 				dup2(fd[n + 1][1], STDOUT_FILENO);
 			}
-			else if (n == cmd_lst->n_cmd - 1)
+			else
 			{
 				ft_close(fd, cmd_lst->n_cmd, fd[n][0], -1);
 				dup2(fd[n][0], STDIN_FILENO);
-				if (outfile != -1)
-					dup2(outfile, STDOUT_FILENO);
+				if (int_out[1] != -1)
+					dup2(int_out[1], STDOUT_FILENO);
 			}
-			execute_command(args, env_lst, 1);
+			execute_command(args, env_lst, cmd_lst, 1);
 
 			/*****************************************************/
 			// i = 0;
@@ -187,17 +190,23 @@ void	exec_multiple_cmds(t_cmd_list *cmd_lst, t_env *env_lst)
 	i = -1;
 	while (++i < cmd_lst->n_cmd)
 		wait(NULL);
+	// printf("test in export\n");
+	// export_print(*env_lst);
 	i = -1;
 	ft_free((void **)fd, cmd_lst->n_cmd);
 	free(fd);
 }
 
-void	execution(t_cmd_list *cmd_lst, t_env *env_lst)
+void	execution(t_cmd_list *cmd_lst, t_env **env_lst)
 {
 	cmd_lst->n_cmd = get_size_of_arr((void **)(cmd_lst->tokens));
+	// printf("number of cmd : %d\n", cmd_lst->n_cmd);
+	// exit(1);
+	
 	if (cmd_lst->n_cmd == 1)
-		exec_single_cmd(cmd_lst, env_lst);
-	else
+	{
+		exec_single_cmd(cmd_lst, env_lst);	
+	}else
 		exec_multiple_cmds(cmd_lst, env_lst);
 	return ;
 }

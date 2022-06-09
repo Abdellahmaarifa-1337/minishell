@@ -6,7 +6,7 @@
 /*   By: mkabissi <mkabissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/21 18:23:30 by amaarifa          #+#    #+#             */
-/*   Updated: 2022/06/07 19:32:03 by mkabissi         ###   ########.fr       */
+/*   Updated: 2022/06/08 22:05:36 by mkabissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,11 +60,12 @@ typedef struct s_token_source {
 /* MUILPILE PIP COMMANDS REPRESNTATION STRUCUER */
 
 typedef struct s_cmd_list {
-	char				*source;
-	char				*cmd_line;
-	t_token				**tokens;
-	int					n_cmd;
-	t_env				**env;
+	char	*source;
+	char	*cmd_line;
+	t_token	**tokens;
+	int		n_cmd;
+	int		exit;
+	t_env	**env;
 }	t_cmd_list;
 
 #endif

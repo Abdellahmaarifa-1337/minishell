@@ -6,37 +6,42 @@
 /*   By: mkabissi <mkabissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 14:22:37 by mkabissi          #+#    #+#             */
-/*   Updated: 2022/06/08 07:08:13 by mkabissi         ###   ########.fr       */
+/*   Updated: 2022/06/09 12:52:03 by mkabissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtins.h"
 
-void	change_envpwd(t_env *env_lst, char *new_pwd, char *old_pwd)
+void	change_envpwd(t_env **env_lst, char *new_pwd, char *old_pwd)
 {
 	char	*new;
 	char	*old;
 
 	new = ft_strjoin("export PWD=", new_pwd);
 	old = ft_strjoin("export OLDPWD=", old_pwd);
-	ft_export(&env_lst, ft_split(new, ' '));
-	ft_export(&env_lst, ft_split(old, ' '));
+	ft_export(env_lst, ft_split(new, ' '));
+	ft_export(env_lst, ft_split(old, ' '));
 	free(new);
 	free(old);
 	free(new_pwd);
 	free(old_pwd);
 }
 
-void cd(char **token, t_env *env_lst)
+void cd(char **token, t_env **env_lst)
 {
 	char	buffer[PATH_MAX];
 	char	*old_pwd;
 	char	*dirname;
 	DIR		*dir;
-
+fprintf(stderr, "I got you !!!\n");
 	old_pwd = ft_strdup(getcwd(buffer, PATH_MAX));
 	if (!token[1])
+	{
+
+fprintf(stderr, "going home !!!\n");
 		dirname = getenv("HOME");
+fprintf(stderr, ">> %s <<\n", dirname);
+	}
 	else
 		dirname = token[1];
 	dir = opendir(dirname);
