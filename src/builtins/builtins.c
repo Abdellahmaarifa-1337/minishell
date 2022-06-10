@@ -6,7 +6,7 @@
 /*   By: mkabissi <mkabissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 18:20:45 by mkabissi          #+#    #+#             */
-/*   Updated: 2022/06/09 13:03:36 by mkabissi         ###   ########.fr       */
+/*   Updated: 2022/06/10 23:51:11 by mkabissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,32 +26,68 @@ int	ft_special_cmp(char	*s1, char	*s2, size_t	n)
 {
 	unsigned char	*a;
 	unsigned char	*b;
-	char			*lowercase;
 	size_t			i;
 
-	lowercase = ft_strdup(s1);
-	a = (unsigned char *)lowercase;
+	a = (unsigned char *)ft_strdup(s1);
 	b = (unsigned char *)s2;
 	i = 0;
+	if (!s1 || n == 0)
+		return (0);
 	while (a[i])
 	{
 		a[i] = ft_tolower(a[i]);
 		i++;
 	}
-	if (n == 0)
-	{
-		free(lowercase);
-		return (0);
-	}
 	i = 0;
 	while (a[i] && b[i] && a[i] == b[i] && i < n - 1)
 		i++;
-	free(lowercase);
-	return (a[i] - b[i]);
+	i = a[i] - b[i];
+	free(a);
+	return (i);
+}
+
+int	get_exit_status(int error)
+{
+	if (error == ENOTDIR)
+		return (127);
+	else if (error == ENOEXEC || error == EACCES || error == E2BIG)
+		return (126);
+	else
+		return (1);
+}
+
+void	exec(char **args, t_env **env_lst, int fork_it)
+{
+	char	**env;
+	int		pid;
+
+	env = NULL;
+	env = env_convert(*env_lst);
+	if (fork_it)
+	{
+		pid = fork();
+		if (pid < 0)
+			exit(0);
+		else if (pid == 0)
+		{
+			g_exit_status = 0;
+			execve(args[0], args, env);
+			exit(get_exit_status(errno));
+		}
+		wait(NULL);
+	}
+	else
+	{
+		g_exit_status = 0;
+		execve(args[0], args, env);
+		g_exit_status = get_exit_status(errno);
+	}
 }
 
 int	which_builtin(char *builtin)
 {
+	if (!builtin)
+		return (0);
 	if (ft_special_cmp(builtin, "echo", 5) == 0)
 		return (ECHO);
 	else if (ft_strncmp(builtin, "cd", 3) == 0)
@@ -69,38 +105,29 @@ int	which_builtin(char *builtin)
 	return (-1);
 }
 
-void	exec(char **args, t_env **env_lst)
-{
-	(void)env_lst;	/********** REMOVE THIS SHIT ***********/
-	char	**env;
-
-	env = NULL;
-	env = env_convert(*env_lst);
-	execve(args[0], args, env);		/********* ENV. NOT SET YET **********/
-}
-
-void	execute_command(char **args, t_env **env_lst, t_cmd_list *cmd_lst, int multi_cmds)
+void	execute_command(char **ar, t_env **env_lst, t_cmd_list *cmd_lst, int n)
 {
 	int	flag;
-	(void)multi_cmds;
-	flag = which_builtin(args[0]);
+
+	flag = which_builtin(ar[0]);
+	if (flag == 0)
+		return ;
 	if (flag == ECHO)
-		echo(args);
+		echo(ar);
 	else if (flag == CD)
-		cd(args, env_lst);
+		cd(ar, env_lst);
 	else if (flag == PWD)
 		pwd();
 	else if (flag == EXPORT)
-		ft_export(env_lst, args);
+	{
+		ft_export(env_lst, ar);
+	}
 	else if (flag == UNSET)
-		unset(env_lst, args);
+		unset(env_lst, ar);
 	else if (flag == ENV)
 		env(*env_lst);
 	else if (flag == EXIT)
-		ft_exit(args, cmd_lst);
+		ft_exit(ar, cmd_lst);
 	else
-	{
-		exec(args, env_lst);
-	}
-
+		exec(ar, env_lst, n);
 }

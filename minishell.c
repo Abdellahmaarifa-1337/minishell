@@ -6,7 +6,7 @@
 /*   By: mkabissi <mkabissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 13:48:45 by amaarifa          #+#    #+#             */
-/*   Updated: 2022/06/09 12:46:36 by mkabissi         ###   ########.fr       */
+/*   Updated: 2022/06/10 16:38:42 by mkabissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,13 +124,7 @@ int	main(int ac, char **av, char **env)
 	while (keep_reading > 0)
 	{
 		line = readline("minishell$ ");
-		// line = ft_strdup("ls <file1 echo hello | >file2 cat file3 <<here1 | <<here2 ls -la >>append cat file4");
-		if (line[0] == '\0')
-		{
-			free(line);
-			continue ;
-		}
-		if (!syntax_checker(line))
+		if (line[0] == '\0' || !syntax_checker(line))
 		{
 			free(line);
 			continue ;
@@ -146,7 +140,6 @@ int	main(int ac, char **av, char **env)
 		keep_reading -= cmd_list->exit;
 		free_cmd_list(cmd_list);
 		cmd_list = NULL;
-		// exit(0);
 	}
-	return (0);
+	return (g_exit_status);
 }

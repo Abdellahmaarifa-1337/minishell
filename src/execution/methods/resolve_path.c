@@ -3,27 +3,27 @@
 /*                                                        :::      ::::::::   */
 /*   resolve_path.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amaarifa <amaarifa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mkabissi <mkabissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 09:07:00 by amaarifa          #+#    #+#             */
-/*   Updated: 2022/06/08 12:45:24 by amaarifa         ###   ########.fr       */
+/*   Updated: 2022/06/10 19:50:45 by mkabissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../execution.h"
 
-void	throw_not_found_err(char *err, char *msg)
+void	throw_not_found_err(char *err, char *msg, int exit_process)
 {
 	if (err && !msg)
-		printf("%s\n", err);
+		ft_putendl_fd(err, STDOUT_FILENO);
 	else
 		perror(msg);
 	g_exit_status = 127;
-	//if (exit_bool)
+	if (exit_process)
 		exit(g_exit_status);
 }
 
-char	*get_right_path(char *command, char **path)
+char	*get_right_path(char *command, char **path, int exit_process)
 {
 	int		i;
 	char	*cmd;
@@ -37,7 +37,7 @@ char	*get_right_path(char *command, char **path)
 		if (access(command, F_OK | X_OK) == 0)
 			return (ft_strdup(command));
 		else
-			throw_not_found_err(NULL, command);
+			throw_not_found_err(NULL, command, exit_process);
 	}
 	while (path && path[i])
 	{
@@ -65,26 +65,30 @@ void	free_path(char **path)
 	}
 }
 
-void	resolve_path(char **args, t_env **env_lst)
+int	resolve_path(char **args, t_env **env_lst, int exit_process)
 {
 	char	**path;
 	char	*tmp;
 
 	if (!args || which_builtin(args[0]) != -1)
-		return ;
+		return (1);
 	tmp = get_env(*env_lst, "PATH");
 	path = ft_split(tmp, ':');
 	free(tmp);
-	tmp = get_right_path(args[0], path);
+	tmp = get_right_path(args[0], path, exit_process);
 	if (!tmp || !tmp[0])
 	{
 		tmp = args[0];
+		g_exit_status = 127;
 		args[0] = ft_strjoin("minishell: ", args[0]);
-		free(args[0]);
 		tmp = ft_strjoin(args[0], ": command not found");
-		throw_not_found_err(tmp, NULL);
+		free(args[0]);
+		throw_not_found_err(tmp, NULL, exit_process);
 		free(tmp);
-		exit(g_exit_status);
+		if (exit_process)
+			exit(g_exit_status);
+		else
+			return (0);
 	}
 	else
 	{
@@ -93,4 +97,5 @@ void	resolve_path(char **args, t_env **env_lst)
 	}
 	free_path(path);
 	free(path);
+	return (1);
 }

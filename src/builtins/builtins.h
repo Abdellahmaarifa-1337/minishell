@@ -6,7 +6,7 @@
 /*   By: mkabissi <mkabissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/29 23:15:10 by amaarifa          #+#    #+#             */
-/*   Updated: 2022/06/09 12:51:30 by mkabissi         ###   ########.fr       */
+/*   Updated: 2022/06/10 03:00:03 by mkabissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include <limits.h>
 # include <dirent.h>
+# include <sys/errno.h>
 # include "../../types.h"
 # include "../lib/lib.h"
 

@@ -1,1 +1,6 @@
 // empty token > "" cat "" "" ""
+
+
+// bash: unset: `4one': not a valid identifier -------> show errors messages
+// export ""  -------> show errors messages
+// unset PATH heep used after free
