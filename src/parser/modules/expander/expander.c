@@ -6,7 +6,7 @@
 /*   By: amaarifa <amaarifa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 01:34:52 by amaarifa          #+#    #+#             */
-/*   Updated: 2022/06/08 13:11:23 by amaarifa         ###   ########.fr       */
+/*   Updated: 2022/06/11 11:14:23 by amaarifa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ void	expand_env_var(char	**s, char *value, int *i, t_env **env_lst)
 	else
 		temp = ft_substr(value, start, *i - start);
 	expanded = get_env(*env_lst, temp);
+	if (!expanded)
+		expanded = ft_strdup("");
 	free(temp);
 	if (value[*i] == '?')
 	{
@@ -47,7 +49,8 @@ void	collect_none_var(char	*value, int *i, char **s)
 	if (!(*s))
 		*s = ft_strdup("");
 	start = *i;
-	while (value[*i] && value[*i] != '$')
+	while (value[*i] && !(value[*i] == '$' && value[*i + 1]
+			&& (ft_isalpha(value[*i + 1]) || value[*i + 1] == '_')))
 	{
 		if (value[*i] == '\'' && !unclosed_double_qoutes(value, *i - 1))
 		{	
@@ -86,7 +89,8 @@ char	*expand_var(char *value, t_env **env_lst)
 	i = 0;
 	while (value[i])
 	{
-		if (value[i] != '$')
+		if (value[i] != '$' || (value[i + 1]
+				&& !(ft_isalpha(value[i + 1]) || value[i + 1] == '_')))
 		{
 			collect_none_var(value, &i, &s);
 			continue ;

@@ -1,32 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   is_valid_idn.c                                     :+:      :+:    :+:   */
+/*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: amaarifa <amaarifa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/30 14:51:32 by amaarifa          #+#    #+#             */
-/*   Updated: 2022/06/11 06:10:15 by amaarifa         ###   ########.fr       */
+/*   Created: 2022/06/11 11:24:37 by amaarifa          #+#    #+#             */
+/*   Updated: 2022/06/11 12:10:57 by amaarifa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../builtins.h"
+#include "lib.h"
 
-int	is_valid_idn(char *s)
+void	int_handler(int signal)
 {
-	int	i;
-
-	i = 0;
-	if (!s || !s[0])
-		return (0);
-	if (s[0] && !ft_isalpha(s[0]) && s[0] != '_')
-		return (0);
-	while (s[i])
-	{
-		if (ft_isalnum(s[i]) || s[0] == '_')
-			i++;
-		else
-			return (0);
-	}
-	return (1);
+	(void) signal;
+	printf("\n");
+	rl_on_new_line();
+	rl_replace_line("", 0);
+	rl_redisplay();
+	g_exit_status = -1 * (g_exit_status + 1);
 }

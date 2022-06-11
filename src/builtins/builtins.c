@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mkabissi <mkabissi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: amaarifa <amaarifa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 18:20:45 by mkabissi          #+#    #+#             */
-/*   Updated: 2022/06/09 13:03:36 by mkabissi         ###   ########.fr       */
+/*   Updated: 2022/06/11 06:37:23 by amaarifa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ void	execute_command(char **args, t_env **env_lst, t_cmd_list *cmd_lst, int mult
 	else if (flag == UNSET)
 		unset(env_lst, args);
 	else if (flag == ENV)
-		env(*env_lst);
+		env(*env_lst, args);
 	else if (flag == EXIT)
 		ft_exit(args, cmd_lst);
 	else

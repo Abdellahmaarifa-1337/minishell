@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mkabissi <mkabissi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: amaarifa <amaarifa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 13:48:45 by amaarifa          #+#    #+#             */
-/*   Updated: 2022/06/09 12:46:36 by mkabissi         ###   ########.fr       */
+/*   Updated: 2022/06/11 12:58:25 by amaarifa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,11 +88,11 @@ void	unset_test(t_env **env_lst, char **av, int ac)
 	//exit(1);
 }
 
-void env_test(t_env *env_list)
-{
-	env(env_list);
-	exit(1);
-}
+// void env_test(t_env *env_list)
+// {
+// 	env(env_list);
+// 	exit(1);
+// }
 
 void	export_test(t_env	**env, char **av, int ac)
 {
@@ -106,25 +106,23 @@ void	export_test(t_env	**env, char **av, int ac)
 /* SET TO DEFAULT */
 int	g_exit_status = 0;
 
-int	main(int ac, char **av, char **env)
+void	prompt(t_env **env_lst)
 {
 	t_cmd_list	*cmd_list;
 	char		*line;
-	t_env		*env_lst;
 	int			keep_reading;
+	int			n;
 
-	env_lst = set_env(env);
-	(void)av;
-	(void)ac;
 	keep_reading = 1;
-	//unset_test(&env_lst, av, ac); //TEST UNSET
-	// export_test(&env_lst, av, ac);
+	n = g_exit_status;
 
-	//env_test(env_lst);
-	while (keep_reading > 0)
+	signal(SIGQUIT, SIG_IGN);
+	while (keep_reading > 0 && n == g_exit_status)
 	{
+		signal(SIGINT, int_handler);
 		line = readline("minishell$ ");
-		// line = ft_strdup("ls <file1 echo hello | >file2 cat file3 <<here1 | <<here2 ls -la >>append cat file4");
+		if (!line)
+			exit(0);
 		if (line[0] == '\0')
 		{
 			free(line);
@@ -138,15 +136,30 @@ int	main(int ac, char **av, char **env)
 		cmd_list = init_cmd_list(line);
 		cmd_list->exit = 0;
 		add_history(line);
-		cmd_list->env = &env_lst;
+		cmd_list->env = env_lst;
 		parser(cmd_list);
-		execution(cmd_list, &env_lst);
+		execution(cmd_list, env_lst);
 		// print_cmd_tk(cmd_list->tokens);
 		// printf("exit: %d\n", cmd_list->exit);
 		keep_reading -= cmd_list->exit;
 		free_cmd_list(cmd_list);
 		cmd_list = NULL;
 		// exit(0);
+	}
+	if (g_exit_status < 0)
+		g_exit_status = (g_exit_status  + 1) * -1;
+}
+
+int	main(int ac, char **av, char **env)
+{
+	t_env		*env_lst;
+
+	env_lst = set_env(env);
+	(void)av;
+	(void)ac;
+	while (1)
+	{
+		prompt(&env_lst);
 	}
 	return (0);
 }

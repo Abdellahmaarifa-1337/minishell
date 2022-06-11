@@ -2,9 +2,11 @@ CC=cc
 CFLAGS= -Wall -Wextra -Wall #-fsanitize=address
 UTILS= src/utils
 PARSER= src/parser
+RDLIB= -L/Users/${USER}/goinfre/.brew/opt/readline/lib 
+RDINCLUDE = -I/Users/${USER}/goinfre/.brew/opt/readline/include/
 
 LIB = src/lib/set_env.c src/lib/create_env.c src/lib/get_env.c \
-	src/lib/get_index_char.c
+	src/lib/get_index_char.c src/lib/signals.c
 SRC= minishell.c ${LIB} ${BUILTINS}
 LIBFT= src/libft/libft.a
 PARSER= src/parser/parser.a
@@ -26,7 +28,7 @@ call_make:
 	make -C src/execution
 
 ${NAME}:${OBJ} $(LIBFT) $(PARSER) $(BUILTIN) $(EXECUTION)
-	@${CC} ${CFLAGS} ${LIBFT} ${PARSER} ${BUILTIN} $(EXECUTION) ${OBJ} -o ${NAME} -lreadline
+	@${CC} ${CFLAGS} -lreadline ${RDLIB} ${RDINCLUDE} ${LIBFT} ${PARSER} ${BUILTIN} $(EXECUTION) ${OBJ} -o ${NAME} 
 
 #${OBJ}:${SRC}
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mkabissi <mkabissi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: amaarifa <amaarifa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 11:58:30 by amaarifa          #+#    #+#             */
-/*   Updated: 2022/06/09 13:04:34 by mkabissi         ###   ########.fr       */
+/*   Updated: 2022/06/11 11:06:50 by amaarifa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,10 +64,13 @@ void	add_export_env(t_env **env_lst, char *s, int append)
 		add_back_env(env_lst, env, append);
 	else
 	{
+		g_exit_status = 1;
+		dup2(1, 2);
+		printf("minishell: export: `%s': not a valid identifier\n", s);
+		dup2(1, 1);
 		free(env->key);
 		free(env->value);
 		free(env);
-		g_exit_status = 1;
 	}
 	return ;
 }
@@ -76,7 +79,7 @@ void	ft_export(t_env **env_lst, char **av)
 {
 	int		i;
 	int		append;
-	int 	size;
+	int		size;
 
 	size = 0;
 	while (av[size])
@@ -94,7 +97,5 @@ void	ft_export(t_env **env_lst, char **av)
 		add_export_env(env_lst, av[i], append);
 		i++;
 	}
-	// printf("test in export\n");
-	// export_print(*env_lst);
 	return ;
 }

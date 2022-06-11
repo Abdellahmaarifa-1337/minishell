@@ -6,7 +6,7 @@
 /*   By: amaarifa <amaarifa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/29 23:13:46 by amaarifa          #+#    #+#             */
-/*   Updated: 2022/06/02 08:11:29 by amaarifa         ###   ########.fr       */
+/*   Updated: 2022/06/11 11:13:19 by amaarifa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,9 @@ void	unset_var(t_env **env, char *s)
 	if (!is_valid_idn(s))
 	{
 		g_exit_status = 1;
+		dup2(1, 2);
+		printf("minishell: unset: `%s': not a valid identifier\n", s);
+		dup2(1, 1);
 		return ;
 	}
 	tmp = *env;
@@ -63,7 +66,6 @@ void	unset_var(t_env **env, char *s)
 	{
 		if (!ft_strncmp(tmp->key, s, ft_strlen(tmp->key) + 1))
 		{
-			printf("going to delete : %s == %s\n", tmp->key, s);
 			delete_node(env, i);
 			break ;
 		}
