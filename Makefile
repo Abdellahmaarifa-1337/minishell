@@ -2,6 +2,10 @@ CC=cc
 CFLAGS= -Wall -Wextra -Wall -fsanitize=address
 UTILS= src/utils
 PARSER= src/parser
+
+# RDLIB= -L/Users/${USER}/goinfre/.brew/opt/readline/lib
+# RDINCLUDE = -I/Users/${USER}/goinfre/.brew/opt/readline/include/
+
 RDLIB= -L/Users/${USER}/.brew/Cellar/readline/8.1.2/lib 
 RDINCLUDE = -I/Users/${USER}/.brew/Cellar/readline/8.1.2/include/
 
@@ -29,8 +33,6 @@ call_make:
 
 ${NAME}:${OBJ} $(LIBFT) $(PARSER) $(BUILTIN) $(EXECUTION)
 	@${CC} ${CFLAGS} -lreadline ${RDLIB} ${RDINCLUDE} ${LIBFT} ${PARSER} ${BUILTIN} $(EXECUTION) ${OBJ} -o ${NAME} 
-
-#${OBJ}:${SRC}
 
 clean:
 	make clean -C src/libft

@@ -6,7 +6,7 @@
 /*   By: mkabissi <mkabissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 14:22:37 by mkabissi          #+#    #+#             */
-/*   Updated: 2022/06/10 01:53:17 by mkabissi         ###   ########.fr       */
+/*   Updated: 2022/06/11 19:26:25 by mkabissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,13 @@ void	change_envpwd(t_env **env_lst, char *new_pwd, char *old_pwd)
 	free(old);
 	free(new_pwd);
 	free(old_pwd);
+}
+
+void	put_error_message(char *dirname)
+{
+	ft_putstr_fd("minishell: cd: ", STDERR_FILENO);
+	ft_putstr_fd(dirname, STDERR_FILENO);
+	ft_putendl_fd(": No such file or directory", STDERR_FILENO);
 }
 
 void	cd(char **token, t_env **env_lst)
@@ -50,9 +57,7 @@ void	cd(char **token, t_env **env_lst)
 	else
 	{
 		g_exit_status = 1;
-		ft_putstr_fd("minishell: cd: ", STDERR_FILENO);
-		ft_putstr_fd(dirname, STDERR_FILENO);
-		ft_putendl_fd(": No such file or directory", STDERR_FILENO);
+		put_error_message(dirname);
 		free(old_pwd);
 	}
 }
