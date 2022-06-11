@@ -6,7 +6,7 @@
 /*   By: mkabissi <mkabissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 14:07:51 by mkabissi          #+#    #+#             */
-/*   Updated: 2022/06/10 19:49:00 by mkabissi         ###   ########.fr       */
+/*   Updated: 2022/06/11 15:59:27 by mkabissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	ft_free(void **arr, int size)
 	{
 		free(arr[i]);
 		i++;
-	} 
+	}
 }
 
 void	ft_close(int **fd, int size, int fd1, int fd2)
@@ -60,8 +60,6 @@ void	exec_single_cmd(t_cmd_list *cmd_lst, t_env **env_lst)
 	// }
 	/***************************************************/
 
-	/****************************************************/
-	printf(">>> cmd: %s\n", args[0]);
 	if (resolve_path(args, cmd_lst->env, 0) == 0)
 		return ;
 	get_in_out_file((cmd_lst->tokens)[0], int_out, 0);
@@ -80,8 +78,8 @@ void	exec_single_cmd(t_cmd_list *cmd_lst, t_env **env_lst)
 		stdout_saved = dup(STDOUT_FILENO);
 		dup2(int_out[1], STDOUT_FILENO);
 	}
-	if (!args)
-		exit(1);
+	// if (!args)
+	// 	exit(1);
 	execute_command(args, env_lst, cmd_lst, 1);
 	if (int_out[0] > -1)
 		close(int_out[0]);
@@ -189,7 +187,6 @@ void	exec_multiple_cmds(t_cmd_list *cmd_lst, t_env **env_lst)
 void	execution(t_cmd_list *cmd_lst, t_env **env_lst)
 {
 	cmd_lst->n_cmd = get_size_of_arr((void **)(cmd_lst->tokens));
-	
 	if (cmd_lst->n_cmd == 1)
 	{
 		exec_single_cmd(cmd_lst, env_lst);	

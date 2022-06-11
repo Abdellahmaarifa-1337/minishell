@@ -6,7 +6,7 @@
 /*   By: mkabissi <mkabissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 18:20:45 by mkabissi          #+#    #+#             */
-/*   Updated: 2022/06/10 23:51:11 by mkabissi         ###   ########.fr       */
+/*   Updated: 2022/06/11 16:05:51 by mkabissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,16 +46,6 @@ int	ft_special_cmp(char	*s1, char	*s2, size_t	n)
 	return (i);
 }
 
-int	get_exit_status(int error)
-{
-	if (error == ENOTDIR)
-		return (127);
-	else if (error == ENOEXEC || error == EACCES || error == E2BIG)
-		return (126);
-	else
-		return (1);
-}
-
 void	exec(char **args, t_env **env_lst, int fork_it)
 {
 	char	**env;
@@ -70,17 +60,18 @@ void	exec(char **args, t_env **env_lst, int fork_it)
 			exit(0);
 		else if (pid == 0)
 		{
-			g_exit_status = 0;
 			execve(args[0], args, env);
-			exit(get_exit_status(errno));
+			exit(1);
 		}
-		wait(NULL);
+		int status;
+		wait(&status);
+		if (WIFEXITED(status))
+			g_exit_status = WEXITSTATUS(status);
 	}
 	else
 	{
-		g_exit_status = 0;
 		execve(args[0], args, env);
-		g_exit_status = get_exit_status(errno);
+		exit(1);
 	}
 }
 
