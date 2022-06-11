@@ -6,7 +6,7 @@
 /*   By: mkabissi <mkabissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 14:07:51 by mkabissi          #+#    #+#             */
-/*   Updated: 2022/06/11 21:39:39 by mkabissi         ###   ########.fr       */
+/*   Updated: 2022/06/12 00:06:03 by mkabissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ void	execution(t_cmd_list *cmd_lst, t_env **env_lst)
 	t_data	*dt;
 	int		number_of_commands;
 
-	dt = NULL;
 	number_of_commands = get_size_of_arr((void **)(cmd_lst->tokens));
 	exec_here_doc(cmd_lst, *env_lst);
 	if (number_of_commands == 1)
@@ -56,7 +55,8 @@ void	execution(t_cmd_list *cmd_lst, t_env **env_lst)
 		if (!dt)
 			exit(0);
 		dt->n_cmd = number_of_commands;
-		exec_multiple_cmds(cmd_lst, env_lst);
+		exec_multiple_cmds(cmd_lst, env_lst, dt);
+		free(dt);
 	}
 	return ;
 }

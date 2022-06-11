@@ -6,11 +6,25 @@
 /*   By: mkabissi <mkabissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/11 21:01:30 by mkabissi          #+#    #+#             */
-/*   Updated: 2022/06/11 21:33:41 by mkabissi         ###   ########.fr       */
+/*   Updated: 2022/06/12 00:49:17 by mkabissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execution.h"
+
+void	alloc_fd(int **fd, int size)
+{
+	int	i;
+
+	i = 0;
+	while (i < size)
+	{
+		fd[i] = (int *)malloc(sizeof(int) * 2);
+		if (!fd[i])
+			exit(0);
+		i++;
+	}
+}
 
 void	ft_dup(int *int_out, int **fd, int size, int n)
 {
@@ -36,13 +50,9 @@ void	ft_dup(int *int_out, int **fd, int size, int n)
 	}
 }
 
-void	exec_current_command(t_data *dt, char	**args, int *int_out,
-			int **fd)
+void	exec_current_command(t_data *dt, char **args, int *int_out, int **fd)
 {
-	pid_t	pid;
-
-	pid = fork();
-	if (pid == 0)
+	if (fork() == 0)
 	{
 		args = get_args((dt->cmd_lst->tokens) + dt->n);
 		resolve_path(args, dt->cmd_lst->env, 1);
@@ -67,42 +77,41 @@ void	exec_current_command(t_data *dt, char	**args, int *int_out,
 	}
 }
 
-void	exec_multiple_cmds(t_cmd_list *cmd_lst, t_env **env_lst)
+void	finish_exec(t_data *dt, int **fd)
 {
-	t_data	dt;
+	ft_close(fd, dt->n_cmd, -1, -1);
+	dt->n = -1;
+	while (++dt->n < dt->n_cmd - 1)
+		wait(NULL);
+	wait(&(dt->status));
+	if (WIFEXITED(dt->status))
+		g_exit_status = WEXITSTATUS(dt->status);
+	ft_free((void **)fd, dt->n_cmd);
+	free(fd);
+}
+
+void	exec_multiple_cmds(t_cmd_list *cmd_lst, t_env **env_lst, t_data *dt)
+{
 	char	**args;
 	int		**fd;
 	int		int_out[2];
-	int		n;
 
-	fd = (int **)malloc(sizeof(int *) * dt.n_cmd);
+	fd = (int **)malloc(sizeof(int *) * dt->n_cmd);
 	if (!fd)
 		exit(0);
-	n = -1;
-	while (++n < dt.n_cmd)
-	{
-		fd[n] = (int *)malloc(sizeof(int) * 2);
-		if (!fd[n])
-			exit(0);
-	}
+	alloc_fd(fd, dt->n_cmd);
 	if (pipe(fd[0]) == -1)
 		exit(1);
-	n = 0;
-	while ((cmd_lst->tokens)[n])
+	dt->n = 0;
+	while ((cmd_lst->tokens)[dt->n])
 	{
-		if (n != dt.n_cmd - 1)
-			if (pipe(fd[n + 1]) == -1)
+		if (dt->n != dt->n_cmd - 1)
+			if (pipe(fd[dt->n + 1]) == -1)
 				exit(1);
-		exec_current_command();
-		n++;
+		dt->cmd_lst = cmd_lst;
+		dt->env_lst = env_lst;
+		exec_current_command(dt, args, int_out, fd);
+		dt->n++;
 	}
-	ft_close(fd, dt.n_cmd, -1, -1);
-	n = -1;
-	while (++n < dt.n_cmd - 1)
-		wait(NULL);
-	wait(&(cmd_lst->status));
-	if (WIFEXITED(cmd_lst->status))
-		g_exit_status = WEXITSTATUS(cmd_lst->status);
-	ft_free((void **)fd, dt.n_cmd);
-	free(fd);
+	finish_exec(dt, fd);
 }

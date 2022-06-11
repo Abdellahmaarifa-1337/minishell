@@ -6,7 +6,7 @@
 /*   By: mkabissi <mkabissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 14:05:27 by mkabissi          #+#    #+#             */
-/*   Updated: 2022/06/11 21:02:19 by mkabissi         ###   ########.fr       */
+/*   Updated: 2022/06/11 21:54:50 by mkabissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 
 /**************** EXECUTIONS PARTS *****************/
 void	exec_single_cmd(t_cmd_list *cmd_lst, t_env **env_lst);
-void	exec_multiple_cmds(t_cmd_list *cmd_lst, t_env **env_lst);
+void	exec_multiple_cmds(t_cmd_list *cmd_lst, t_env **env_lst, t_data *dt);
 
 /******************** HELPERS **********************/
 char	**get_args(t_token **tokens);
