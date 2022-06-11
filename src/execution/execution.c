@@ -6,7 +6,7 @@
 /*   By: mkabissi <mkabissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 14:07:51 by mkabissi          #+#    #+#             */
-/*   Updated: 2022/06/11 15:59:27 by mkabissi         ###   ########.fr       */
+/*   Updated: 2022/06/11 16:18:11 by mkabissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	exec_single_cmd(t_cmd_list *cmd_lst, t_env **env_lst)
 
 	stdin_saved = -1;
 	stdout_saved = -1;
-	exec_here_doc(cmd_lst, *env_lst);
+
 	args = get_args(cmd_lst->tokens);
 	/****************************************************/
 	// int	i = 0;
@@ -106,7 +106,7 @@ void	exec_multiple_cmds(t_cmd_list *cmd_lst, t_env **env_lst)
 	int		n;
 	int		i;
 
-	exec_here_doc(cmd_lst, *env_lst);
+
 	fd = (int **)malloc(sizeof(int *) * cmd_lst->n_cmd);
 	if (!fd)
 		exit(0);
@@ -187,6 +187,9 @@ void	exec_multiple_cmds(t_cmd_list *cmd_lst, t_env **env_lst)
 void	execution(t_cmd_list *cmd_lst, t_env **env_lst)
 {
 	cmd_lst->n_cmd = get_size_of_arr((void **)(cmd_lst->tokens));
+	// printf("number of cmd : %d\n", cmd_lst->n_cmd);
+	// exit(1);
+	exec_here_doc(cmd_lst, *env_lst);
 	if (cmd_lst->n_cmd == 1)
 	{
 		exec_single_cmd(cmd_lst, env_lst);	

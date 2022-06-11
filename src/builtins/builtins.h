@@ -6,7 +6,7 @@
 /*   By: mkabissi <mkabissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/29 23:15:10 by amaarifa          #+#    #+#             */
-/*   Updated: 2022/06/10 03:00:03 by mkabissi         ###   ########.fr       */
+/*   Updated: 2022/06/11 16:19:50 by mkabissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	execute_command(char **args, t_env **env_lst, t_cmd_list *cmd_lst, int mult
 void	echo(char **token);
 void	pwd(void);
 void	unset(t_env **env, char **av);
-void	env(t_env *env);
+void	env(t_env *env, char **args);
 void	cd(char **token, t_env **env);
 void	ft_export(t_env **env_lst, char **av);
 void	ft_exit(char **args, t_cmd_list *cmd_lst);

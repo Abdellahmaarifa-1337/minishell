@@ -3,10 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   types.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mkabissi <mkabissi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: amaarifa <amaarifa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/21 18:23:30 by amaarifa          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2022/06/10 18:45:58 by mkabissi         ###   ########.fr       */
+=======
+/*   Updated: 2022/06/11 11:27:23 by amaarifa         ###   ########.fr       */
+>>>>>>> 865717e9c1097d1274135c1d8dfe888d64d16c0c
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +25,7 @@
 # include <unistd.h>
 # include "./src/libft/libft.h"
 # include "fcntl.h"
+# include "signal.h"
 
 # define EMPTY_TOKEN -1
 # define AMBIGUOUS_REDIRECT -2
@@ -67,6 +72,8 @@ typedef struct s_cmd_list {
 	int		exit;
 	t_env	**env;
 }	t_cmd_list;
+
+void	rl_replace_line(char *string, int i);
 
 #endif
 

@@ -6,7 +6,7 @@
 /*   By: mkabissi <mkabissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 18:20:45 by mkabissi          #+#    #+#             */
-/*   Updated: 2022/06/11 16:05:51 by mkabissi         ###   ########.fr       */
+/*   Updated: 2022/06/11 16:21:20 by mkabissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,13 +110,11 @@ void	execute_command(char **ar, t_env **env_lst, t_cmd_list *cmd_lst, int n)
 	else if (flag == PWD)
 		pwd();
 	else if (flag == EXPORT)
-	{
 		ft_export(env_lst, ar);
-	}
 	else if (flag == UNSET)
 		unset(env_lst, ar);
 	else if (flag == ENV)
-		env(*env_lst);
+		env(*env_lst, ar);
 	else if (flag == EXIT)
 		ft_exit(ar, cmd_lst);
 	else

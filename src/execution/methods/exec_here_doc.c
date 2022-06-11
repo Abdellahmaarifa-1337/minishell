@@ -6,7 +6,7 @@
 /*   By: amaarifa <amaarifa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 18:58:55 by amaarifa          #+#    #+#             */
-/*   Updated: 2022/06/08 12:22:33 by amaarifa         ###   ########.fr       */
+/*   Updated: 2022/06/11 14:32:03 by amaarifa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,16 +32,26 @@ int	is_the_last_out(t_token *tokens, int index)
 	return (1);
 }
 
+void handler()
+{
+	printf("child recievd \n");
+	exit(0);
+}
+
 void	open_empty_here_doc(char *limiter)
 {
 	char	*s;
 
 	s = readline(">");
-	while (!s || ft_strncmp(s, limiter, ft_strlen(limiter) + 1) != 0)
+	if (!s)
+		return ;
+	while (ft_strncmp(s, limiter, ft_strlen(limiter) + 1) != 0)
 	{
 		if (s)
 			free(s);
 		s = readline(">");
+		if (!s)
+			return ;
 	}
 	if (s)
 		free(s);
@@ -125,7 +135,9 @@ void	open_full_here_doc(t_token *token, int id, t_env *env_lst)
 	fd = open(name, O_CREAT | O_RDWR | O_TRUNC, 0777);
 	res = ft_strdup("");
 	s = readline(">");
-	while (!s || ft_strncmp(s, token->value, ft_strlen(token->value) + 1) != 0)
+	if (!s)
+		return ;
+	while (ft_strncmp(s, token->value, ft_strlen(token->value) + 1) != 0)
 	{
 		if (s)
 		{
@@ -135,6 +147,8 @@ void	open_full_here_doc(t_token *token, int id, t_env *env_lst)
 				res = append_string(res, s);
 		}
 		s = readline(">");
+		if (!s)
+			return ;
 	}
 	if (s)
 		free(s);
@@ -172,9 +186,18 @@ void	exec_here_doc(t_cmd_list *cmd_lst, t_env *env_lst)
 	int	i;
 
 	i = 0;
-	while ((cmd_lst->tokens)[i])
+	//signal(SIGINT, SIG_IGN);
+	if (fork() == 0)
 	{
-		open_here_doc((cmd_lst->tokens)[i], i, env_lst);
-		i++;
+		signal(SIGINT, handler);
+		while ((cmd_lst->tokens)[i])
+		{
+			//printf("going to next herdoc\n");
+			open_here_doc((cmd_lst->tokens)[i], i, env_lst);
+			i++;
+		}
+		exit(0);
 	}
+	//signal(SIGINT, int_handler);
+	wait(NULL);
 }
