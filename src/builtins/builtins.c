@@ -6,7 +6,7 @@
 /*   By: mkabissi <mkabissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 18:20:45 by mkabissi          #+#    #+#             */
-/*   Updated: 2022/06/11 16:21:20 by mkabissi         ###   ########.fr       */
+/*   Updated: 2022/06/11 19:18:53 by mkabissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ void	exec(char **args, t_env **env_lst, int fork_it)
 {
 	char	**env;
 	int		pid;
+	int		status;
 
 	env = NULL;
 	env = env_convert(*env_lst);
@@ -63,7 +64,6 @@ void	exec(char **args, t_env **env_lst, int fork_it)
 			execve(args[0], args, env);
 			exit(1);
 		}
-		int status;
 		wait(&status);
 		if (WIFEXITED(status))
 			g_exit_status = WEXITSTATUS(status);

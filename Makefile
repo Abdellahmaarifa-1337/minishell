@@ -30,8 +30,6 @@ call_make:
 ${NAME}:${OBJ} $(LIBFT) $(PARSER) $(BUILTIN) $(EXECUTION)
 	@${CC} ${CFLAGS} -lreadline ${RDLIB} ${RDINCLUDE} ${LIBFT} ${PARSER} ${BUILTIN} $(EXECUTION) ${OBJ} -o ${NAME} 
 
-#${OBJ}:${SRC}
-
 clean:
 	make clean -C src/libft
 	make clean -C src/parser

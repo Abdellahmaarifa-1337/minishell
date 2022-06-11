@@ -6,7 +6,7 @@
 /*   By: mkabissi <mkabissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 09:07:00 by amaarifa          #+#    #+#             */
-/*   Updated: 2022/06/10 19:50:45 by mkabissi         ###   ########.fr       */
+/*   Updated: 2022/06/11 19:59:14 by mkabissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ char	*get_right_path(char *command, char **path, int exit_process)
 	char	*cmd;
 	char	*temp;
 
-	i = 0;
 	if (command && !command[0])
 		return (NULL);
 	if (ft_strchr(command, '/'))
@@ -39,7 +38,8 @@ char	*get_right_path(char *command, char **path, int exit_process)
 		else
 			throw_not_found_err(NULL, command, exit_process);
 	}
-	while (path && path[i])
+	i = -1;
+	while (path && path[++i])
 	{
 		temp = ft_strjoin(path[i], "/");
 		cmd = ft_strjoin(temp, command);
@@ -48,7 +48,6 @@ char	*get_right_path(char *command, char **path, int exit_process)
 			return (cmd);
 		else
 			free(cmd);
-		i++;
 	}
 	return (0);
 }
@@ -65,6 +64,22 @@ void	free_path(char **path)
 	}
 }
 
+int	command_not_found_case(char **args, char *tmp, int exit_process)
+{
+	tmp = args[0];
+	g_exit_status = 127;
+	args[0] = ft_strjoin("minishell: ", args[0]);
+	tmp = ft_strjoin(args[0], ": command not found");
+	free(args[0]);
+	throw_not_found_err(tmp, NULL, exit_process);
+	free(tmp);
+	if (exit_process)
+		exit(g_exit_status);
+	else
+		return (0);
+	return (1);
+}
+
 int	resolve_path(char **args, t_env **env_lst, int exit_process)
 {
 	char	**path;
@@ -76,20 +91,8 @@ int	resolve_path(char **args, t_env **env_lst, int exit_process)
 	path = ft_split(tmp, ':');
 	free(tmp);
 	tmp = get_right_path(args[0], path, exit_process);
-	if (!tmp || !tmp[0])
-	{
-		tmp = args[0];
-		g_exit_status = 127;
-		args[0] = ft_strjoin("minishell: ", args[0]);
-		tmp = ft_strjoin(args[0], ": command not found");
-		free(args[0]);
-		throw_not_found_err(tmp, NULL, exit_process);
-		free(tmp);
-		if (exit_process)
-			exit(g_exit_status);
-		else
-			return (0);
-	}
+	if ((!tmp || !tmp[0]) && !command_not_found_case(args, tmp, exit_process))
+		return (0);
 	else
 	{
 		free(args[0]);
