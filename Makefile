@@ -1,5 +1,5 @@
 CC=cc
-CFLAGS= -Wall -Wextra -Wall #-fsanitize=address
+CFLAGS= -Wall -Wextra -Wall -fsanitize=address
 UTILS= src/utils
 PARSER= src/parser
 RDLIB= -L/Users/${USER}/goinfre/.brew/opt/readline/lib 

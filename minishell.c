@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amaarifa <amaarifa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mkabissi <mkabissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 13:48:45 by amaarifa          #+#    #+#             */
-/*   Updated: 2022/06/11 12:58:25 by amaarifa         ###   ########.fr       */
+/*   Updated: 2022/06/11 16:19:35 by mkabissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,12 +123,7 @@ void	prompt(t_env **env_lst)
 		line = readline("minishell$ ");
 		if (!line)
 			exit(0);
-		if (line[0] == '\0')
-		{
-			free(line);
-			continue ;
-		}
-		if (!syntax_checker(line))
+		if (line[0] == '\0' || !syntax_checker(line))
 		{
 			free(line);
 			continue ;
@@ -144,7 +139,6 @@ void	prompt(t_env **env_lst)
 		keep_reading -= cmd_list->exit;
 		free_cmd_list(cmd_list);
 		cmd_list = NULL;
-		// exit(0);
 	}
 	if (g_exit_status < 0)
 		g_exit_status = (g_exit_status  + 1) * -1;

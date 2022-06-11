@@ -6,7 +6,7 @@
 /*   By: mkabissi <mkabissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 07:12:51 by mkabissi          #+#    #+#             */
-/*   Updated: 2022/06/08 22:47:35 by mkabissi         ###   ########.fr       */
+/*   Updated: 2022/06/09 19:53:30 by mkabissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ int	ft_isnumber(char *arg)
 	i = 0;
 	if (!arg)
 		return (0);
+	if (arg[i] == '-')
+		i++;
 	while (arg[i])
 	{
 		if (ft_isdigit(arg[i]) == 0)
@@ -47,7 +49,7 @@ void	ft_exit(char **args, t_cmd_list *cmd_lst)
 	}
 	else if (size > 1 && ft_isnumber(args[1]) == 0)
 	{
-		g_exit_status = 2;
+		g_exit_status = 255;
 		ft_putstr_fd("minishell: exit: ", STDERR_FILENO);
 		ft_putstr_fd(args[1], STDERR_FILENO);
 		ft_putendl_fd(": numeric argument required", STDERR_FILENO);
