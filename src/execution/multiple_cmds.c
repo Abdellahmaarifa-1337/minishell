@@ -6,7 +6,7 @@
 /*   By: mkabissi <mkabissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/11 21:01:30 by mkabissi          #+#    #+#             */
-/*   Updated: 2022/06/12 11:26:19 by mkabissi         ###   ########.fr       */
+/*   Updated: 2022/06/12 14:37:22 by mkabissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,12 @@ void	ft_dup(int *int_out, int **fd, int size, int n)
 	}    
 }
 
-void	exec_current_command(t_data *dt, char **args, int *int_out, int **fd)
+void	exec_current_command(t_data *dt, int *int_out, int **fd)
 {
+	char	**args;
+
+	signal(SIGINT, handler_single_cmd);
+	signal(SIGQUIT, handler_single_cmd);
 	if (fork() == 0)
 	{
 		args = get_args((dt->cmd_lst->tokens) + dt->n);
@@ -86,13 +90,14 @@ void	finish_exec(t_data *dt, int **fd)
 	wait(&(dt->status));
 	if (WIFEXITED(dt->status))
 		g_exit_status = WEXITSTATUS(dt->status);
+	if (g_exit_status < 0)
+		g_exit_status = (g_exit_status * -1) + 128;
 	ft_free((void **)fd, dt->n_cmd);
 	free(fd);
 }
 
 void	exec_multiple_cmds(t_cmd_list *cmd_lst, t_env **env_lst, t_data *dt)
 {
-	char	**args;
 	int		**fd;
 	int		int_out[2];
 
@@ -110,7 +115,7 @@ void	exec_multiple_cmds(t_cmd_list *cmd_lst, t_env **env_lst, t_data *dt)
 				exit(1);
 		dt->cmd_lst = cmd_lst;
 		dt->env_lst = env_lst;
-		exec_current_command(dt, args, int_out, fd);
+		exec_current_command(dt, int_out, fd);
 		dt->n++;
 	}
 	finish_exec(dt, fd);

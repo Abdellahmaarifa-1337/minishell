@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mkabissi <mkabissi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: amaarifa <amaarifa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 07:12:51 by mkabissi          #+#    #+#             */
-/*   Updated: 2022/06/09 19:53:30 by mkabissi         ###   ########.fr       */
+/*   Updated: 2022/06/12 12:33:39 by amaarifa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ void	ft_exit(char **args, t_cmd_list *cmd_lst)
 		cmd_lst->exit = 0;
 		g_exit_status = 1;
 		ft_putendl_fd("minishell: exit: too many arguments", STDERR_FILENO);
+		return ;
 	}
 	else if (size > 1 && ft_isnumber(args[1]) == 0)
 	{
@@ -54,5 +55,5 @@ void	ft_exit(char **args, t_cmd_list *cmd_lst)
 		ft_putstr_fd(args[1], STDERR_FILENO);
 		ft_putendl_fd(": numeric argument required", STDERR_FILENO);
 	}
-	return ;
+	exit(g_exit_status);
 }

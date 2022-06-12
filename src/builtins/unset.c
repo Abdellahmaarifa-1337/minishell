@@ -6,7 +6,7 @@
 /*   By: amaarifa <amaarifa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/29 23:13:46 by amaarifa          #+#    #+#             */
-/*   Updated: 2022/06/11 11:13:19 by amaarifa         ###   ########.fr       */
+/*   Updated: 2022/06/12 09:52:16 by amaarifa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,14 @@
 
 void	free_node(t_env **env)
 {
-	free((*env)->key);
-	free((*env)->value);
-	free((*env));
+	if (!(*env))
+		return ;
+	//free((*env)->key);
+	//free((*env)->value);
+	//free((*env));
+		//printf("key = %s, value %s\n",(*env)->key, (*env)->value);
+		//while(1);
+
 }
 
 void	delete_node(t_env **env, int index)
@@ -35,11 +40,13 @@ void	delete_node(t_env **env, int index)
 			prev = *env;
 			*env = (*env)->next;
 			free_node(&prev);
+			break ;
 		}
 		else if (i == index)
 		{
 			prev->next = tmp->next;
 			free_node(&tmp);
+			break ;
 		}
 		i++;
 		prev = tmp;

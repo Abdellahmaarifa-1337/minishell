@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mkabissi <mkabissi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: amaarifa <amaarifa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 18:20:45 by mkabissi          #+#    #+#             */
-/*   Updated: 2022/06/11 19:18:53 by mkabissi         ###   ########.fr       */
+/*   Updated: 2022/06/12 11:50:34 by amaarifa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,8 @@ int	ft_special_cmp(char	*s1, char	*s2, size_t	n)
 	return (i);
 }
 
+
+
 void	exec(char **args, t_env **env_lst, int fork_it)
 {
 	char	**env;
@@ -54,19 +56,26 @@ void	exec(char **args, t_env **env_lst, int fork_it)
 
 	env = NULL;
 	env = env_convert(*env_lst);
+
 	if (fork_it)
 	{
+		signal(SIGINT, handler_single_cmd);
+		signal(SIGQUIT, handler_single_cmd);
 		pid = fork();
 		if (pid < 0)
 			exit(0);
 		else if (pid == 0)
 		{
 			execve(args[0], args, env);
-			exit(1);
+			wait(NULL);
+			exit(0);
 		}
-		wait(&status);
+		while (wait(&status) != -1)
+			;
 		if (WIFEXITED(status))
 			g_exit_status = WEXITSTATUS(status);
+		if (g_exit_status < 0)
+			g_exit_status = (g_exit_status * -1) + 128;
 	}
 	else
 	{

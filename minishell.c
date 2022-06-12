@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mkabissi <mkabissi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: amaarifa <amaarifa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 13:48:45 by amaarifa          #+#    #+#             */
-/*   Updated: 2022/06/11 16:19:35 by mkabissi         ###   ########.fr       */
+/*   Updated: 2022/06/12 12:47:23 by amaarifa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,15 +116,20 @@ void	prompt(t_env **env_lst)
 	keep_reading = 1;
 	n = g_exit_status;
 
-	signal(SIGQUIT, SIG_IGN);
-	while (keep_reading > 0 && n == g_exit_status)
+	signal(SIGQUIT, int_handler);
+	
+	while (keep_reading > 0 && g_exit_status >= 0)
 	{
 		signal(SIGINT, int_handler);
+		// printf("value %d\n", g_exit_status);
+		// if (g_exit_status < 0)
+		// 	g_exit_status = (g_exit_status  + 1) * -1;
 		line = readline("minishell$ ");
 		if (!line)
 			exit(0);
 		if (line[0] == '\0' || !syntax_checker(line))
 		{
+			g_exit_status = 0;
 			free(line);
 			continue ;
 		}
@@ -140,8 +145,7 @@ void	prompt(t_env **env_lst)
 		free_cmd_list(cmd_list);
 		cmd_list = NULL;
 	}
-	if (g_exit_status < 0)
-		g_exit_status = (g_exit_status  + 1) * -1;
+	//printf("g_exit_status %d\n", g_exit_status);
 }
 
 int	main(int ac, char **av, char **env)
@@ -154,6 +158,8 @@ int	main(int ac, char **av, char **env)
 	while (1)
 	{
 		prompt(&env_lst);
+		if (g_exit_status < 0)
+			g_exit_status = 1;
 	}
 	return (0);
 }
