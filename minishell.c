@@ -6,7 +6,7 @@
 /*   By: amaarifa <amaarifa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 13:48:45 by amaarifa          #+#    #+#             */
-/*   Updated: 2022/06/11 12:58:25 by amaarifa         ###   ########.fr       */
+/*   Updated: 2022/06/11 16:37:45 by amaarifa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,6 +117,7 @@ void	prompt(t_env **env_lst)
 	n = g_exit_status;
 
 	signal(SIGQUIT, SIG_IGN);
+	
 	while (keep_reading > 0 && n == g_exit_status)
 	{
 		signal(SIGINT, int_handler);

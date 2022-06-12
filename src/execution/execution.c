@@ -6,7 +6,7 @@
 /*   By: amaarifa <amaarifa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 14:07:51 by mkabissi          #+#    #+#             */
-/*   Updated: 2022/06/11 12:38:01 by amaarifa         ###   ########.fr       */
+/*   Updated: 2022/06/11 16:59:39 by amaarifa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -203,6 +203,11 @@ void	execution(t_cmd_list *cmd_lst, t_env **env_lst)
 	// printf("number of cmd : %d\n", cmd_lst->n_cmd);
 	// exit(1);
 	exec_here_doc(cmd_lst, *env_lst);
+	if (g_exit_status < 0)
+	{
+		g_exit_status = (g_exit_status - 1) * -1;
+		return ;
+	}
 	if (cmd_lst->n_cmd == 1)
 	{
 		exec_single_cmd(cmd_lst, env_lst);	
