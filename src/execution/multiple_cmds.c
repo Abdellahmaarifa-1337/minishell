@@ -6,7 +6,7 @@
 /*   By: mkabissi <mkabissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/11 21:01:30 by mkabissi          #+#    #+#             */
-/*   Updated: 2022/06/12 00:49:17 by mkabissi         ###   ########.fr       */
+/*   Updated: 2022/06/12 11:26:19 by mkabissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	ft_dup(int *int_out, int **fd, int size, int n)
 		dup2(fd[n][0], STDIN_FILENO);
 		if (int_out[1] > -1)
 			dup2(int_out[1], STDOUT_FILENO);
-	}
+	}    
 }
 
 void	exec_current_command(t_data *dt, char **args, int *int_out, int **fd)
