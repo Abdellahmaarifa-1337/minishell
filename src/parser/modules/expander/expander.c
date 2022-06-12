@@ -6,7 +6,7 @@
 /*   By: amaarifa <amaarifa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 01:34:52 by amaarifa          #+#    #+#             */
-/*   Updated: 2022/06/12 13:07:52 by amaarifa         ###   ########.fr       */
+/*   Updated: 2022/06/12 18:39:07 by amaarifa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void	collect_none_var(char	*value, int *i, char **s)
 		*s = ft_strdup("");
 	start = *i;
 	while (*i < (int)ft_strlen(value) && value[*i] && !(value[*i] == '$' && value[*i + 1]
-			&& (ft_isalpha(value[*i + 1]) || value[*i + 1] == '_')))
+			&& (ft_isalpha(value[*i + 1]) || value[*i + 1] == '_' || value[*i + 1] == '?')))
 	{
 		if (value[*i] == '\'' && !unclosed_double_qoutes(value, *i - 1))
 		{	

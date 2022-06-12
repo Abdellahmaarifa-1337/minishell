@@ -3,6 +3,6 @@
 #include <string.h>
 int main()
 {
-	printf("%d\n", strncmp("zz", "zcvbcxvbvcbA", 3));
+	printf("%d\n", strlen(NULL));
 	return 0;
 }

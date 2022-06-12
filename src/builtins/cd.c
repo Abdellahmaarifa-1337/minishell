@@ -6,7 +6,7 @@
 /*   By: mkabissi <mkabissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 14:22:37 by mkabissi          #+#    #+#             */
-/*   Updated: 2022/06/11 19:26:25 by mkabissi         ###   ########.fr       */
+/*   Updated: 2022/06/12 23:51:26 by mkabissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ void	change_envpwd(t_env **env_lst, char *new_pwd, char *old_pwd)
 	char	*new;
 	char	*old;
 
+	if (!*env_lst)
+		return ;
 	new = ft_strjoin("export PWD=", new_pwd);
 	old = ft_strjoin("export OLDPWD=", old_pwd);
 	ft_export(env_lst, ft_split(new, ' '));
@@ -34,6 +36,50 @@ void	put_error_message(char *dirname)
 	ft_putendl_fd(": No such file or directory", STDERR_FILENO);
 }
 
+char	*ft_getenv(char *name, t_env **env_lst)
+{
+	t_env	*temp;
+
+	if (!*env_lst || !name)
+		return (NULL);
+	temp = *env_lst;
+	while (temp)
+	{
+		if (ft_strcmp(name, temp->key) == 0)
+			return (temp->value);
+		temp = temp->next;
+	}
+	return (NULL);
+}
+
+char	*get_directory_name(char *token, t_env **env_lst)
+{
+	char	*home;
+	char	*rest_of_path;
+	char	*temp;
+
+	if (!token || ft_strncmp("~", token, 2) == 0)
+		return (ft_getenv("HOME", env_lst));
+	else if (ft_strncmp("~-", token, 3) == 0)
+		return (ft_getenv("OLDPWD", env_lst));
+	else if (ft_strncmp("-", token, 2) == 0)
+	{
+		temp = ft_getenv("OLDPWD", env_lst);
+		ft_putendl_fd(temp, STDOUT_FILENO);
+		return (temp);
+	}
+	else if (ft_strncmp("~/", token, 2) == 0)
+	{
+		home = ft_getenv("HOME", env_lst);
+		rest_of_path = ft_substr(token, 1, ft_strlen(token) - 1);
+		temp = ft_strjoin(home, rest_of_path);
+		free(rest_of_path);
+		return (temp);
+	}
+	else
+		return (token);
+}
+
 void	cd(char **token, t_env **env_lst)
 {
 	char	buffer[PATH_MAX];
@@ -42,10 +88,7 @@ void	cd(char **token, t_env **env_lst)
 	DIR		*dir;
 
 	old_pwd = ft_strdup(getcwd(buffer, PATH_MAX));
-	if (!token[1])
-		dirname = getenv("HOME");
-	else
-		dirname = token[1];
+	dirname = get_directory_name(token[1], env_lst);
 	dir = opendir(dirname);
 	if (dir)
 	{
@@ -53,6 +96,7 @@ void	cd(char **token, t_env **env_lst)
 		chdir(dirname);
 		getcwd(buffer, PATH_MAX);
 		change_envpwd(env_lst, ft_strdup(buffer), old_pwd);
+		g_exit_status = 0;
 	}
 	else
 	{
