@@ -6,7 +6,7 @@
 /*   By: amaarifa <amaarifa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 18:58:55 by amaarifa          #+#    #+#             */
-/*   Updated: 2022/06/11 19:43:05 by amaarifa         ###   ########.fr       */
+/*   Updated: 2022/06/12 09:09:02 by amaarifa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,19 +34,23 @@ int	is_the_last_out(t_token *tokens, int index)
 
 void handler()
 {
-	printf("test 2\n");
+	// printf("test 2\n");
 	//int fd = 3;
 	//int saved = dup(0);
 	//dup2(fd, 0);
+	//printf("handler working 1\n");
 	close(0);
-	g_exit_status = -1 * (g_exit_status + 1);
+	if (g_exit_status >=0)
+		g_exit_status = -1 * (g_exit_status + 1);
 	//dup2(0, saved);
 }
 
 void	open_empty_here_doc(char *limiter)
 {
 	char	*s;
-
+	
+	if (g_exit_status < 0)
+	 	return ;
 	s = readline(">");
 	// if (!s)
 	// 	return ;
@@ -139,7 +143,9 @@ void	open_full_here_doc(t_token *token, int id, t_env *env_lst)
 	name = generate_unique_name("/tmp/here_doc_", id);
 	fd = open(name, O_CREAT | O_RDWR | O_TRUNC, 0777);
 	res = ft_strdup("");
-	s = readline(">");
+	if (g_exit_status < 0)
+	 	return ;
+	s = readline("<");
 	// if (!s)
 	// 	return ;
 	while (s && ft_strncmp(s, token->value, ft_strlen(token->value) + 1) != 0)
@@ -151,7 +157,7 @@ void	open_full_here_doc(t_token *token, int id, t_env *env_lst)
 			else
 				res = append_string(res, s);
 		}
-		s = readline(">");
+		s = readline("<");
 		// if (!s)
 		// 	return ;
 	}
@@ -205,6 +211,7 @@ void	exec_here_doc(t_cmd_list *cmd_lst, t_env *env_lst)
 		}
 		// dprintf(2, "done from herdocs\n");
 		dup2(saved, 0);
+		signal(SIGINT, int_handler);
 	// 	exit(0);
 	// }
 	//signal(SIGINT, int_handler);

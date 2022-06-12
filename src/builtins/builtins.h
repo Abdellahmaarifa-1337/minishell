@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amaarifa <amaarifa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mkabissi <mkabissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/29 23:15:10 by amaarifa          #+#    #+#             */
-/*   Updated: 2022/06/11 06:37:32 by amaarifa         ###   ########.fr       */
+/*   Updated: 2022/06/11 19:20:15 by mkabissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include <limits.h>
 # include <dirent.h>
+# include <sys/errno.h>
 # include "../../types.h"
 # include "../lib/lib.h"
 
@@ -28,7 +29,8 @@
 
 /********** BUILTINS **********/
 
-void	execute_command(char **args, t_env **env_lst, t_cmd_list *cmd_lst, int multi_cmds);
+void	execute_command(char **args, t_env **env_lst, t_cmd_list *cmd_lst,
+			int multi_cmds);
 void	echo(char **token);
 void	pwd(void);
 void	unset(t_env **env, char **av);

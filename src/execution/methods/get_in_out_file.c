@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   get_in_out_file.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mkabissi <mkabissi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: amaarifa <amaarifa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 10:01:36 by amaarifa          #+#    #+#             */
-/*   Updated: 2022/06/09 15:31:11 by mkabissi         ###   ########.fr       */
+/*   Updated: 2022/06/12 12:12:51 by amaarifa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../execution.h"
 
-int	open_in_file(char *name)
+int	open_in_file(char *name, int exit_process)
 {
 	int	fd;
 
@@ -21,12 +21,13 @@ int	open_in_file(char *name)
 	{
 		perror((const char *)name);
 		g_exit_status = 1;
-		exit(g_exit_status);
+		if (exit_process)
+			exit(g_exit_status);
 	}
 	return (fd);
 }
 
-int	open_out_file(char *name, int out_type)
+int	open_out_file(char *name, int out_type, int exit_process)
 {
 	int	fd;
 
@@ -38,35 +39,40 @@ int	open_out_file(char *name, int out_type)
 	{
 		perror((const char *)name);
 		g_exit_status = 1;
-		exit(g_exit_status);
+		if (exit_process)
+			exit(g_exit_status);
 	}
 	return (fd);
 }
 
-int	*get_in_out_file(t_token *tokens, int *fd)
+int	*get_in_out_file(t_token *tokens, int *fd, int exit_process)
 {
 	t_token	*tmp;
+	int		stop;
 
+	stop = 0;
 	tmp = tokens;
-	fd[0] = -1;
-	fd[1] = -1;
-	while (tmp)
+	fd[0] = -2;
+	fd[1] = -2;
+	while (tmp && !stop)
 	{
 		if (tmp->type == IN_REDERCTIONT)
 		{
-			if (fd[0] != -1)
+			if (fd[0] > -1)
 				close(fd[0]);
-			fd[0] = open_in_file(tmp->value);
+			fd[0] = open_in_file(tmp->value, exit_process);
+			if (fd[0] == -1 && exit_process == 0)
+				stop = 1;
 		}
 		else if (tmp->type == OUT_TRUNC || tmp->type == APPEND)
 		{
-			if (fd[1] != -1)
+			if (fd[1] > -1)
 				close(fd[1]);
-			fd[1] = open_out_file(tmp->value, tmp->type);
-			
+			fd[1] = open_out_file(tmp->value, tmp->type, exit_process);
+			if (fd[1] == -1 && exit_process == 0)
+				stop = 1;
 		}
 		tmp = tmp->next;
 	}
-	fprintf(stderr, "fd: %d\n", fd[1]);
 	return (fd);
 }

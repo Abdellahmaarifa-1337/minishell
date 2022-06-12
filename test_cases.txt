@@ -1,1 +1,16 @@
 // empty token > "" cat "" "" ""
+
+
+// bash: unset: `4one': not a valid identifier -------> show errors messages
+// export ""  -------> show errors messages
+// unset PATH heep used after free
+
+
+cd ~
+cd ~-
+cd ~/Desktop
+exit hiyd print f childs "|"
+echo '"'$?$?$?$?$'"'
+singnal quit fix new lines ""   ctrl + \
+
+unset PTAH and run excutable files, no such file or directory.

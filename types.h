@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   types.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amaarifa <amaarifa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mkabissi <mkabissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/21 18:23:30 by amaarifa          #+#    #+#             */
-/*   Updated: 2022/06/11 11:27:23 by amaarifa         ###   ########.fr       */
+/*   Updated: 2022/06/12 00:23:45 by mkabissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,11 +63,18 @@ typedef struct s_token_source {
 typedef struct s_cmd_list {
 	char	*source;
 	char	*cmd_line;
-	t_token	**tokens;
-	int		n_cmd;
 	int		exit;
+	t_token	**tokens;
 	t_env	**env;
 }	t_cmd_list;
+
+typedef struct s_data {
+	int			n;
+	int			n_cmd;
+	int			status;
+	t_env		**env_lst;
+	t_cmd_list	*cmd_lst;
+}	t_data;
 
 void	rl_replace_line(char *string, int i);
 

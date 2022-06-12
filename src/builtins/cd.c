@@ -6,7 +6,7 @@
 /*   By: mkabissi <mkabissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 14:22:37 by mkabissi          #+#    #+#             */
-/*   Updated: 2022/06/09 12:52:03 by mkabissi         ###   ########.fr       */
+/*   Updated: 2022/06/11 19:26:25 by mkabissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,21 +27,23 @@ void	change_envpwd(t_env **env_lst, char *new_pwd, char *old_pwd)
 	free(old_pwd);
 }
 
-void cd(char **token, t_env **env_lst)
+void	put_error_message(char *dirname)
+{
+	ft_putstr_fd("minishell: cd: ", STDERR_FILENO);
+	ft_putstr_fd(dirname, STDERR_FILENO);
+	ft_putendl_fd(": No such file or directory", STDERR_FILENO);
+}
+
+void	cd(char **token, t_env **env_lst)
 {
 	char	buffer[PATH_MAX];
 	char	*old_pwd;
 	char	*dirname;
 	DIR		*dir;
-fprintf(stderr, "I got you !!!\n");
+
 	old_pwd = ft_strdup(getcwd(buffer, PATH_MAX));
 	if (!token[1])
-	{
-
-fprintf(stderr, "going home !!!\n");
 		dirname = getenv("HOME");
-fprintf(stderr, ">> %s <<\n", dirname);
-	}
 	else
 		dirname = token[1];
 	dir = opendir(dirname);
@@ -54,8 +56,8 @@ fprintf(stderr, ">> %s <<\n", dirname);
 	}
 	else
 	{
-		perror("cd error");
+		g_exit_status = 1;
+		put_error_message(dirname);
 		free(old_pwd);
 	}
-	return ;
 }

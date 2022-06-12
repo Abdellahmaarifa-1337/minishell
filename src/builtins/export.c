@@ -6,7 +6,7 @@
 /*   By: amaarifa <amaarifa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 11:58:30 by amaarifa          #+#    #+#             */
-/*   Updated: 2022/06/11 11:06:50 by amaarifa         ###   ########.fr       */
+/*   Updated: 2022/06/12 09:21:33 by amaarifa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void	add_export_env(t_env **env_lst, char *s, int append)
 	t_env	*env;
 
 	env = create_env(s);
-	if ((env->key)[ft_strlen(env->key) - 1] == '+')
+	if (env->key && env->key[0] && (env->key)[ft_strlen(env->key) - 1] == '+')
 	{
 		(env->key)[ft_strlen(env->key) - 1] = '\0';
 		append = 1;

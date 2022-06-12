@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_convert.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amaarifa <amaarifa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mkabissi <mkabissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 11:55:27 by amaarifa          #+#    #+#             */
-/*   Updated: 2022/06/08 12:29:26 by amaarifa         ###   ########.fr       */
+/*   Updated: 2022/06/11 16:53:48 by mkabissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ char	**env_convert(t_env *env_lst)
 	t_env	*tmp;
 	char	**env;
 	int		i;
-	
+
 	if (!env_lst)
 		return (NULL);
 	i = 0;

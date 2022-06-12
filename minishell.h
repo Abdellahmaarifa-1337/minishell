@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amaarifa <amaarifa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mkabissi <mkabissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 13:49:19 by amaarifa          #+#    #+#             */
-/*   Updated: 2022/06/11 12:37:19 by amaarifa         ###   ########.fr       */
+/*   Updated: 2022/06/12 00:26:50 by mkabissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
  *
  * @brief a simple shell programme.
  *
- * @author Abdellah maarifa & ilyass kabissi
+ * @author Abdellah maarifa & mohamed ilyas kabissi
  * 
  */
 
@@ -35,6 +35,5 @@ void	execution(t_cmd_list *cmd_lst, t_env **env_lst);
 
 void	print_token(t_token *token);
 void	print_cmd_list(t_cmd_list *cmd_list);
-
 
 #endif
