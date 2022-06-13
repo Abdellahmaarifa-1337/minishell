@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amaarifa <amaarifa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mkabissi <mkabissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 18:20:45 by mkabissi          #+#    #+#             */
-/*   Updated: 2022/06/12 11:50:34 by amaarifa         ###   ########.fr       */
+/*   Updated: 2022/06/13 10:59:44 by mkabissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,7 +125,7 @@ void	execute_command(char **ar, t_env **env_lst, t_cmd_list *cmd_lst, int n)
 	else if (flag == ENV)
 		env(*env_lst, ar);
 	else if (flag == EXIT)
-		ft_exit(ar, cmd_lst);
+		ft_exit(ar, cmd_lst, n);
 	else
 		exec(ar, env_lst, n);
 }

@@ -19,3 +19,6 @@ exit hiyd print f childs "|"
 unset PTAH and run excutable files, no such file or directory.
 echo '"'$?$?$?$?$?'"'
 singnal quit fix new lines ""   ctrl + \
+
+
+

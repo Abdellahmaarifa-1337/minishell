@@ -6,7 +6,7 @@
 /*   By: mkabissi <mkabissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/21 18:23:30 by amaarifa          #+#    #+#             */
-/*   Updated: 2022/06/12 00:23:45 by mkabissi         ###   ########.fr       */
+/*   Updated: 2022/06/13 19:42:42 by mkabissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,14 @@ typedef struct s_data {
 	t_env		**env_lst;
 	t_cmd_list	*cmd_lst;
 }	t_data;
+
+typedef struct s_syntax_dt {
+	int			pipe_error;
+	int			stx_error;
+	int			end;
+	int			error;
+}	t_syntax_dt;
+
 
 void	rl_replace_line(char *string, int i);
 

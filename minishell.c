@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amaarifa <amaarifa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mkabissi <mkabissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 13:48:45 by amaarifa          #+#    #+#             */
-/*   Updated: 2022/06/12 18:32:32 by amaarifa         ###   ########.fr       */
+/*   Updated: 2022/06/13 19:55:22 by mkabissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,10 +111,8 @@ void	prompt(t_env **env_lst)
 	t_cmd_list	*cmd_list;
 	char		*line;
 	int			keep_reading;
-	int			n;
 
 	keep_reading = 1;
-	n = g_exit_status;
 
 	signal(SIGQUIT, int_handler);
 	
