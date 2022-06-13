@@ -6,7 +6,7 @@
 /*   By: amaarifa <amaarifa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/02 15:25:33 by amaarifa          #+#    #+#             */
-/*   Updated: 2021/11/10 15:40:44 by amaarifa         ###   ########.fr       */
+/*   Updated: 2022/06/13 23:24:46 by amaarifa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	size_t	i;
 	size_t	str_size;
 
+	if (len > ft_strlen(s))
+		len = ft_strlen(s);
 	if (!s)
 		return (0);
 	i = 0;

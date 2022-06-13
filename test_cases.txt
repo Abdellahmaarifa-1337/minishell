@@ -14,7 +14,7 @@ exit -- 56
 
 cat | adfdasfd | adsfadsf
 cd ../ from file was recently removed
-minishell$ echo '"'$'"'
+
 // solved
 unset PTAH and run excutable files, no such file or directory.
 echo '"'$?$?$?$?$?'"'

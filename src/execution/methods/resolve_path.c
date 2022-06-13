@@ -6,25 +6,13 @@
 /*   By: amaarifa <amaarifa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 09:07:00 by amaarifa          #+#    #+#             */
-/*   Updated: 2022/06/13 21:05:14 by amaarifa         ###   ########.fr       */
+/*   Updated: 2022/06/13 23:12:51 by amaarifa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../execution.h"
 
-void	free_path(char **path)
-{
-	int	i;
-
-	i = 0;
-	while (path[i])
-	{
-		free(path[i]);
-		i++;
-	}
-}
-
-void	no_cmd_err(int exit_process, char *command, char *msg)
+int	no_cmd_err(int exit_process, char *command, char *msg)
 {
 	ft_putstr_fd("minishell: ", 2);
 	ft_putstr_fd(command, 2);
@@ -32,53 +20,48 @@ void	no_cmd_err(int exit_process, char *command, char *msg)
 	g_exit_status = 127;
 	if (exit_process)
 		exit(g_exit_status);
+	return (0);
 }
 
-char	*get_right_path(char *command, char **path, int exit_process)
+char	*get_cmd(char	**path, int exit_process, char *command)
 {
 	int		i;
 	char	*cmd;
 	char	*temp;
 
-	if (command && !command[0])
+	i = -1;
+	while (path && path[++i])
 	{
-		no_cmd_err(exit_process, "", ": command not found");
-		return (0);
-	}
-	if (access(command, F_OK | X_OK) == 0 && !path)
-	{
-		return (ft_strdup(command));
-	}
-	else
-	{
-		if (ft_strchr(command, '/'))
-		{
-			if (access(command, F_OK | X_OK) == 0)
-				return (ft_strdup(command));
-			no_cmd_err(exit_process, command, ": No such file or directory");
-		}
+		temp = ft_strjoin(path[i], "/");
+		cmd = ft_strjoin(temp, command);
+		free(temp);
+		if (access(cmd, F_OK | X_OK) == 0)
+			return (cmd);
 		else
-		{
-			i = -1;
-			while (path && path[++i])
-			{
-				temp = ft_strjoin(path[i], "/");
-				cmd = ft_strjoin(temp, command);
-				free(temp);
-				if (access(cmd, F_OK | X_OK) == 0)
-					return (cmd);
-				else
-				 	free(cmd);
-			}
-			if (!path)
-				no_cmd_err(exit_process, command, ": No such file or directory");
-			else
-				no_cmd_err(exit_process, command, ": command not found");
-		}
-
-		return 0;
+			free(cmd);
 	}
-	return (cmd);
+	if (!path)
+		no_cmd_err(exit_process, command, ": No such file or directory");
+	else
+		no_cmd_err(exit_process, command, ": command not found");
+	return (0);
+}
+
+char	*get_right_path(char *command, char **path, int exit_process)
+{
+	if (command && !command[0])
+		no_cmd_err(exit_process, "", ": command not found");
+	if (access(command, F_OK | X_OK) == 0 && !path)
+		return (ft_strdup(command));
+	else if (ft_strchr(command, '/'))
+	{
+		if (access(command, F_OK | X_OK) == 0)
+			return (ft_strdup(command));
+		no_cmd_err(exit_process, command, ": No such file or directory");
+	}	
+	else
+		return (get_cmd(path, exit_process, command));
+	return (0);
 }
 
 int	command_not_found_case(char **args, char *tmp, int exit_process)
@@ -96,20 +79,6 @@ int	command_not_found_case(char **args, char *tmp, int exit_process)
 	return (1);
 }
 
-void	free_args(char **av)
-{
-	int	i;
-
-	i = 0;
-	while (av && av[i])
-	{
-		free(av[i]);
-		i++;
-	}
-	if (av)
-		free(av);
-}
-
 int	resolve_path(char **args, t_env **env_lst, int exit_process)
 {
 	char	**path;
@@ -124,10 +93,7 @@ int	resolve_path(char **args, t_env **env_lst, int exit_process)
 	if ((!tmp || !tmp[0]))
 	{
 		if (path)
-		{
 			free_path(path);
-			free(path);
-		}
 		if (args)
 			free_args(args);
 		return (0);
@@ -137,10 +103,6 @@ int	resolve_path(char **args, t_env **env_lst, int exit_process)
 		free(args[0]);
 		args[0] = tmp;
 	}
-	if (path)
-	{
-		free_path(path);
-		free(path);
-	}
+	free_path(path);
 	return (1);
 }
