@@ -6,11 +6,22 @@
 /*   By: amaarifa <amaarifa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 09:07:00 by amaarifa          #+#    #+#             */
-/*   Updated: 2022/06/13 12:02:59 by amaarifa         ###   ########.fr       */
+/*   Updated: 2022/06/13 16:34:48 by amaarifa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../execution.h"
+void	free_path(char **path)
+{
+	int	i;
+
+	i = 0;
+	while (path[i])
+	{
+		free(path[i]);
+		i++;
+	}
+}
 
 void	throw_not_found_err(char *err, char *msg, int exit_process)
 {
@@ -44,12 +55,16 @@ char	*get_right_path(char *command, char **path, int exit_process)
 		no_cmd_err(exit_process, "", ": command not found");
 		return (0);
 	}
-	if (access(command, F_OK | X_OK) == 0)
+	if (access(command, F_OK | X_OK) == 0 && !path)
+	{
 		return (ft_strdup(command));
+	}
 	else
 	{
 		if (ft_strchr(command, '/'))
 		{
+			if (access(command, F_OK | X_OK) == 0)
+				return (ft_strdup(command));
 			no_cmd_err(exit_process, command, ": No such file or directory");
 		}
 		else
@@ -76,17 +91,6 @@ char	*get_right_path(char *command, char **path, int exit_process)
 	return (cmd);
 }
 
-void	free_path(char **path)
-{
-	int	i;
-
-	i = 0;
-	while (path[i])
-	{
-		free(path[i]);
-		i++;
-	}
-}
 
 int	command_not_found_case(char **args, char *tmp, int exit_process)
 {
@@ -104,6 +108,8 @@ int	command_not_found_case(char **args, char *tmp, int exit_process)
 	return (1);
 }
 
+
+
 int	resolve_path(char **args, t_env **env_lst, int exit_process)
 {
 	char	**path;
@@ -116,7 +122,16 @@ int	resolve_path(char **args, t_env **env_lst, int exit_process)
 	free(tmp);
 	tmp = get_right_path(args[0], path, exit_process);
 	if ((!tmp || !tmp[0]))
+	{
+		if (path)
+		{
+			free_path(path);
+			free(path);
+			free(args[0]);
+			free(args);
+		}
 		return (0);
+	}
 	else
 	{
 		free(args[0]);

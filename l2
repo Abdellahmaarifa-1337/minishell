@@ -1,0 +1,16 @@
+Makefile
+README.md
+l
+l1
+l2
+leak.sh
+minishell
+minishell.c
+minishell.h
+minishell.o
+sig_test.c
+src
+test
+test.c
+test_cases.txt
+types.h

@@ -12,6 +12,9 @@ cd ~/Desktop
 exit hiyd print f childs "|"
 exit -- 56
 
+leaks
+
+
 // solved
 unset PTAH and run excutable files, no such file or directory.
 echo '"'$?$?$?$?$?'"'

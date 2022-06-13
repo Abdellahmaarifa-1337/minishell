@@ -6,7 +6,7 @@
 /*   By: amaarifa <amaarifa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 18:20:45 by mkabissi          #+#    #+#             */
-/*   Updated: 2022/06/12 11:50:34 by amaarifa         ###   ########.fr       */
+/*   Updated: 2022/06/13 16:40:54 by amaarifa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,19 @@ int	ft_special_cmp(char	*s1, char	*s2, size_t	n)
 }
 
 
+void free_env(char **env)
+{
+	int i;
+
+	i = 0;
+	while(env && env[i])
+	{
+		free(env[i]);
+		i++;
+	}
+	if(env)
+		free(env);
+}
 
 void	exec(char **args, t_env **env_lst, int fork_it)
 {
@@ -82,6 +95,7 @@ void	exec(char **args, t_env **env_lst, int fork_it)
 		execve(args[0], args, env);
 		exit(1);
 	}
+	free_env(env);
 }
 
 int	which_builtin(char *builtin)
