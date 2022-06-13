@@ -6,21 +6,11 @@
 /*   By: amaarifa <amaarifa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 18:20:45 by mkabissi          #+#    #+#             */
-/*   Updated: 2022/06/13 16:40:54 by amaarifa         ###   ########.fr       */
+/*   Updated: 2022/06/13 18:19:40 by amaarifa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtins.h"
-
-int	get_size_of_arr(void **tokens)
-{
-	int	len;
-
-	len = 0;
-	while (tokens && tokens[len])
-		len++;
-	return (len);
-}
 
 int	ft_special_cmp(char	*s1, char	*s2, size_t	n)
 {
@@ -46,50 +36,38 @@ int	ft_special_cmp(char	*s1, char	*s2, size_t	n)
 	return (i);
 }
 
-
-void free_env(char **env)
+void	run_in_child(char **args, char **env)
 {
-	int i;
+	int		pid;
+	int		status;
 
-	i = 0;
-	while(env && env[i])
+	signal(SIGINT, handler_single_cmd);
+	signal(SIGQUIT, handler_single_cmd);
+	pid = fork();
+	if (pid < 0)
+		exit(0);
+	else if (pid == 0)
 	{
-		free(env[i]);
-		i++;
+		execve(args[0], args, env);
+		wait(NULL);
+		exit(0);
 	}
-	if(env)
-		free(env);
+	while (wait(&status) != -1)
+		;
+	if (WIFEXITED(status))
+		g_exit_status = WEXITSTATUS(status);
+	if (g_exit_status < 0)
+		g_exit_status = (g_exit_status * -1) + 128;
 }
 
 void	exec(char **args, t_env **env_lst, int fork_it)
 {
 	char	**env;
-	int		pid;
-	int		status;
 
 	env = NULL;
 	env = env_convert(*env_lst);
-
 	if (fork_it)
-	{
-		signal(SIGINT, handler_single_cmd);
-		signal(SIGQUIT, handler_single_cmd);
-		pid = fork();
-		if (pid < 0)
-			exit(0);
-		else if (pid == 0)
-		{
-			execve(args[0], args, env);
-			wait(NULL);
-			exit(0);
-		}
-		while (wait(&status) != -1)
-			;
-		if (WIFEXITED(status))
-			g_exit_status = WEXITSTATUS(status);
-		if (g_exit_status < 0)
-			g_exit_status = (g_exit_status * -1) + 128;
-	}
+		run_in_child(args, env);
 	else
 	{
 		execve(args[0], args, env);

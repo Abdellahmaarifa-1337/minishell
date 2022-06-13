@@ -6,11 +6,12 @@
 /*   By: amaarifa <amaarifa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 09:07:00 by amaarifa          #+#    #+#             */
-/*   Updated: 2022/06/13 16:34:48 by amaarifa         ###   ########.fr       */
+/*   Updated: 2022/06/13 21:05:14 by amaarifa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../execution.h"
+
 void	free_path(char **path)
 {
 	int	i;
@@ -23,22 +24,11 @@ void	free_path(char **path)
 	}
 }
 
-void	throw_not_found_err(char *err, char *msg, int exit_process)
-{
-	if (err && !msg)
-		ft_putendl_fd(err, STDOUT_FILENO);
-	else
-		perror(msg);
-	g_exit_status = 127;
-	if (exit_process)
-		exit(g_exit_status);
-}
-
-void no_cmd_err(int exit_process, char *command, char *msg)
+void	no_cmd_err(int exit_process, char *command, char *msg)
 {
 	ft_putstr_fd("minishell: ", 2);
 	ft_putstr_fd(command, 2);
-	ft_putendl_fd(msg ,2);
+	ft_putendl_fd(msg, 2);
 	g_exit_status = 127;
 	if (exit_process)
 		exit(g_exit_status);
@@ -91,7 +81,6 @@ char	*get_right_path(char *command, char **path, int exit_process)
 	return (cmd);
 }
 
-
 int	command_not_found_case(char **args, char *tmp, int exit_process)
 {
 	tmp = args[0];
@@ -99,7 +88,6 @@ int	command_not_found_case(char **args, char *tmp, int exit_process)
 	args[0] = ft_strjoin("minishell: ", args[0]);
 	tmp = ft_strjoin(args[0], ": command not found");
 	free(args[0]);
-	throw_not_found_err(tmp, NULL, exit_process);
 	free(tmp);
 	if (exit_process)
 		exit(g_exit_status);
@@ -108,7 +96,19 @@ int	command_not_found_case(char **args, char *tmp, int exit_process)
 	return (1);
 }
 
+void	free_args(char **av)
+{
+	int	i;
 
+	i = 0;
+	while (av && av[i])
+	{
+		free(av[i]);
+		i++;
+	}
+	if (av)
+		free(av);
+}
 
 int	resolve_path(char **args, t_env **env_lst, int exit_process)
 {
@@ -127,9 +127,9 @@ int	resolve_path(char **args, t_env **env_lst, int exit_process)
 		{
 			free_path(path);
 			free(path);
-			free(args[0]);
-			free(args);
 		}
+		if (args)
+			free_args(args);
 		return (0);
 	}
 	else

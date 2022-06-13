@@ -6,7 +6,7 @@
 /*   By: amaarifa <amaarifa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/11 21:01:30 by mkabissi          #+#    #+#             */
-/*   Updated: 2022/06/13 12:05:14 by amaarifa         ###   ########.fr       */
+/*   Updated: 2022/06/13 18:36:44 by amaarifa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,6 @@ int	exec_current_command(t_data *dt, int *int_out, int **fd)
 	if (pid == 0)
 	{
 		args = get_args((dt->cmd_lst->tokens) + dt->n);
-		
 		resolve_path(args, dt->cmd_lst->env, 1);
 		get_in_out_file((dt->cmd_lst->tokens)[dt->n], int_out, 1);
 		if (!args || !args[0])
@@ -72,11 +71,6 @@ int	exec_current_command(t_data *dt, int *int_out, int **fd)
 			dup2(int_out[1], fd[dt->n + 1][1]);
 		ft_dup(int_out, fd, dt->n_cmd, dt->n);
 		execute_command(args, dt->env_lst, dt->cmd_lst, 0);
-		if (args)
-		{
-			ft_free((void **)args, get_size_of_arr((void **)args));
-			free(args);
-		}
 		exit(g_exit_status);
 	}
 	return (pid);
@@ -106,6 +100,7 @@ void	exec_multiple_cmds(t_cmd_list *cmd_lst, t_env **env_lst, t_data *dt)
 {
 	int		**fd;
 	int		int_out[2];
+	int		pid;
 
 	fd = (int **)malloc(sizeof(int *) * dt->n_cmd);
 	if (!fd)
@@ -113,9 +108,9 @@ void	exec_multiple_cmds(t_cmd_list *cmd_lst, t_env **env_lst, t_data *dt)
 	alloc_fd(fd, dt->n_cmd);
 	if (pipe(fd[0]) == -1)
 		exit(1);
-	dt->n = 0;
-	int pid = -1;
-	while ((cmd_lst->tokens)[dt->n])
+	dt->n = -1;
+	pid = -1;
+	while ((cmd_lst->tokens)[++(dt->n)])
 	{
 		if (dt->n != dt->n_cmd - 1)
 			if (pipe(fd[dt->n + 1]) == -1)
@@ -126,7 +121,6 @@ void	exec_multiple_cmds(t_cmd_list *cmd_lst, t_env **env_lst, t_data *dt)
 			pid = exec_current_command(dt, int_out, fd);
 		else
 			exec_current_command(dt, int_out, fd);
-		dt->n++;
 	}
 	finish_exec(dt, fd, pid);
 }

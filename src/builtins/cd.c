@@ -6,15 +6,15 @@
 /*   By: amaarifa <amaarifa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 14:22:37 by mkabissi          #+#    #+#             */
-/*   Updated: 2022/06/13 16:26:13 by amaarifa         ###   ########.fr       */
+/*   Updated: 2022/06/13 18:09:33 by amaarifa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtins.h"
 
-void free_av(char **av)
+void	free_av(char **av)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (av && av[i])
@@ -32,7 +32,6 @@ void	change_envpwd(t_env **env_lst, char *new_pwd, char *old_pwd)
 	char	*old;
 	char	**tmp;
 
-
 	new = ft_strjoin("export PWD=", new_pwd);
 	old = ft_strjoin("export OLDPWD=", old_pwd);
 	tmp = ft_split(new, ' ');
@@ -43,8 +42,6 @@ void	change_envpwd(t_env **env_lst, char *new_pwd, char *old_pwd)
 	free_av(tmp);
 	free(new);
 	free(old);
-	// free(*new_pwd);
-	// free(*old_pwd);
 }
 
 void	put_error_message(char *dirname)
@@ -60,8 +57,7 @@ void	cd(char **token, t_env **env_lst)
 	char	*old_pwd;
 	char	*dirname;
 	DIR		*dir;
-	
-	
+
 	old_pwd = ft_strdup(getcwd(buffer, PATH_MAX));
 	if (!token[1])
 		dirname = getenv("HOME");
@@ -78,7 +74,6 @@ void	cd(char **token, t_env **env_lst)
 		change_envpwd(env_lst, tmp, old_pwd);
 		free(old_pwd);
 		free(tmp);
-		//free(dir);
 	}
 	else
 	{

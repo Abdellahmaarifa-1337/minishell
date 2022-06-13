@@ -12,9 +12,9 @@ cd ~/Desktop
 exit hiyd print f childs "|"
 exit -- 56
 
-leaks
-
-
+cat | adfdasfd | adsfadsf
+cd ../ from file was recently removed
+minishell$ echo '"'$'"'
 // solved
 unset PTAH and run excutable files, no such file or directory.
 echo '"'$?$?$?$?$?'"'

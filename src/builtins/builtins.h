@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mkabissi <mkabissi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: amaarifa <amaarifa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/29 23:15:10 by amaarifa          #+#    #+#             */
-/*   Updated: 2022/06/11 19:20:15 by mkabissi         ###   ########.fr       */
+/*   Updated: 2022/06/13 18:13:01 by amaarifa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,5 +43,6 @@ int		is_valid_idn(char *s);
 int		which_builtin(char *builtin);
 char	**env_convert(t_env *env_lst);
 int		get_size_of_arr(void **tokens);
-
+int		get_size_of_arr(void **tokens);
+void	free_env(char **env);
 #endif

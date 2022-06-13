@@ -6,7 +6,7 @@
 /*   By: amaarifa <amaarifa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/11 11:24:37 by amaarifa          #+#    #+#             */
-/*   Updated: 2022/06/13 14:49:13 by amaarifa         ###   ########.fr       */
+/*   Updated: 2022/06/13 17:30:33 by amaarifa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,6 @@
 
 void	int_handler(int signal)
 {
-
-	//printf("handler 1 worinng with %d\n", g_exit_status);
 	if (signal == SIGINT)
 	{
 		g_exit_status = 1;
@@ -27,13 +25,12 @@ void	int_handler(int signal)
 	if (signal == SIGQUIT)
 	{
 		g_exit_status = 0;
-		// printf("\n");
 		rl_on_new_line();
 		rl_redisplay();
 	}
 }
 
-void handler_single_cmd(int signal)
+void	handler_single_cmd(int signal)
 {
 	g_exit_status = (signal) * -1;
 	printf("\n");
