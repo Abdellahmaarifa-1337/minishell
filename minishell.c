@@ -6,7 +6,7 @@
 /*   By: amaarifa <amaarifa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 13:48:45 by amaarifa          #+#    #+#             */
-/*   Updated: 2022/06/12 18:32:32 by amaarifa         ###   ########.fr       */
+/*   Updated: 2022/06/13 14:20:46 by amaarifa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,17 +116,20 @@ void	prompt(t_env **env_lst)
 	keep_reading = 1;
 	n = g_exit_status;
 
-	signal(SIGQUIT, int_handler);
+	
 	
 	while (keep_reading > 0 && g_exit_status >= 0)
 	{
 		signal(SIGINT, int_handler);
+		signal(SIGQUIT, int_handler);
 		// printf("value %d\n", g_exit_status);
 		// if (g_exit_status < 0)
 		// 	g_exit_status = (g_exit_status  + 1) * -1;
 		line = readline("minishell$ ");
 		if (!line)
 			exit(0);
+		if (line[0])
+			add_history(line);
 		if (line[0] == '\0' || !syntax_checker(line))
 		{
 			g_exit_status = 0;

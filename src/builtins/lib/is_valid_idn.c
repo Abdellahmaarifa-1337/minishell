@@ -6,7 +6,7 @@
 /*   By: amaarifa <amaarifa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 14:51:32 by amaarifa          #+#    #+#             */
-/*   Updated: 2022/06/11 06:10:15 by amaarifa         ###   ########.fr       */
+/*   Updated: 2022/06/13 14:17:15 by amaarifa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	is_valid_idn(char *s)
 		return (0);
 	while (s[i])
 	{
-		if (ft_isalnum(s[i]) || s[0] == '_')
+		if (ft_isalnum(s[i]) || s[i] == '_')
 			i++;
 		else
 			return (0);

@@ -6,7 +6,7 @@
 /*   By: amaarifa <amaarifa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/11 11:24:37 by amaarifa          #+#    #+#             */
-/*   Updated: 2022/06/12 18:36:05 by amaarifa         ###   ########.fr       */
+/*   Updated: 2022/06/13 13:16:20 by amaarifa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,12 +24,11 @@ void	int_handler(int signal)
 		rl_replace_line("", 0);
 		rl_redisplay();
 	}
-	else
+	if (signal == SIGQUIT)
 	{
 		g_exit_status = 0;
 		// printf("\n");
 		rl_on_new_line();
-		rl_replace_line("", 0);
 		rl_redisplay();
 	}
 }

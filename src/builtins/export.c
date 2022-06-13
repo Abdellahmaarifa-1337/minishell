@@ -6,7 +6,7 @@
 /*   By: amaarifa <amaarifa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 11:58:30 by amaarifa          #+#    #+#             */
-/*   Updated: 2022/06/12 09:21:33 by amaarifa         ###   ########.fr       */
+/*   Updated: 2022/06/13 11:13:51 by amaarifa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,9 +65,9 @@ void	add_export_env(t_env **env_lst, char *s, int append)
 	else
 	{
 		g_exit_status = 1;
-		dup2(1, 2);
-		printf("minishell: export: `%s': not a valid identifier\n", s);
-		dup2(1, 1);
+		ft_putstr_fd("minishell: export: `", STDERR_FILENO);
+		ft_putstr_fd(s, STDERR_FILENO);
+		ft_putstr_fd("': not a valid identifier\n", STDERR_FILENO);
 		free(env->key);
 		free(env->value);
 		free(env);

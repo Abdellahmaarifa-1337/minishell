@@ -6,7 +6,7 @@
 /*   By: amaarifa <amaarifa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/22 08:13:08 by amaarifa          #+#    #+#             */
-/*   Updated: 2022/06/08 12:50:18 by amaarifa         ###   ########.fr       */
+/*   Updated: 2022/06/13 10:54:03 by amaarifa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ void	falg_token(t_token *tokens)
 	temp = tokens;
 	while (temp)
 	{
-		if (!temp->value)
+		if (!temp->value || !(temp->value[0]))
 		{
 			if (temp->type == IN_REDERCTIONT || temp->type == OUT_TRUNC
 				|| temp->type == APPEND)

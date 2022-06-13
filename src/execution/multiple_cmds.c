@@ -6,7 +6,7 @@
 /*   By: amaarifa <amaarifa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/11 21:01:30 by mkabissi          #+#    #+#             */
-/*   Updated: 2022/06/12 11:50:23 by amaarifa         ###   ########.fr       */
+/*   Updated: 2022/06/13 12:05:14 by amaarifa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,22 +50,22 @@ void	ft_dup(int *int_out, int **fd, int size, int n)
 	}
 }
 
-void	exec_current_command(t_data *dt, int *int_out, int **fd)
+int	exec_current_command(t_data *dt, int *int_out, int **fd)
 {
 	char	**args;
+	int		pid;
 
 	signal(SIGINT, handler_single_cmd);
 	signal(SIGQUIT, handler_single_cmd);
-	if (fork() == 0)
+	pid = fork();
+	if (pid == 0)
 	{
 		args = get_args((dt->cmd_lst->tokens) + dt->n);
+		
 		resolve_path(args, dt->cmd_lst->env, 1);
 		get_in_out_file((dt->cmd_lst->tokens)[dt->n], int_out, 1);
-		if (int_out[0] == -1 || int_out[1] == -1)
-		{
-			g_exit_status = 1;
-			exit(g_exit_status);
-		}
+		if (!args || !args[0])
+			exit(0);
 		if (int_out[0] > -1)
 			dup2(int_out[0], fd[dt->n][0]);
 		if (int_out[1] > -1 && dt->n < dt->n_cmd - 1)
@@ -77,17 +77,23 @@ void	exec_current_command(t_data *dt, int *int_out, int **fd)
 			ft_free((void **)args, get_size_of_arr((void **)args));
 			free(args);
 		}
-		exit(0);
+		exit(g_exit_status);
 	}
+	return (pid);
 }
 
-void	finish_exec(t_data *dt, int **fd)
+void	finish_exec(t_data *dt, int **fd, int pid)
 {
 	ft_close(fd, dt->n_cmd, -1, -1);
 	dt->n = -1;
-	while (++dt->n < dt->n_cmd - 1)
-		wait(NULL);
-	wait(&(dt->status));
+	if (pid != -1)
+	{
+		waitpid(pid, &dt->status, 0);
+		if (WIFEXITED(dt->status))
+			g_exit_status = WEXITSTATUS(dt->status);
+	}
+	while (wait(NULL) != -1)
+		;
 	if (WIFEXITED(dt->status))
 		g_exit_status = WEXITSTATUS(dt->status);
 	if (g_exit_status < 0)
@@ -108,6 +114,7 @@ void	exec_multiple_cmds(t_cmd_list *cmd_lst, t_env **env_lst, t_data *dt)
 	if (pipe(fd[0]) == -1)
 		exit(1);
 	dt->n = 0;
+	int pid = -1;
 	while ((cmd_lst->tokens)[dt->n])
 	{
 		if (dt->n != dt->n_cmd - 1)
@@ -115,8 +122,11 @@ void	exec_multiple_cmds(t_cmd_list *cmd_lst, t_env **env_lst, t_data *dt)
 				exit(1);
 		dt->cmd_lst = cmd_lst;
 		dt->env_lst = env_lst;
-		exec_current_command(dt, int_out, fd);
+		if (dt->n == dt->n_cmd - 1)
+			pid = exec_current_command(dt, int_out, fd);
+		else
+			exec_current_command(dt, int_out, fd);
 		dt->n++;
 	}
-	finish_exec(dt, fd);
+	finish_exec(dt, fd, pid);
 }

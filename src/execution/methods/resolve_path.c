@@ -6,7 +6,7 @@
 /*   By: amaarifa <amaarifa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 09:07:00 by amaarifa          #+#    #+#             */
-/*   Updated: 2022/06/12 18:15:24 by amaarifa         ###   ########.fr       */
+/*   Updated: 2022/06/13 12:02:59 by amaarifa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,9 @@ void no_cmd_err(int exit_process, char *command, char *msg)
 	ft_putstr_fd("minishell: ", 2);
 	ft_putstr_fd(command, 2);
 	ft_putendl_fd(msg ,2);
+	g_exit_status = 127;
 	if (exit_process)
-		exit(exit_process);
+		exit(g_exit_status);
 }
 
 char	*get_right_path(char *command, char **path, int exit_process)
@@ -39,8 +40,10 @@ char	*get_right_path(char *command, char **path, int exit_process)
 	char	*temp;
 
 	if (command && !command[0])
-		return (NULL);
-
+	{
+		no_cmd_err(exit_process, "", ": command not found");
+		return (0);
+	}
 	if (access(command, F_OK | X_OK) == 0)
 		return (ft_strdup(command));
 	else

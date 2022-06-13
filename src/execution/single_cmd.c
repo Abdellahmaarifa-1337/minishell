@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   single_cmd.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mkabissi <mkabissi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: amaarifa <amaarifa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/11 19:57:10 by mkabissi          #+#    #+#             */
-/*   Updated: 2022/06/11 21:00:56 by mkabissi         ###   ########.fr       */
+/*   Updated: 2022/06/13 11:21:32 by amaarifa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,9 +53,9 @@ void	exec_single_cmd(t_cmd_list *cmd_lst, t_env **env_lst)
 	get_in_out_file((cmd_lst->tokens)[0], int_out, 0);
 	if (int_out[0] == -1 || int_out[1] == -1)
 		return ;
+	if (!args || !args[0])
+		return ;
 	dup_stdin_stdout(int_out, &stdin_saved, &stdout_saved);
-	if (!args)
-		exit(1);
 	execute_command(args, env_lst, cmd_lst, 1);
 	close_open_files(int_out, &stdin_saved, &stdout_saved);
 	if (args)
