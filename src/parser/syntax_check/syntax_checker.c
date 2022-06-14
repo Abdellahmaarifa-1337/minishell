@@ -6,7 +6,7 @@
 /*   By: mkabissi <mkabissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/21 17:13:09 by mkabissi          #+#    #+#             */
-/*   Updated: 2022/06/14 09:57:44 by mkabissi         ###   ########.fr       */
+/*   Updated: 2022/06/14 10:46:39 by mkabissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,10 +45,10 @@ char	*skip_quote(char *src)
 	while (src[k])
 	{
 		if (src[k] == '\'')
-			while (src[++k] && src[k] != '\'')
+			while (src[k + 1] && src[++k] && src[k] != '\'')
 				p[i++] = 'A';
 		else if (src[k] == '"')
-			while (src[++k] && src[k] != '"')
+			while (src[k + 1] && src[++k] && src[k] != '"')
 				p[i++] = 'B';
 		else
 			p[i++] = src[k];
