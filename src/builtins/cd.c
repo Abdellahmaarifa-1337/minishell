@@ -6,7 +6,7 @@
 /*   By: mkabissi <mkabissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 14:22:37 by mkabissi          #+#    #+#             */
-/*   Updated: 2022/06/14 02:05:44 by mkabissi         ###   ########.fr       */
+/*   Updated: 2022/06/14 03:18:16 by mkabissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,10 +40,13 @@ void	change_envpwd(t_env **env_lst, char *new_pwd, char *old_pwd)
 	ft_export(env_lst, tmp);
 	free_av(tmp);
 	tmp = ft_split(old, ' ');
-	ft_export(env_lst, tmp);
+	if (tmp)
+	{
+		ft_export(env_lst, tmp);
+		free(old);
+	}
 	free_av(tmp);
 	free(new);
-	free(old);
 }
 
 void	put_error_message(char *dirname)
@@ -51,22 +54,6 @@ void	put_error_message(char *dirname)
 	ft_putstr_fd("minishell: cd: ", STDERR_FILENO);
 	ft_putstr_fd(dirname, STDERR_FILENO);
 	ft_putendl_fd(": No such file or directory", STDERR_FILENO);
-}
-
-char	*ft_getenv(char *name, t_env **env_lst)
-{
-	t_env	*temp;
-
-	if (!*env_lst || !name)
-		return (NULL);
-	temp = *env_lst;
-	while (temp)
-	{
-		if (ft_strcmp(name, temp->key) == 0)
-			return (temp->value);
-		temp = temp->next;
-	}
-	return (NULL);
 }
 
 char	*get_directory_name(char *token, t_env **env_lst)
@@ -103,6 +90,7 @@ void	cd(char **token, t_env **env_lst)
 	char	*old_pwd;
 	char	*dirname;
 	DIR		*dir;
+	char	*tmp;
 
 	old_pwd = ft_strdup(ft_getenv("PWD", env_lst));
 	dirname = get_directory_name(token[1], env_lst);
@@ -112,7 +100,6 @@ void	cd(char **token, t_env **env_lst)
 		closedir(dir);
 		chdir(dirname);
 		getcwd(buffer, PATH_MAX);
-		char *tmp;
 		tmp = ft_strdup(buffer);
 		change_envpwd(env_lst, tmp, old_pwd);
 		free(old_pwd);

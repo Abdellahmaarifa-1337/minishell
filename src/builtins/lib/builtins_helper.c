@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtings_helper.c                                 :+:      :+:    :+:   */
+/*   builtins_helper.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amaarifa <amaarifa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mkabissi <mkabissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 18:11:26 by amaarifa          #+#    #+#             */
-/*   Updated: 2022/06/13 18:12:58 by amaarifa         ###   ########.fr       */
+/*   Updated: 2022/06/14 03:18:33 by mkabissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,4 +34,20 @@ void	free_env(char **env)
 	}
 	if (env)
 		free(env);
+}
+
+char	*ft_getenv(char *name, t_env **env_lst)
+{
+	t_env	*temp;
+
+	if (!*env_lst || !name)
+		return (NULL);
+	temp = *env_lst;
+	while (temp)
+	{
+		if (ft_strcmp(name, temp->key) == 0)
+			return (temp->value);
+		temp = temp->next;
+	}
+	return (NULL);
 }
