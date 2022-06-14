@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   syntax_checker.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mkabissi <mkabissi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: amaarifa <amaarifa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/21 17:13:09 by mkabissi          #+#    #+#             */
-/*   Updated: 2022/06/13 23:57:11 by mkabissi         ###   ########.fr       */
+/*   Updated: 2022/06/14 02:56:27 by amaarifa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	skip_spaces(char *cmd_line, int i)
 
 	k = i;
 	skip = 1;
-	while (cmd_line[++k] == ' ')
+	while (cmd_line[k + 1] && cmd_line[++k] == ' ')
 		skip++;
 	return (skip);
 }
@@ -45,10 +45,10 @@ char	*skip_quote(char *src)
 	while (src[k])
 	{
 		if (src[k] == '\'')
-			while (src[++k] != '\'')
+			while (src[k + 1] && src[++k] != '\'' && p[i + 1])
 				p[i++] = 'A';
 		else if (src[k] == '"')
-			while (src[++k] != '"')
+			while (src[k + 1] && src[++k] != '"' && p[i + 1])
 				p[i++] = 'B';
 		else
 			p[i++] = src[k];
@@ -56,6 +56,13 @@ char	*skip_quote(char *src)
 	}
 	p[i] = '\0';
 	return (p);
+}
+
+void print_char_err(char	*s1, char c, char *s2)
+{
+	ft_putstr_fd(s1, 2);
+	write(2, &c, 1);
+	ft_putstr_fd(s2, 2);
 }
 
 int	syntax_checker(char *cmd_line)
@@ -66,22 +73,25 @@ int	syntax_checker(char *cmd_line)
 	dt->error = 0;
 	dt->end = -1;
 	if (!quotes_check(cmd_line, &dt->stx_error, &dt->end) && !dt->error)
+	{
 		dt->error = 1;
+	}
 	dt->pipe_error = pipe_check(cmd_line, &dt->stx_error, &dt->end);
 	if ((dt->pipe_error == 0 || dt->pipe_error == 1 || dt->pipe_error == 2)
 		&& !dt->error)
 	{
 		if (dt->pipe_error == 0)
-			printf("minishell: unclosed pipe\n");
+			ft_putstr_fd("minishell: unclosed pipe\n", 2);
 		else if (dt->pipe_error == 1)
-			printf("minishell: syntax error near unexpected token `%c'\n",
-				dt->stx_error);
+			print_char_err("minishell: syntax error near unexpected token `",
+				dt->stx_error, "'\n");
 		else if (dt->pipe_error == 2)
-			printf("minishell: syntax error near unexpected token `||'\n");
+			ft_putstr_fd("minishell: syntax error near unexpected token `||'\n", 2);
 		dt->error = 1;
 	}
-	if ((!redirect_check(cmd_line, &dt->stx_error, &dt->end) || dt->error)
-		&& execute_heredoc(dt, cmd_line))
+	if ((!redirect_check(cmd_line, &dt->stx_error, &dt->end) || dt->error))
 		return (0);
+	free(dt);
 	return (1);
 }
+

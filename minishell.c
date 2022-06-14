@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mkabissi <mkabissi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: amaarifa <amaarifa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 13:48:45 by amaarifa          #+#    #+#             */
-/*   Updated: 2022/06/14 01:16:52 by mkabissi         ###   ########.fr       */
+/*   Updated: 2022/06/14 02:35:18 by amaarifa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ void	free_cmd_list(t_cmd_list	*cmd_list)
 t_cmd_list	*init_cmd_list(char *s)
 {
 	t_cmd_list	*cmd_list;
-	char	*temp;
 
 	cmd_list = (t_cmd_list *)malloc(sizeof(t_cmd_list));
 	if (!cmd_list)

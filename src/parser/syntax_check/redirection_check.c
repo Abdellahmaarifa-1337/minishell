@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection_check.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mkabissi <mkabissi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: amaarifa <amaarifa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/21 17:12:17 by mkabissi          #+#    #+#             */
-/*   Updated: 2022/06/14 00:31:22 by mkabissi         ###   ########.fr       */
+/*   Updated: 2022/06/14 01:36:59 by amaarifa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,10 +57,13 @@ int	redirect_check(char *cmd_line, int *stx_error, int *end)
 	if (p && !redirection_check(p, stx_error, end))
 	{
 		if (*stx_error == '\0' || *stx_error == '\n')
-			printf("minishell: syntax error near unexpected token `newline'\n");
+			ft_putstr_fd("minishell: syntax error near unexpected token `newline'\n", 2);
 		else
-			printf("minishell: syntax error near unexpected token `%c'\n",
-				*stx_error);
+		{
+			ft_putstr_fd("minishell: syntax error near unexpected token `", 2);
+			write(2, stx_error, 1);
+			ft_putstr_fd("'\n",2);
+		}
 		free(p);
 		return (0);
 	}

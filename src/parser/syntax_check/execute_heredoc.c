@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_heredoc.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mkabissi <mkabissi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: amaarifa <amaarifa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 12:48:13 by mkabissi          #+#    #+#             */
-/*   Updated: 2022/06/14 01:14:19 by mkabissi         ###   ########.fr       */
+/*   Updated: 2022/06/14 02:34:43 by amaarifa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,12 +75,8 @@ int	execute_heredoc(t_syntax_dt *dt, char *cmd_line)
 {
 	t_cmd_list	*cmd_lst;
 	char		*line;
-	int			lenght;
 
-	lenght = 0;
-	while (cmd_line[lenght] && lenght < dt->end)
-		lenght++;
-	line = ft_substr(cmd_line, 0, lenght - 1);
+	line = ft_substr(cmd_line, 0, dt->end - 2);
 	cmd_lst = init_cmd_list(line);
 	parser(cmd_lst);
 	exec_here_doc(cmd_lst);

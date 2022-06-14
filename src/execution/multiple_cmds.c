@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   multiple_cmds.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mkabissi <mkabissi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: amaarifa <amaarifa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/11 21:01:30 by mkabissi          #+#    #+#             */
-/*   Updated: 2022/06/14 00:58:03 by mkabissi         ###   ########.fr       */
+/*   Updated: 2022/06/14 01:25:43 by amaarifa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	ft_dup(int *int_out, int **fd, int size, int n)
 		dup2(fd[n][0], STDIN_FILENO);
 		if (int_out[1] > -1)
 			dup2(int_out[1], STDOUT_FILENO);
-	}    
+	}
 }
 
 int	exec_current_command(t_data *dt, int *int_out, int **fd)
