@@ -6,7 +6,7 @@
 /*   By: amaarifa <amaarifa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/11 11:24:37 by amaarifa          #+#    #+#             */
-/*   Updated: 2022/06/11 12:10:57 by amaarifa         ###   ########.fr       */
+/*   Updated: 2022/06/13 17:30:33 by amaarifa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,24 @@
 
 void	int_handler(int signal)
 {
-	(void) signal;
+	if (signal == SIGINT)
+	{
+		g_exit_status = 1;
+		printf("\n");
+		rl_on_new_line();
+		rl_replace_line("", 0);
+		rl_redisplay();
+	}
+	if (signal == SIGQUIT)
+	{
+		g_exit_status = 0;
+		rl_on_new_line();
+		rl_redisplay();
+	}
+}
+
+void	handler_single_cmd(int signal)
+{
+	g_exit_status = (signal) * -1;
 	printf("\n");
-	rl_on_new_line();
-	rl_replace_line("", 0);
-	rl_redisplay();
-	g_exit_status = -1 * (g_exit_status + 1);
 }

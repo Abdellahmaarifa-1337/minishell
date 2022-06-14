@@ -6,24 +6,11 @@
 /*   By: mkabissi <mkabissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 13:48:45 by amaarifa          #+#    #+#             */
-/*   Updated: 2022/06/11 16:19:35 by mkabissi         ###   ########.fr       */
+/*   Updated: 2022/06/14 01:16:52 by mkabissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void	print_cmd_tk(t_token **tokens)
-{
-	int	i;
-
-	i = 0;
-	while (tokens[i])
-	{
-		print_token(tokens[i]);
-		printf("\n ------------------PIPE----------------- \n");
-		i++;
-	}
-}
 
 void	free_cmd_list(t_cmd_list	*cmd_list)
 {
@@ -50,6 +37,7 @@ void	free_cmd_list(t_cmd_list	*cmd_list)
 t_cmd_list	*init_cmd_list(char *s)
 {
 	t_cmd_list	*cmd_list;
+	char	*temp;
 
 	cmd_list = (t_cmd_list *)malloc(sizeof(t_cmd_list));
 	if (!cmd_list)
@@ -63,85 +51,47 @@ t_cmd_list	*init_cmd_list(char *s)
 	return (cmd_list);
 }
 
-void	print_env(t_env *env)
-{
-	t_env	*tmp;
-
-	tmp = env;
-	while (tmp)
-	{
-		printf("The key : %s\n", tmp->key);
-		printf("The value : %s\n", tmp->value);
-		tmp = tmp->next;
-	}
-}
-
-/* TEST BUILTINGS */
-void	unset_test(t_env **env_lst, char **av, int ac)
-{
-	av[ac - 1] = NULL;
-	printf("\n\nbefore unset \n\n");
-	print_env(*env_lst);
-	unset(env_lst, av);
-	printf("\n\nafter unset \n\n");
-	print_env(*env_lst);
-	//exit(1);
-}
-
-// void env_test(t_env *env_list)
-// {
-// 	env(env_list);
-// 	exit(1);
-// }
-
-void	export_test(t_env	**env, char **av, int ac)
-{
-	av[ac - 1] = 0;
-	ft_export(env, NULL);
-	printf("\n\nADDING VALUES\n\n");
-	ft_export(env, av);
-	ft_export(env, NULL);
-	// exit(1);
-}
 /* SET TO DEFAULT */
 int	g_exit_status = 0;
 
-void	prompt(t_env **env_lst)
+void	run_cmd(t_env **env_lst, int *keep_reading, char *line)
 {
 	t_cmd_list	*cmd_list;
+
+	cmd_list = init_cmd_list(line);
+	cmd_list->exit = 0;
+	cmd_list->env = env_lst;
+	parser(cmd_list);
+	execution(cmd_list, env_lst);
+	*keep_reading -= cmd_list->exit;
+	free_cmd_list(cmd_list);
+	cmd_list = NULL;
+}
+
+void	prompt(t_env **env_lst)
+{
 	char		*line;
 	int			keep_reading;
-	int			n;
 
 	keep_reading = 1;
-	n = g_exit_status;
-
-	signal(SIGQUIT, SIG_IGN);
-	while (keep_reading > 0 && n == g_exit_status)
+	while (keep_reading > 0 && g_exit_status >= 0)
 	{
 		signal(SIGINT, int_handler);
+		signal(SIGQUIT, int_handler);
 		line = readline("minishell$ ");
 		if (!line)
 			exit(0);
+		if (line[0])
+			add_history(line);
 		if (line[0] == '\0' || !syntax_checker(line))
 		{
+			g_exit_status = 0;
 			free(line);
 			continue ;
 		}
-		cmd_list = init_cmd_list(line);
-		cmd_list->exit = 0;
 		add_history(line);
-		cmd_list->env = env_lst;
-		parser(cmd_list);
-		execution(cmd_list, env_lst);
-		// print_cmd_tk(cmd_list->tokens);
-		// printf("exit: %d\n", cmd_list->exit);
-		keep_reading -= cmd_list->exit;
-		free_cmd_list(cmd_list);
-		cmd_list = NULL;
+		run_cmd(env_lst, &keep_reading, line);
 	}
-	if (g_exit_status < 0)
-		g_exit_status = (g_exit_status  + 1) * -1;
 }
 
 int	main(int ac, char **av, char **env)
@@ -154,6 +104,8 @@ int	main(int ac, char **av, char **env)
 	while (1)
 	{
 		prompt(&env_lst);
+		if (g_exit_status < 0)
+			g_exit_status = 1;
 	}
 	return (0);
 }

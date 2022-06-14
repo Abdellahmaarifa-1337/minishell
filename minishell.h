@@ -6,7 +6,7 @@
 /*   By: mkabissi <mkabissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 13:49:19 by amaarifa          #+#    #+#             */
-/*   Updated: 2022/06/12 00:26:50 by mkabissi         ###   ########.fr       */
+/*   Updated: 2022/06/13 22:59:02 by mkabissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,8 @@
 # include "src/lib/lib.h"
 # include "src/builtins/builtins.h"
 
-void	parser(t_cmd_list	*cmd_list);
-void	execution(t_cmd_list *cmd_lst, t_env **env_lst);
+void		parser(t_cmd_list	*cmd_list);
+void		execution(t_cmd_list *cmd_lst, t_env **env_lst);
 
 /********* TEMP FUNCTIONS **********/
 

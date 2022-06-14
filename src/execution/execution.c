@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mkabissi <mkabissi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: amaarifa <amaarifa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 14:07:51 by mkabissi          #+#    #+#             */
-/*   Updated: 2022/06/12 00:06:03 by mkabissi         ###   ########.fr       */
+/*   Updated: 2022/06/14 00:37:14 by amaarifa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,9 @@ void	ft_close(int **fd, int size, int fd1, int fd2)
 	i = 0;
 	while (i < size)
 	{
-		if (fd[i][0] != fd1 && fd[i][0] != fd2)
+		if (fd[i][0] != 0 && fd[i][0] != fd1 && fd[i][0] != fd2)
 			close(fd[i][0]);
-		if (fd[i][1] != fd1 && fd[i][1] != fd2)
+		if (fd[i][0] != 0 && fd[i][1] != fd1 && fd[i][1] != fd2)
 			close(fd[i][1]);
 		i++;
 	}
@@ -47,6 +47,10 @@ void	execution(t_cmd_list *cmd_lst, t_env **env_lst)
 
 	number_of_commands = get_size_of_arr((void **)(cmd_lst->tokens));
 	exec_here_doc(cmd_lst, *env_lst);
+	if (g_exit_status < 0)
+	{
+		return ;
+	}
 	if (number_of_commands == 1)
 		exec_single_cmd(cmd_lst, env_lst);
 	else

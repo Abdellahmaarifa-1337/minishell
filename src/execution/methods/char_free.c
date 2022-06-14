@@ -1,26 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lib.h                                              :+:      :+:    :+:   */
+/*   char_free.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: amaarifa <amaarifa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/29 18:09:49 by amaarifa          #+#    #+#             */
-/*   Updated: 2022/06/13 17:30:43 by amaarifa         ###   ########.fr       */
+/*   Created: 2022/06/13 23:00:15 by amaarifa          #+#    #+#             */
+/*   Updated: 2022/06/13 23:01:08 by amaarifa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef LIB_H
-# define LIB_H
+#include "../execution.h"
 
-# include "../../types.h"
+void	free_path(char **path)
+{
+	int	i;
 
-t_env	*set_env(char **env);
-t_env	*create_env(char *s);
-char	*get_env(t_env *env_list, char *key);
-int		get_index_char(char *s, char c);
-void	int_handler(int signal);
-void	int_handler_without_nl(int signal);
-void	handler_single_cmd(int signal);
+	i = 0;
+	while (path && path[i])
+	{
+		free(path[i]);
+		i++;
+	}
+	if (path)
+		free(path);
+}
 
-#endif
+void	free_args(char **av)
+{
+	int	i;
+
+	i = 0;
+	while (av && av[i])
+	{
+		free(av[i]);
+		i++;
+	}
+	if (av)
+		free(av);
+}

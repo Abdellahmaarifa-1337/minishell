@@ -1,12 +1,12 @@
 CC=cc
-CFLAGS= -Wall -Wextra -Wall -fsanitize=address
+CFLAGS= -Wall -Wextra -Wall #-fsanitize=address
 UTILS= src/utils
 PARSER= src/parser
 
-# RDLIB= -L/Users/${USER}/goinfre/.brew/opt/readline/lib
-# RDINCLUDE = -I/Users/${USER}/goinfre/.brew/opt/readline/include/
+# RDLIB= -L/Users/${USER}/Documents/.brew/opt/readline/lib 
+# RDINCLUDE = -I/Users/${USER}/Documents/.brew/opt/readline/include/
 
-RDLIB= -L/Users/${USER}/.brew/Cellar/readline/8.1.2/lib 
+RDLIB= -L/Users/${USER}/.brew/Cellar/readline/8.1.2/lib
 RDINCLUDE = -I/Users/${USER}/.brew/Cellar/readline/8.1.2/include/
 
 LIB = src/lib/set_env.c src/lib/create_env.c src/lib/get_env.c \

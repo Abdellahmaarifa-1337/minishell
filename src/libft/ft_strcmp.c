@@ -1,32 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   is_valid_idn.c                                     :+:      :+:    :+:   */
+/*   ft_strcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amaarifa <amaarifa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mkabissi <mkabissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/30 14:51:32 by amaarifa          #+#    #+#             */
-/*   Updated: 2022/06/13 14:17:15 by amaarifa         ###   ########.fr       */
+/*   Created: 2021/08/12 17:54:11 by amaarifa          #+#    #+#             */
+/*   Updated: 2022/06/12 23:45:21 by mkabissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../builtins.h"
+#include "libft.h"
 
-int	is_valid_idn(char *s)
+int	ft_strcmp(const char	*s1, const char	*s2)
 {
-	int	i;
+	unsigned char	*a;
+	unsigned char	*b;
+	size_t			i;
 
+	a = (unsigned char *)s1;
+	b = (unsigned char *)s2;
 	i = 0;
-	if (!s || !s[0])
-		return (0);
-	if (s[0] && !ft_isalpha(s[0]) && s[0] != '_')
-		return (0);
-	while (s[i])
-	{
-		if (ft_isalnum(s[i]) || s[i] == '_')
-			i++;
-		else
-			return (0);
-	}
-	return (1);
+	while (a[i] && b[i] && a[i] == b[i])
+		i++;
+	return (a[i] - b[i]);
 }

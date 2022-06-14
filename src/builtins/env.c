@@ -6,7 +6,7 @@
 /*   By: amaarifa <amaarifa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 11:48:30 by amaarifa          #+#    #+#             */
-/*   Updated: 2022/06/11 11:10:17 by amaarifa         ###   ########.fr       */
+/*   Updated: 2022/06/13 18:09:09 by amaarifa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,9 @@ void	env(t_env *env, char **args)
 	g_exit_status = 0;
 	if (args && args[0] && args[1])
 	{
-		dup2(1, 2);
-		printf("env: %s: No such file or directory\n", args[1]);
-		dup2(1, 1);
+		ft_putstr_fd("env: ", 2);
+		ft_putstr_fd(args[1], 2);
+		ft_putstr_fd(": No such file or directory\n", 2);
 		g_exit_status = 1;
 		return ;
 	}
