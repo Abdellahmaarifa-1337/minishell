@@ -6,7 +6,7 @@
 /*   By: mkabissi <mkabissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/16 12:19:02 by mkabissi          #+#    #+#             */
-/*   Updated: 2022/06/08 01:06:13 by mkabissi         ###   ########.fr       */
+/*   Updated: 2022/06/14 12:38:18 by mkabissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ void	echo(char **token)
 
 	i = 0;
 	n_option = 0;
+	g_exit_status = 0;
 	while (token[++i] != NULL)
 	{
 		if (strncmp(token[i], "-n", 2) == 0

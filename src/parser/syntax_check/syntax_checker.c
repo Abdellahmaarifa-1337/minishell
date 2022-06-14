@@ -6,7 +6,7 @@
 /*   By: mkabissi <mkabissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/21 17:13:09 by mkabissi          #+#    #+#             */
-/*   Updated: 2022/06/14 10:46:39 by mkabissi         ###   ########.fr       */
+/*   Updated: 2022/06/14 12:15:06 by mkabissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,7 @@ int	syntax_checker(char *cmd_line)
 	if (!redirect_check(cmd_line, &dt->stx_error, &dt->end) || dt->error)
 	{
 		print_err(dt->stx_error);
+		free(dt);
 		return (0);
 	}
 	free(dt);
