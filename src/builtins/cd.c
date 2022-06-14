@@ -6,27 +6,44 @@
 /*   By: mkabissi <mkabissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 14:22:37 by mkabissi          #+#    #+#             */
-/*   Updated: 2022/06/12 23:51:26 by mkabissi         ###   ########.fr       */
+/*   Updated: 2022/06/14 00:58:48 by mkabissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtins.h"
 
+void	free_av(char **av)
+{
+	int	i;
+
+	i = 0;
+	while (av && av[i])
+	{
+		free(av[i]);
+		i++;
+	}
+	if (av)
+		free(av);
+}
+
 void	change_envpwd(t_env **env_lst, char *new_pwd, char *old_pwd)
 {
 	char	*new;
 	char	*old;
+	char	**tmp;
 
 	if (!*env_lst)
 		return ;
 	new = ft_strjoin("export PWD=", new_pwd);
 	old = ft_strjoin("export OLDPWD=", old_pwd);
-	ft_export(env_lst, ft_split(new, ' '));
-	ft_export(env_lst, ft_split(old, ' '));
+	tmp = ft_split(new, ' ');
+	ft_export(env_lst, tmp);
+	free_av(tmp);
+	tmp = ft_split(old, ' ');
+	ft_export(env_lst, tmp);
+	free_av(tmp);
 	free(new);
 	free(old);
-	free(new_pwd);
-	free(old_pwd);
 }
 
 void	put_error_message(char *dirname)
@@ -95,8 +112,11 @@ void	cd(char **token, t_env **env_lst)
 		closedir(dir);
 		chdir(dirname);
 		getcwd(buffer, PATH_MAX);
-		change_envpwd(env_lst, ft_strdup(buffer), old_pwd);
-		g_exit_status = 0;
+		char *tmp;
+		tmp = ft_strdup(buffer);
+		change_envpwd(env_lst, tmp, old_pwd);
+		free(old_pwd);
+		free(tmp);
 	}
 	else
 	{

@@ -4,7 +4,8 @@ CFLAGS= -Wall -Wextra -Wall #-fsanitize=address
 
 METHODS= ./methods/get_args.c ./methods/resolve_path.c \
 		./methods/exec_here_doc.c ./methods/get_in_out_file.c \
-
+		./methods/char_free.c ./methods/here_doc_helpers.c \
+		./methods/open_here_doc.c
 SRC = execution.c single_cmd.c multiple_cmds.c $(METHODS)
 
 NAME = execution.a

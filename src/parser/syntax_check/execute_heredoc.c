@@ -6,7 +6,7 @@
 /*   By: mkabissi <mkabissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 12:48:13 by mkabissi          #+#    #+#             */
-/*   Updated: 2022/06/13 23:40:00 by mkabissi         ###   ########.fr       */
+/*   Updated: 2022/06/14 01:14:19 by mkabissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,5 +85,6 @@ int	execute_heredoc(t_syntax_dt *dt, char *cmd_line)
 	parser(cmd_lst);
 	exec_here_doc(cmd_lst);
 	free_cmd_list(cmd_lst);
+	free(dt);
 	return (1);
 }

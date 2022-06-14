@@ -6,7 +6,7 @@
 /*   By: amaarifa <amaarifa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 14:07:51 by mkabissi          #+#    #+#             */
-/*   Updated: 2022/06/12 07:33:13 by amaarifa         ###   ########.fr       */
+/*   Updated: 2022/06/14 00:37:14 by amaarifa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,9 @@ void	ft_close(int **fd, int size, int fd1, int fd2)
 	i = 0;
 	while (i < size)
 	{
-		if (fd[i][0] != fd1 && fd[i][0] != fd2)
+		if (fd[i][0] != 0 && fd[i][0] != fd1 && fd[i][0] != fd2)
 			close(fd[i][0]);
-		if (fd[i][1] != fd1 && fd[i][1] != fd2)
+		if (fd[i][0] != 0 && fd[i][1] != fd1 && fd[i][1] != fd2)
 			close(fd[i][1]);
 		i++;
 	}

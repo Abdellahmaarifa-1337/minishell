@@ -5,7 +5,7 @@ CFLAGS = -Wall -Werror -Wextra #-fsanitize=address
 BUILTINS = builtins.c echo.c pwd.c env.c export.c unset.c \
 		cd.c exit.c \
 		./lib/export_print.c ./lib/is_valid_idn.c \
-		./lib/env_convert.c
+		./lib/env_convert.c ./lib/builtins_helper.c
 
 #---------------------- EXECUTION SOURCE -------------------#
 SRC = ${BUILTINS}
