@@ -6,7 +6,7 @@
 /*   By: mkabissi <mkabissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/21 18:23:30 by amaarifa          #+#    #+#             */
-/*   Updated: 2022/06/13 19:42:42 by mkabissi         ###   ########.fr       */
+/*   Updated: 2022/06/14 09:44:12 by mkabissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,12 +77,12 @@ typedef struct s_data {
 }	t_data;
 
 typedef struct s_syntax_dt {
-	int			pipe_error;
-	int			stx_error;
-	int			end;
-	int			error;
+	int				stx_error;
+	int				end;
+	int				error;
+	int				first_lap;
+	unsigned int	first_address;
 }	t_syntax_dt;
-
 
 void	rl_replace_line(char *string, int i);
 

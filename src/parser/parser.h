@@ -6,7 +6,7 @@
 /*   By: mkabissi <mkabissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/21 18:22:38 by amaarifa          #+#    #+#             */
-/*   Updated: 2022/06/14 00:32:04 by mkabissi         ###   ########.fr       */
+/*   Updated: 2022/06/14 09:44:56 by mkabissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ int				unclosed_double_qoutes(char *s, int i);
 
 /*------------------- LIB ----------------------------*/
 char			*join_strings(char *s1, char *s2);
-//char			*get_env(char *s);
 t_token			*parse_cmd(t_token_source *token_source, t_env **env_lst);
 void			unflag_cmd_list(char **s);
 void			unflag_pipe(char *s);
@@ -47,11 +46,10 @@ int				replace_pipe(char *source, int i, char c);
 t_cmd_list		*init_cmd_list(char *s);
 void			free_cmd_list(t_cmd_list *cmd_list);
 int				syntax_checker(char *cmd_line);
-int				pipe_check(char *cmd_line, int *stx_error, int *end);
+int				pipe_check(char *cmd_line, t_syntax_dt *dt);
 int				quotes_check(char *cmd_line, int *stx_error, int *end);
 int				redirect_check(char *cmd_line, int *stx_error, int *end);
 int				redirection_check(char *cmd_line, int *stx_error, int *end);
-int				execute_heredoc(t_syntax_dt *dt,char *cmd_line);
 int				skip_spaces(char *cmd_line, int i);
 char			*skip_quote(char *src);
 int				end_of_cmd(char c);

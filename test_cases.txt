@@ -13,7 +13,6 @@ cd ~-
 cd ~/Desktop
 exit hiyd print f childs "|"
 exit -- 56
-
 cat | adfdasfd | adsfadsf
 cd ../ from file was recently removed
 

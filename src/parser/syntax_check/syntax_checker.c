@@ -6,7 +6,7 @@
 /*   By: mkabissi <mkabissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/21 17:13:09 by mkabissi          #+#    #+#             */
-/*   Updated: 2022/06/13 23:57:11 by mkabissi         ###   ########.fr       */
+/*   Updated: 2022/06/14 09:57:44 by mkabissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	skip_spaces(char *cmd_line, int i)
 
 	k = i;
 	skip = 1;
-	while (cmd_line[++k] == ' ')
+	while (cmd_line[k + 1] && cmd_line[++k] == ' ')
 		skip++;
 	return (skip);
 }
@@ -45,10 +45,10 @@ char	*skip_quote(char *src)
 	while (src[k])
 	{
 		if (src[k] == '\'')
-			while (src[++k] != '\'')
+			while (src[++k] && src[k] != '\'')
 				p[i++] = 'A';
 		else if (src[k] == '"')
-			while (src[++k] != '"')
+			while (src[++k] && src[k] != '"')
 				p[i++] = 'B';
 		else
 			p[i++] = src[k];
@@ -58,30 +58,42 @@ char	*skip_quote(char *src)
 	return (p);
 }
 
+void	print_err(int stx_error)
+{
+	if (stx_error == '\0' || stx_error == '\n')
+	{
+		ft_putstr_fd("minishell: syntax error near unexpected token", 2);
+		ft_putendl_fd("`newline'", 2);
+	}
+	else
+	{
+		ft_putstr_fd("minishell: syntax error near unexpected token `", 2);
+		write(2, &stx_error, 1);
+		ft_putstr_fd("'\n", 2);
+	}
+}
+
 int	syntax_checker(char *cmd_line)
 {
 	t_syntax_dt	*dt;
 
 	dt = (t_syntax_dt *)malloc(sizeof(t_syntax_dt));
+	if (!dt)
+	{
+		write(2, "(t_syntax_dt) dt: malloc error\n", 31);
+		return (0);
+	}
 	dt->error = 0;
 	dt->end = -1;
 	if (!quotes_check(cmd_line, &dt->stx_error, &dt->end) && !dt->error)
 		dt->error = 1;
-	dt->pipe_error = pipe_check(cmd_line, &dt->stx_error, &dt->end);
-	if ((dt->pipe_error == 0 || dt->pipe_error == 1 || dt->pipe_error == 2)
-		&& !dt->error)
-	{
-		if (dt->pipe_error == 0)
-			printf("minishell: unclosed pipe\n");
-		else if (dt->pipe_error == 1)
-			printf("minishell: syntax error near unexpected token `%c'\n",
-				dt->stx_error);
-		else if (dt->pipe_error == 2)
-			printf("minishell: syntax error near unexpected token `||'\n");
+	if (!pipe_check(cmd_line, dt))
 		dt->error = 1;
-	}
-	if ((!redirect_check(cmd_line, &dt->stx_error, &dt->end) || dt->error)
-		&& execute_heredoc(dt, cmd_line))
+	if (!redirect_check(cmd_line, &dt->stx_error, &dt->end) || dt->error)
+	{
+		print_err(dt->stx_error);
 		return (0);
+	}
+	free(dt);
 	return (1);
 }

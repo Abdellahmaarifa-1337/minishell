@@ -6,7 +6,7 @@
 /*   By: mkabissi <mkabissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/29 23:15:10 by amaarifa          #+#    #+#             */
-/*   Updated: 2022/06/14 00:58:53 by mkabissi         ###   ########.fr       */
+/*   Updated: 2022/06/14 03:18:54 by mkabissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ void	env(t_env *env, char **args);
 void	cd(char **token, t_env **env);
 void	ft_export(t_env **env_lst, char **av);
 void	ft_exit(char **args, t_cmd_list *cmd_lst, int print);
+char	*ft_getenv(char *name, t_env **env_lst);
 void	export_print(t_env *env);
 int		is_valid_idn(char *s);
 int		which_builtin(char *builtin);

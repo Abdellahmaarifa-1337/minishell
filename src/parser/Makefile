@@ -1,5 +1,5 @@
 CC=cc
-CFLAGS= -Wall -Wextra -Wall #-fsanitize=address
+CFLAGS= -Wall -Wextra -Wall -g #-fsanitize=address
 
 #------------------------ PATHS ------------------------#
 
@@ -19,8 +19,7 @@ TOKENSRC = ./methods/token_source
 #-------------------- SYNTAX CHECKER --------------------#
 SYNTAX_CHECK = ${STX_CHECK}/syntax_checker.c \
 	${STX_CHECK}/pipe_check.c ${STX_CHECK}/redirection_check.c \
-	${STX_CHECK}/quotes_check.c ${STX_CHECK}/execute_heredoc.c \
-	${STX_CHECK}/redirection_check_helpers.c
+	${STX_CHECK}/quotes_check.c ${STX_CHECK}/redirection_check_helpers.c
 
 #---------------------- PARSER LIB ----------------------#
 LIB_SRC = ${LIB}/parse_cmd.c ${LIB}/join_strings.c \
