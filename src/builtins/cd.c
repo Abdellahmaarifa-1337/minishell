@@ -6,7 +6,7 @@
 /*   By: mkabissi <mkabissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 14:22:37 by mkabissi          #+#    #+#             */
-/*   Updated: 2022/06/14 00:58:48 by mkabissi         ###   ########.fr       */
+/*   Updated: 2022/06/14 02:05:44 by mkabissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ void	cd(char **token, t_env **env_lst)
 	char	*dirname;
 	DIR		*dir;
 
-	old_pwd = ft_strdup(getcwd(buffer, PATH_MAX));
+	old_pwd = ft_strdup(ft_getenv("PWD", env_lst));
 	dirname = get_directory_name(token[1], env_lst);
 	dir = opendir(dirname);
 	if (dir)
