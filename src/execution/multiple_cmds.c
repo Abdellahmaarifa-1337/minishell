@@ -6,7 +6,7 @@
 /*   By: amaarifa <amaarifa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/11 21:01:30 by mkabissi          #+#    #+#             */
-/*   Updated: 2022/06/14 01:25:43 by amaarifa         ###   ########.fr       */
+/*   Updated: 2022/06/14 20:50:59 by amaarifa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,8 @@ int	exec_current_command(t_data *dt, int *int_out, int **fd)
 	signal(SIGINT, handler_single_cmd);
 	signal(SIGQUIT, handler_single_cmd);
 	pid = fork();
+	if (pid == -1)
+		exit(1);
 	if (pid == 0)
 	{
 		args = get_args((dt->cmd_lst->tokens) + dt->n);

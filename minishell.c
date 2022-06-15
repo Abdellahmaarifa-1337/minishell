@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mkabissi <mkabissi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: amaarifa <amaarifa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 13:48:45 by amaarifa          #+#    #+#             */
-/*   Updated: 2022/06/14 03:03:43 by mkabissi         ###   ########.fr       */
+/*   Updated: 2022/06/14 20:44:06 by amaarifa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,9 +50,6 @@ t_cmd_list	*init_cmd_list(char *s)
 	return (cmd_list);
 }
 
-/* SET TO DEFAULT */
-int	g_exit_status = 0;
-
 void	run_cmd(t_env **env_lst, int *keep_reading, char *line)
 {
 	t_cmd_list	*cmd_list;
@@ -95,13 +92,18 @@ void	prompt(t_env **env_lst)
 
 int	main(int ac, char **av, char **env)
 {
-	t_env		*env_lst;
+	t_env			*env_lst;
+	struct termios	termios_new;
 
 	env_lst = set_env(env);
 	(void)av;
 	(void)ac;
+	g_exit_status = 0;
 	while (1)
 	{
+		tcgetattr(0, &termios_new);
+		termios_new.c_lflag &= ~ECHOCTL;
+		tcsetattr(0, 0, &termios_new);
 		prompt(&env_lst);
 		if (g_exit_status < 0)
 			g_exit_status = 1;

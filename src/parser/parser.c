@@ -6,7 +6,7 @@
 /*   By: amaarifa <amaarifa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 17:15:00 by amaarifa          #+#    #+#             */
-/*   Updated: 2022/06/02 07:47:02 by amaarifa         ###   ########.fr       */
+/*   Updated: 2022/06/14 20:49:14 by amaarifa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,8 @@ void	parser(t_cmd_list	*cmd_list)
 	unflag_cmd_list(cmd_lines);
 	cmd_list->tokens = (t_token **)malloc(sizeof(t_token *)
 			* (get_number_cmd(cmd_lines) + 1));
+	if (!cmd_list)
+		exit(1);
 	i = 0;
 	while (cmd_lines[i])
 	{

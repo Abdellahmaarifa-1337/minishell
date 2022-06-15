@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mkabissi <mkabissi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: amaarifa <amaarifa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 18:20:45 by mkabissi          #+#    #+#             */
-/*   Updated: 2022/06/14 00:59:04 by mkabissi         ###   ########.fr       */
+/*   Updated: 2022/06/14 20:35:27 by amaarifa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ int	which_builtin(char *builtin)
 	if (!builtin)
 		return (0);
 	if (ft_special_cmp(builtin, "echo", 5) == 0)
-		return (ECHO);
+		return (_ECHO);
 	else if (ft_strncmp(builtin, "cd", 3) == 0)
 		return (CD);
 	else if (ft_special_cmp(builtin, "pwd", 4) == 0)
@@ -104,7 +104,7 @@ void	execute_command(char **ar, t_env **env_lst, t_cmd_list *cmd_lst, int n)
 	flag = which_builtin(ar[0]);
 	if (flag == 0)
 		return ;
-	if (flag == ECHO)
+	if (flag == _ECHO)
 		echo(ar);
 	else if (flag == CD)
 		cd(ar, env_lst);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mkabissi <mkabissi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: amaarifa <amaarifa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 13:49:19 by amaarifa          #+#    #+#             */
-/*   Updated: 2022/06/14 03:21:19 by mkabissi         ###   ########.fr       */
+/*   Updated: 2022/06/14 20:41:31 by amaarifa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,5 +35,5 @@ void	execution(t_cmd_list *cmd_lst, t_env **env_lst);
 
 void	print_token(t_token *token);
 void	print_cmd_list(t_cmd_list *cmd_list);
-
+int		g_exit_status;
 #endif

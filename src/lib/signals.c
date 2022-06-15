@@ -6,7 +6,7 @@
 /*   By: amaarifa <amaarifa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/11 11:24:37 by amaarifa          #+#    #+#             */
-/*   Updated: 2022/06/13 17:30:33 by amaarifa         ###   ########.fr       */
+/*   Updated: 2022/06/14 20:33:55 by amaarifa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,5 +33,8 @@ void	int_handler(int signal)
 void	handler_single_cmd(int signal)
 {
 	g_exit_status = (signal) * -1;
-	printf("\n");
+	if (signal == SIGQUIT)
+		printf("^\\Quit: 3\n");
+	else if (signal == SIGINT)
+		printf("^C\n");
 }

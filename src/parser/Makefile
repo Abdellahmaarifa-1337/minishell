@@ -1,11 +1,10 @@
 CC=cc
-CFLAGS= -Wall -Wextra -Wall -g -fsanitize=address
+CFLAGS= -Wall -Wextra -Wall #-g -fsanitize=address
 
 #------------------------ PATHS ------------------------#
 
 METHODS = ./methods
 MODULES = ./modules
-TMP = ./tmp
 LEXER_MD = ./modules/lexer
 EXPAN_MD = ./modules/expander
 LIB = ./lib
@@ -50,7 +49,6 @@ SRC = parser.c \
 	${EXPAN_MD_SRC} ${QUOTERM_MD_SRC} \
 	${TOKEN_MT_SRC} \
 	${TOKENSRC_SRC} \
-	${TMP}/print_data.c \
 
 
 NAME = parser.a

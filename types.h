@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   types.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mkabissi <mkabissi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: amaarifa <amaarifa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/21 18:23:30 by amaarifa          #+#    #+#             */
-/*   Updated: 2022/06/14 09:44:12 by mkabissi         ###   ########.fr       */
+/*   Updated: 2022/06/14 20:34:24 by amaarifa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # include "./src/libft/libft.h"
 # include "fcntl.h"
 # include "signal.h"
+# include <termios.h>
 
 # define EMPTY_TOKEN -1
 # define AMBIGUOUS_REDIRECT -2
