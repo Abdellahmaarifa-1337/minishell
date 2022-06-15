@@ -6,7 +6,7 @@
 /*   By: mkabissi <mkabissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 07:12:51 by mkabissi          #+#    #+#             */
-/*   Updated: 2022/06/13 11:00:21 by mkabissi         ###   ########.fr       */
+/*   Updated: 2022/06/15 19:57:12 by mkabissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,7 @@ void	ft_exit(char **args, t_cmd_list *cmd_lst, int print)
 	cmd_lst->exit = 1;
 	if (print)
 		ft_putendl_fd("exit", STDERR_FILENO);
-	if (size == 1)
-		g_exit_status = 0;
-	else if (size == 2 && ft_isnumber(args[1]))
+	if (size == 2 && ft_isnumber(args[1]))
 		g_exit_status = ft_atoi(args[1]);
 	else if (size > 2 && ft_isnumber(args[1]))
 	{
