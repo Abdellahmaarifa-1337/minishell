@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amaarifa <amaarifa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mkabissi <mkabissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/11 11:24:37 by amaarifa          #+#    #+#             */
-/*   Updated: 2022/06/14 20:33:55 by amaarifa         ###   ########.fr       */
+/*   Updated: 2022/06/15 22:16:21 by mkabissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ void	int_handler(int signal)
 void	handler_single_cmd(int signal)
 {
 	g_exit_status = (signal) * -1;
+	fprintf(stderr, "exit_status: %d\n", g_exit_status);
 	if (signal == SIGQUIT)
 		printf("^\\Quit: 3\n");
 	else if (signal == SIGINT)
